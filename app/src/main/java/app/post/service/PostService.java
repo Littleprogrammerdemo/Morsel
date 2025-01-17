@@ -6,6 +6,7 @@ import app.post.model.Post;
 import app.post.repository.PostRepository;
 import app.user.model.User;
 import app.user.service.UserService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,18 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class PostService {
+    private final PostRepository postRepository;
 
-    @Autowired
-    private PostRepository postRepository;
+    private final CommentService commentService;  // Inject CommentService
+    @Getter
+    private final UserService userService;
 
-    @Autowired
-    private CommentService commentService;  // Inject CommentService
-    @Autowired
-    private UserService userService;
+    public PostService(PostRepository postRepository, CommentService commentService, UserService userService) {
+        this.postRepository = postRepository;
+        this.commentService = commentService;
+        this.userService = userService;
+    }
+
     public void createPost(User user, String title, String content) {
         Post post = Post.builder()
                 .owner(user)

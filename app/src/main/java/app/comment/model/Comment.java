@@ -13,7 +13,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "comment_like")
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
@@ -22,10 +24,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne // Много коментари могат да принадлежат на един потребител
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)// Много коментари могат да принадлежат на един потребител
     private User owner;
 
-    @ManyToOne // Много коментари могат да бъдат свързани с един пост
+    @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)// Много коментари могат да бъдат свързани с един пост
     private Post post;
 
     @Column(nullable = false)
@@ -36,8 +41,5 @@ public class Comment {
 
     @Column(nullable = false)
     private LocalDateTime updatedOn;
-
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "owner")
-    private Comment comment;
 
 }

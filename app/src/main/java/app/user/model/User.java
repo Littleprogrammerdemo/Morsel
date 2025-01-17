@@ -6,17 +6,15 @@ import app.post.model.Post;
 import app.rating.model.Rating;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Builder
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -66,9 +64,10 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<Rating> ratings = new ArrayList<>();
 
-    public User(UUID id, String name, String email) {
+    public User(UUID id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
     }
+
 }

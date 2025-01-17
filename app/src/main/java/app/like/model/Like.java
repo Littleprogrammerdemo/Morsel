@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "like")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,7 +35,4 @@ public class Like {
 
     @Column(nullable = false)
     private LocalDateTime updatedOn;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "owner")
-    private List<Like> likes = new ArrayList<>();
 }

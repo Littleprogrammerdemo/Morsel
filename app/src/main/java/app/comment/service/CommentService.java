@@ -15,12 +15,14 @@ import java.util.UUID;
 
 @Service
 public class CommentService {
+    private final CommentRepository commentRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
+    private final PostService postService;
 
-    @Autowired
-    private PostService postService;
+    public CommentService(CommentRepository commentRepository, PostService postService) {
+        this.commentRepository = commentRepository;
+        this.postService = postService;
+    }
 
     public void addComment(UUID postId, User user, String content) {
         Post post = postService.getPostById(postId);

@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "post_like")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,7 +44,4 @@ public class Post {
 
     @Column(nullable = false)
     private double rating;
-
-    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "owner")
-    private List<Comment> comments = new ArrayList<>();  // List of comments for this post
 }

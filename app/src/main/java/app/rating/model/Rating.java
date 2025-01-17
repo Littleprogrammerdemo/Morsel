@@ -36,7 +36,5 @@ public class Rating {
     @Column(nullable = false)
     private LocalDateTime updatedOn;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "owner")
-    private List<Rating> ratings = new ArrayList<>();
 
 }
