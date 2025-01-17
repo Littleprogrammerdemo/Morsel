@@ -10,14 +10,11 @@ import app.user.repository.UserRepository;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 
-import jakarta.persistence.metamodel.SingularAttribute;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,7 +96,7 @@ public class UserService {
         return userRepository.findAll();  // Fetching all users from the repository
     }
 
-    public User getUserById(SingularAttribute<AbstractPersistable, Serializable> id) {
+    public User getUserById(UUID id) {
         User user = null;
         String query = "SELECT * FROM users WHERE id = ?"; // Adjust table and column names as needed
 
@@ -127,5 +124,9 @@ public class UserService {
 
     public String getUserByUsername(String name) {
         return name;
+    }
+
+    public User getUserById(UUID id,User user) {
+        return user;
     }
 }

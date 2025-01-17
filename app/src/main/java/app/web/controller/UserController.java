@@ -5,6 +5,8 @@ import app.user.service.UserService;
 import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +31,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ModelAndView getUserDetailsPage(@PathVariable UUID id) {
 
-        User user = userService.getUserById();
+        User user = userService.getUserById(id);
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -50,5 +52,13 @@ public class UserController {
         modelAndView.setViewName("users");
 
         return modelAndView;
+    }
+    private User getCurrentUser() {
+        // Replace this with actual logic to retrieve the authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("No authenticated user found");
+        }
+        return (User) authentication.getPrincipal(); // Assumes the principal is of type User
     }
 }

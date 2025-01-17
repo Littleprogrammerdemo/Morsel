@@ -32,8 +32,17 @@ public class RatingController {
         String currentUser = userService.getUserByUsername(authentication.getName());  // Assuming you have this method to get the user by username
 
         // Call the rating service with the current user and the rating
-        ratingService.ratePost(postId, currentUser, rating);
+        ratingService.ratePost(postId, getCurrentUser(), currentUser, rating);
 
         return "redirect:/post/" + postId;  // Redirect to the post after rating
+    }
+
+    private User getCurrentUser() {
+        // Replace this with actual logic to retrieve the authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("No authenticated user found");
+        }
+        return (User) authentication.getPrincipal(); // Assumes the principal is of type User
     }
 }

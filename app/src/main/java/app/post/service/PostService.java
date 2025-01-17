@@ -78,20 +78,4 @@ public class PostService {
         postRepository.deleteById(postId);
     }
 
-
-    public void createPost(String title, String content) {
-        // Get the current user (for example, using Spring Security or some session-based method)
-        User currentUser = userService.getUserById(id);  // Fetch the logged-in user
-
-        // Create a new Post instance
-        Post post = new Post();
-        post.setTitle(title);
-        post.setContent(content);
-        post.setCreatedOn(LocalDateTime.now());
-        post.setUpdatedOn(LocalDateTime.now());
-        post.setOwner(currentUser);  // Set the logged-in user as the post owner
-
-        // Save the new post in the repository
-        postRepository.save(post);
-    }
 }

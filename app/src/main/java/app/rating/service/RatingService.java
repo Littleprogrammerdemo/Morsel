@@ -4,6 +4,7 @@ import app.post.model.Post;
 import app.post.service.PostService;
 import app.rating.model.Rating;
 import app.rating.repository.RatingRepository;
+import app.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class RatingService {
     private PostService postService;  // To fetch the post by its ID
 
     // Add or update a rating for a post
-    public void ratePost(UUID postId, String user, double ratingValue) {
+    public void ratePost(UUID postId, User user, double ratingValue) {
         if (ratingValue < 1.0 || ratingValue > 5.0) {
             throw new IllegalArgumentException("Rating must be between 1.0 and 5.0 stars.");
         }
@@ -64,4 +65,6 @@ public class RatingService {
         return total / ratings.size();  // Calculate average rating
     }
 
+    public void ratePost(UUID postId, Object currentUser, String currentUser1, double rating) {
+    }
 }

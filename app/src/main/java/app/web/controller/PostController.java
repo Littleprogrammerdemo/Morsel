@@ -1,10 +1,13 @@
 package app.web.controller;
 
 import app.post.service.PostService;
+import app.user.model.User;
 import app.web.dto.PostCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,12 +45,20 @@ public class PostController {
         String content = postCommand.getContent();  // Accessing getContent()
 
         // Use the postCommand data to save the post or update it
-        postService.createPost(title,
+        postService.createPost(getCurrentUser(), title,
                 content);
 
         return "redirect:/home";  // Redirect to home after successful operation
     }
 
+    private User getCurrentUser() {
+        // Replace this with actual logic to retrieve the authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("No authenticated user found");
+        }
+        return (User) authentication.getPrincipal(); // Assumes the principal is of type User
+    }
     @GetMapping("/post/{id}/delete")
     public String deletePost(@PathVariable UUID id) {
         log.debug("Deleting post with id: {}", id);
