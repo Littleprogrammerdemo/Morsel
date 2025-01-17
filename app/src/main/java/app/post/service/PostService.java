@@ -5,12 +5,15 @@ import app.comment.service.CommentService;
 import app.post.model.Post;
 import app.post.repository.PostRepository;
 import app.user.model.User;
+import app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class PostService {
@@ -20,8 +23,9 @@ public class PostService {
 
     @Autowired
     private CommentService commentService;  // Inject CommentService
-
-    public Post createPost(User user, String title, String content) {
+    @Autowired
+    private UserService userService;
+    public void createPost(User user, String title, String content) {
         Post post = Post.builder()
                 .owner(user)
                 .title(title)
@@ -31,7 +35,7 @@ public class PostService {
                 .likes(0)
                 .rating(0)  // Default rating is 0
                 .build();
-        return postRepository.save(post);
+        postRepository.save(post);
     }
 
     public List<Post> getPostsByUser(UUID userId) {
@@ -63,5 +67,31 @@ public class PostService {
         double newRating = (post.getRating() + rating) / 2;  // Calculate new average rating
         post.setRating(newRating);
         return postRepository.save(post);
+    }
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();  // Fetching all posts from the repository
+    }
+
+    // Method to delete a post by its ID
+    public void deletePostById(UUID postId) {
+        // Use the repository to delete the post by its ID
+        postRepository.deleteById(postId);
+    }
+
+
+    public void createPost(String title, String content) {
+        // Get the current user (for example, using Spring Security or some session-based method)
+        User currentUser = userService.getUserById(id);  // Fetch the logged-in user
+
+        // Create a new Post instance
+        Post post = new Post();
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCreatedOn(LocalDateTime.now());
+        post.setUpdatedOn(LocalDateTime.now());
+        post.setOwner(currentUser);  // Set the logged-in user as the post owner
+
+        // Save the new post in the repository
+        postRepository.save(post);
     }
 }

@@ -4,7 +4,6 @@ import app.post.model.Post;
 import app.post.service.PostService;
 import app.rating.model.Rating;
 import app.rating.repository.RatingRepository;
-import app.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class RatingService {
     private PostService postService;  // To fetch the post by its ID
 
     // Add or update a rating for a post
-    public Rating ratePost(UUID postId, User user, double ratingValue) {
+    public void ratePost(UUID postId, String user, double ratingValue) {
         if (ratingValue < 1.0 || ratingValue > 5.0) {
             throw new IllegalArgumentException("Rating must be between 1.0 and 5.0 stars.");
         }
@@ -36,21 +35,22 @@ public class RatingService {
             // If the user has already rated, update the rating
             existingRating.setRating(ratingValue);
             existingRating.setCreatedOn(LocalDateTime.now());
-            return ratingRepository.save(existingRating);
+            ratingRepository.save(existingRating);
         } else {
             // If the user hasn't rated, create a new rating
             Rating newRating = Rating.builder()
                     .post(post)
-                    .user(user)
+                    .owner(user)
                     .rating(ratingValue)
                     .createdOn(LocalDateTime.now())
                     .build();
-            return ratingRepository.save(newRating);
+            ratingRepository.save(newRating);
         }
     }
 
     // Get all ratings for a post
     public List<Rating> getRatingsForPost(UUID postId) {
+
         return ratingRepository.findByPostId(postId);
     }
 
@@ -63,4 +63,5 @@ public class RatingService {
         double total = ratings.stream().mapToDouble(Rating::getRating).sum();
         return total / ratings.size();  // Calculate average rating
     }
+
 }

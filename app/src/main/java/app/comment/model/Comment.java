@@ -34,6 +34,9 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime createdOn;
 
+    @Column(nullable = false)
+    private LocalDateTime updatedOn;
+
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "owner")
     private Comment comment;
 

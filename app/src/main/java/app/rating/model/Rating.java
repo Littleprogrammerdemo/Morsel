@@ -26,7 +26,7 @@ public class Rating {
     private Post post;  // Link to the post being rated
 
     @ManyToOne
-    private User user;  // User who rated the post
+    private User owner;  // User who rated the post
 
     @Column(nullable = false)
     private double rating;  // Rating value between 1.0 and 5.0

@@ -2,6 +2,7 @@ package app.comment.service;
 
 import app.comment.model.Comment;
 import app.comment.repository.CommentRepository;
+import app.exception.CommentNotFoundException;
 import app.post.model.Post;
 import app.post.service.PostService;
 import app.user.model.User;
@@ -21,7 +22,7 @@ public class CommentService {
     @Autowired
     private PostService postService;
 
-    public Comment addComment(UUID postId, User user, String content) {
+    public void addComment(UUID postId, User user, String content) {
         Post post = postService.getPostById(postId);
         Comment comment = Comment.builder()
                 .post(post)
@@ -29,7 +30,7 @@ public class CommentService {
                 .content(content)
                 .createdOn(LocalDateTime.now())
                 .build();
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
     }
 
     public List<Comment> getCommentsByPost(UUID postId) {
@@ -37,4 +38,13 @@ public class CommentService {
         return commentRepository.findByPost(post);
 
     }
+    public void deleteCommentById(UUID commentId) {
+        // Assuming commentRepository handles the data persistence
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+
+        commentRepository.delete(comment);
+    }
+
+
 }

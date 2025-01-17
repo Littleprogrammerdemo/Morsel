@@ -27,7 +27,7 @@ public class Like {
     private Post post;
 
     @ManyToOne
-    private User user;
+    private User owner;
 
     @Column(nullable = false)
     private LocalDateTime createdOn;
