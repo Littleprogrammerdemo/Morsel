@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "like")
+@Table(name = "likes")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

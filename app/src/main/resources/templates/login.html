@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include external CSS file -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}">
-    <th:block th:include="~{fragments/head}"></th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <title>Login</title>
 </head>
 <body>
 
@@ -21,16 +20,16 @@
 
         <div class="container">
             <a th:href="@{/}" class="logo-big">
-                <img src="/image/Morsel-logo.jpg" alt="Logo Image">
+                <img src="/images/Morsel-logo.jpg" alt="Logo Image">
             </a>
         </div>
 
         <form class="form"
-              th:action="@{/register}"
+              th:action="@{/login}"
               th:method="post"
-              th:object="${registerRequest}">
+              th:object="${loginRequest}">
 
-            <h3>Register Here</h3>
+            <h3>Login Here</h3>
 
             <label for="username">Username</label>
             <input type="text" placeholder="Username" id="username" th:field="*{username}">
@@ -40,9 +39,9 @@
             <input type="password" placeholder="Password" id="password" th:field="*{password}">
             <p class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
+            <button type="submit">Log In</button>
 
-            <button>Register</button>
-            <p class="form-already">Already have an account? <a th:href="@{/login}">Login</a>!</p>
+            <p class="form-already">Don't have an account? <a th:href="@{/register}">Register now</a>!</p>
         </form>
 
     </section>

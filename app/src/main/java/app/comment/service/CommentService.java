@@ -6,6 +6,7 @@ import app.exception.CommentNotFoundException;
 import app.post.model.Post;
 import app.post.service.PostService;
 import app.user.model.User;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,9 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     private final PostService postService;
-
-    public CommentService(CommentRepository commentRepository, PostService postService) {
+    @Autowired
+    public CommentService( CommentRepository commentRepository,
+                          PostService postService) {
         this.commentRepository = commentRepository;
         this.postService = postService;
     }

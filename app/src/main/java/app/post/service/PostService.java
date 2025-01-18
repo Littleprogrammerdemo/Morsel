@@ -7,6 +7,7 @@ import app.post.repository.PostRepository;
 import app.user.model.User;
 import app.user.service.UserService;
 import lombok.Getter;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class PostService {
     private final CommentService commentService;  // Inject CommentService
     @Getter
     private final UserService userService;
-
+    @Autowired
     public PostService(PostRepository postRepository, CommentService commentService, UserService userService) {
         this.postRepository = postRepository;
         this.commentService = commentService;
