@@ -1,0 +1,45 @@
+<!-- src/main/resources/templates/home.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+<header>
+    <h1>Welcome to the Home Page</h1>
+    <nav>
+        <a th:href="@{/profile}">Profile</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</header>
+
+<section>
+    <h2>Posts</h2>
+    <div th:each="post : ${posts}">
+        <article>
+            <h3 th:text="${post.title}"></h3>
+            <p th:text="${post.content}"></p>
+            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
+            <p><strong>Rating:</strong> <span th:text="${post.rating}"></span></p>
+            <form th:action="@{/post/{id}/like(id=${post.id})}" method="post">
+                <button type="submit">Like</button>
+            </form>
+            <form th:action="@{/post/{id}/rate(id=${post.id})}" method="post">
+                <label for="rating">Rate:</label>
+                <input type="number" id="rating" name="rating" min="1" max="5">
+                <button type="submit">Submit Rating</button>
+            </form>
+            <div>
+                <h4>Comments:</h4>
+                <div th:each="comment : ${post.comments}">
+                    <p th:text="${comment.content}"></p>
+                    <small>by <span th:text="${comment.owner.username}"></span></small>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+</body>
+</html>

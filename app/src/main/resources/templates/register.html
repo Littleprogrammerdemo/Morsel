@@ -1,52 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include external CSS file -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}">
-    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<header>
+    <h1>Register</h1>
+</header>
 
-<main>
-    <section class="section full-height">
+<section>
+    <form th:action="@{/register}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
 
-        <div class="container">
-            <a th:href="@{/}" class="logo-big">
-                <img src="/image/Morsel-logo.jpg" alt="Logo Image">
-            </a>
-        </div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
 
-        <form class="form"
-              th:action="@{/register}"
-              th:method="post"
-              th:object="${registerRequest}">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
 
-            <h3>Register Here</h3>
-
-            <label for="username">Username</label>
-            <input type="text" placeholder="Username" id="username" th:field="*{username}">
-            <p class="alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-
-            <label for="password">Password</label>
-            <input type="password" placeholder="Password" id="password" th:field="*{password}">
-            <p class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-
-
-            <button>Register</button>
-            <p class="form-already">Already have an account? <a th:href="@{/login}">Login</a>!</p>
-        </form>
-
-    </section>
-</main>
-<div class="footer" th:insert="~{fragments/common/footer :: footer}"></div>
+        <button type="submit">Register</button>
+    </form>
+</section>
 </body>
 </html>

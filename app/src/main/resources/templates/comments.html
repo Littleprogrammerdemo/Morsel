@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Comments</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<section>
+    <h2>All Comments</h2>
+    <div th:each="comment : ${comments}">
+        <article>
+            <p th:text="${comment.content}"></p>
+            <small>by <span th:text="${comment.owner.username}"></span> on <span th:text="${comment.createdOn}"></span></small>
+            <p><strong>Likes:</strong> <span th:text="${comment.likes}"></span></p>
+            <form th:action="@{/comment/{id}/like(id=${comment.id})}" method="post">
+                <button type="submit">Like</button>
+            </form>
+            <form th:action="@{/comment/{id}/dislike(id=${comment.id})}" method="post">
+                <button type="submit">Dislike</button>
+            </form>
+            <form th:action="@{/comment/{id}/delete(id=${comment.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </article>
+    </div>
+</section>
+</body>
+</html>

@@ -21,7 +21,7 @@ public class CommentService {
     private final PostService postService;
     @Autowired
     public CommentService( CommentRepository commentRepository,
-                          PostService postService) {
+                           PostService postService) {
         this.commentRepository = commentRepository;
         this.postService = postService;
     }
