@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>User Profile</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="profile-menu.css">
 </head>
 <body>
 <header>
@@ -13,19 +13,23 @@
     </nav>
 </header>
 
-<section>
-    <h2>Profile Information</h2>
-    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
-    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+<section class="profile-menu">
+    <div class="profile-header">
+        <h2>Profile Information</h2>
+        <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+    </div>
 </section>
 
-<section>
-    <h2>Your Posts</h2>
-    <div th:each="post : ${user.posts}">
-        <article>
-            <h3 th:text="${post.title}"></h3>
-            <p th:text="${post.content}"></p>
-        </article>
+<section class="home-section">
+    <div class="single-section-box profile-menu">
+        <h2>Your Posts</h2>
+        <div th:each="post : ${user.posts}">
+            <article>
+                <h3 th:text="${post.title}"></h3>
+                <p th:text="${post.content}"></p>
+            </article>
+        </div>
     </div>
 </section>
 </body>

@@ -1,45 +1,94 @@
-<!-- src/main/resources/templates/home.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
     <title>Home</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-
 </head>
 <body>
-<header>
-    <h1>Welcome to the Home Page</h1>
-    <nav>
-        <a th:href="@{/profile}">Profile</a>
-        <a th:href="@{/logout}">Logout</a>
-    </nav>
-</header>
-
-<section>
-    <h2>Posts</h2>
-    <div th:each="post : ${posts}">
-        <article>
-            <h3 th:text="${post.title}"></h3>
-            <p th:text="${post.content}"></p>
-            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
-            <p><strong>Rating:</strong> <span th:text="${post.rating}"></span></p>
-            <form th:action="@{/post/{id}/like(id=${post.id})}" method="post">
-                <button type="submit">Like</button>
-            </form>
-            <form th:action="@{/post/{id}/rate(id=${post.id})}" method="post">
-                <label for="rating">Rate:</label>
-                <input type="number" id="rating" name="rating" min="1" max="5">
-                <button type="submit">Submit Rating</button>
-            </form>
-            <div>
-                <h4>Comments:</h4>
-                <div th:each="comment : ${post.comments}">
-                    <p th:text="${comment.content}"></p>
-                    <small>by <span th:text="${comment.owner.username}"></span></small>
+<nav>
+    <!-- Navigation bar placeholder -->
+</nav>
+<main>
+    <div class="nav-bar" th:insert="~{fragments/common/navigation-bar :: navigation-bar ('dashboard')}"></div>
+    <div class="home-section">
+        <div class="single-section-box home-profile-information">
+            <div class="profile-header">
+                <img th:src="${#strings.isEmpty(user.profilePicture) ? 'https://cdn4.iconfinder.com/data/icons/famous-character-vol-2-flat/48/Avatar_Famous_Characters-07-512.png' : user.profilePicture}"
+                     alt="Profile Picture"
+                     class="profile-avatar">
+                <h2 class="profile-name" th:text="${#strings.isEmpty(user.firstName)} ? ${user.username} : ${user.firstName} + ' ' + ${user.lastName}"></h2>
+                <div class="profile-status-role-container">
+                    <p th:text="${user.active} ? ACTIVE : INACTIVE"
+                       th:classappend="${user.active} ? 'active-profile' : 'inactive-profile'">ACTIVE</p>
+                </div>
+                <div class="details-section">
+                    <div class="details-section-container">
+                        <strong>User id: </strong>
+                        <p th:text="${user.id}">[user id]</p>
+                    </div>
                 </div>
             </div>
-        </article>
+            <div class="profile-info">
+                <div class="details-section-container">
+                    <strong>Username: </strong>
+                    <p th:text="${user.username}">Your username here</p>
+                </div>
+                <div class="details-section-container">
+                    <strong>Email: </strong>
+                    <p th:text="${#strings.isEmpty(user.email)} ? 'Edit profile and add email' : ${user.email}">Email address</p>
+                </div>
+                <div class="details-section-container">
+                    <strong>Joined: </strong>
+                    <p th:text="${#temporals.format(user.createdOn, 'dd MMM yyyy HH:mm')}">Profile created on date</p>
+                </div>
+            </div>
+            <a th:href="@{/users/profile}" class="profile-actions-button">
+                <p>Edit Profile</p>
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                     width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M16 4h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Posts Section -->
+        <div class="posts-section">
+            <h2>User Posts</h2>
+            <div class="post">
+                <img src="photo-url.jpg" alt="Post Photo" class="post-photo" />
+                <div class="post-content">
+                    <h3 class="post-title">Post Title</h3>
+                    <p class="post-description">Post description goes here...</p>
+                </div>
+            </div>
+            <div class="post-meta">
+                    <div class="likes">
+                        <strong>Likes:</strong>
+                        <span th:text="${post.likes}">0</span>
+                    </div>
+                    <div class="ratings">
+                        <strong>Rating:</strong>
+                        <span th:text="${post.rating}">0</span>/5
+                    </div>
+                    <div class="comments">
+                        <strong>Comments:</strong>
+                        <ul>
+                            <li th:each="comment : ${post.comments}">
+                                <p><strong th:text="${comment.username}">User</strong>: <span th:text="${comment.text}">Comment text...</span></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+</main>
+<div class="footer" th:insert="~{fragments/common/footer :: footer}"></div>
 </body>
 </html>
