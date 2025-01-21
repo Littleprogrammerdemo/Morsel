@@ -1,13 +1,15 @@
 package app.post.service;
 
 import app.comment.model.Comment;
+import app.comment.repository.CommentRepository;
 import app.comment.service.CommentService;
+import app.exception.CommentNotFoundException;
+import app.like.service.LikeService;
+import app.rating.service.RatingService;
 import app.post.model.Post;
 import app.post.repository.PostRepository;
 import app.user.model.User;
 import app.user.service.UserService;
-import lombok.Getter;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +17,28 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Service
 public class PostService {
     private final PostRepository postRepository;
-
-    private final CommentService commentService;  // Inject CommentService
-    @Getter
+    private final CommentService commentService;
+    private final LikeService likeService;
+    private final RatingService ratingService;
     private final UserService userService;
+
     @Autowired
-    public PostService(PostRepository postRepository, CommentService commentService, UserService userService) {
+    public PostService(PostRepository postRepository,
+                       CommentRepository commentRepository, CommentService commentService,
+                       LikeService likeService,
+                       RatingService ratingService,
+                       UserService userService) {
         this.postRepository = postRepository;
         this.commentService = commentService;
+        this.likeService = likeService;
+        this.ratingService = ratingService;
         this.userService = userService;
     }
 
+    // Създаване на пост
     public void createPost(User user, String title, String content) {
         Post post = Post.builder()
                 .owner(user)
@@ -44,43 +52,56 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<Post> getPostsByUser(UUID userId) {
-        return postRepository.findByOwnerId(userId);
-    }
-
+    // Получаване на пост по ID
     public Post getPostById(UUID postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
-    }
-
-    // Get comments for a post
-    public List<Comment> getCommentsForPost(UUID postId) {
-
-        return commentService.getCommentsByPost(postId);
-    }
-
-    public Post likePost(UUID postId) {
-        Post post = getPostById(postId);
-        post.setLikes(post.getLikes() + 1);  // Increment the like count
-        return postRepository.save(post);
-    }
-
-    public Post ratePost(UUID postId, double rating) {
-        if (rating < 1.0 || rating > 5.0) {
-            throw new IllegalArgumentException("Rating must be between 1.0 and 5.0 stars.");
-        }
-
-        Post post = getPostById(postId);
-        double newRating = (post.getRating() + rating) / 2;  // Calculate new average rating
-        post.setRating(newRating);
-        return postRepository.save(post);
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
     }
     public List<Post> getAllPosts() {
-        return postRepository.findAll();  // Fetching all posts from the repository
+        return postRepository.findAll(); // This fetches all posts from the database
+    }
+    // Получаване на коментари за пост
+    public List<Comment> getCommentsForPost(UUID postId) {
+        return commentService.getCommentsForPost(postId);
     }
 
-    // Method to delete a post by its ID
+    // Добавяне на коментар
+    public void addComment(UUID postId, User user, String content) {
+        Post post = getPostById(postId);
+
+        // Call the CommentService to save the comment
+        commentService.addComment(post, user, content);
+    }
+
+    // Изтриване на коментар
+    public void deleteCommentFromPost(UUID commentId) {
+        commentService.deleteComment(commentId);  // Извикваме deleteComment от CommentService
+    }
+
+    // Лайкване на пост
+    public void likePost(UUID postId, User user) {
+        Post post = getPostById(postId);
+        likeService.addLike(post, user);
+        post.setLikes(post.getLikes() + 1);  // Increment like count
+        postRepository.save(post);
+    }
+
+    public void ratePost(UUID postId, double rating, User user) {
+        Post post = getPostById(postId);
+
+        // Извикваме метода от RatingService за да добавим или актуализираме рейтинга
+        ratingService.ratePost(post, user, rating);
+
+        // Изчисляваме новия среден рейтинг на поста
+        double newRating = ratingService.calculateAverageRating(postId);
+        post.setRating(newRating);
+
+        // Записваме актуализирания пост в базата
+        postRepository.save(post);
+    }
+
+    // Изтриване на пост
     public void deletePostById(UUID postId) {
-        // Use the repository to delete the post by its ID
         postRepository.deleteById(postId);
     }
 

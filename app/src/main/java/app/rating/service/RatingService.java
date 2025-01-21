@@ -1,7 +1,6 @@
 package app.rating.service;
 
 import app.post.model.Post;
-import app.post.service.PostService;
 import app.rating.model.Rating;
 import app.rating.repository.RatingRepository;
 import app.user.model.User;
@@ -15,22 +14,21 @@ import java.util.UUID;
 @Service
 public class RatingService {
 
-    @Autowired
-    private RatingRepository ratingRepository;
+    private final RatingRepository ratingRepository;
 
     @Autowired
-    private PostService postService;  // To fetch the post by its ID
+    public RatingService(RatingRepository ratingRepository) {
+        this.ratingRepository = ratingRepository;
+    }
 
     // Add or update a rating for a post
-    public void ratePost(UUID postId, User user, double ratingValue) {
+    public void ratePost(Post post, User user, double ratingValue) {
         if (ratingValue < 1.0 || ratingValue > 5.0) {
             throw new IllegalArgumentException("Rating must be between 1.0 and 5.0 stars.");
         }
 
-        Post post = postService.getPostById(postId);  // Get the post to be rated
-
         // Check if the user has already rated this post
-        Rating existingRating = ratingRepository.findByPostIdAndUserId(postId, user.getId());
+        Rating existingRating = ratingRepository.findByPostIdAndUserId(post.getId(), user.getId());
 
         if (existingRating != null) {
             // If the user has already rated, update the rating
@@ -51,7 +49,6 @@ public class RatingService {
 
     // Get all ratings for a post
     public List<Rating> getRatingsForPost(UUID postId) {
-
         return ratingRepository.findByPostId(postId);
     }
 
@@ -63,8 +60,5 @@ public class RatingService {
         }
         double total = ratings.stream().mapToDouble(Rating::getRating).sum();
         return total / ratings.size();  // Calculate average rating
-    }
-
-    public void ratePost(UUID postId, Object currentUser, String currentUser1, double rating) {
     }
 }

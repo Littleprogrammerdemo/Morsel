@@ -4,14 +4,11 @@ import app.post.service.PostService;
 import app.user.model.User;
 import app.web.dto.PostCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.UUID;
 
@@ -29,6 +26,7 @@ public class PostController {
     public String viewPost(@PathVariable UUID id, Model model) {
         log.debug("Viewing post with id: {}", id);
         model.addAttribute("post", postService.getPostById(id));
+        model.addAttribute("comments", postService.getCommentsForPost(id));  // Добавяне на коментари
         return "post/view";
     }
 
@@ -45,33 +43,52 @@ public class PostController {
         String content = postCommand.getContent();  // Accessing getContent()
 
         // Use the postCommand data to save the post or update it
-        postService.createPost(getCurrentUser(), title,
-                content);
+        postService.createPost(getCurrentUser(), title, content);
 
         return "redirect:/home";  // Redirect to home after successful operation
     }
 
+    // Логика за лайкване на пост
+    @PostMapping("/post/{postId}/like")
+    public String likePost(@PathVariable UUID postId) {
+        postService.likePost(postId, getCurrentUser());
+        return "redirect:/post/" + postId;  // Redirect back to the post
+    }
+
+    // Логика за рейтинг на пост
+    @PostMapping("/post/{postId}/rate")
+    public String ratePost(@PathVariable UUID postId, @RequestParam double rating) {
+        postService.ratePost(postId, rating, getCurrentUser());
+        return "redirect:/post/" + postId;  // Redirect back to the post
+    }
+
+    // Добавяне на коментар
+    @PostMapping("/post/{postId}/comment")
+    public String addComment(@PathVariable UUID postId, @RequestParam String content) {
+        postService.addComment(postId, getCurrentUser(), content);
+        return "redirect:/post/" + postId;  // Redirect to the post page after the comment is added
+    }
+
+    // Изтриване на коментар
+    @GetMapping("/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable UUID commentId) {
+        postService.deleteCommentFromPost(commentId);
+        return "redirect:/home";  // Redirect to home after deletion
+    }
+
     private User getCurrentUser() {
-        // Replace this with actual logic to retrieve the authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new IllegalStateException("No authenticated user found");
         }
-        return (User) authentication.getPrincipal(); // Assumes the principal is of type User
+        return (User) authentication.getPrincipal();  // Assumes the principal is of type User
     }
+
+    // Изтриване на пост
     @GetMapping("/post/{id}/delete")
     public String deletePost(@PathVariable UUID id) {
         log.debug("Deleting post with id: {}", id);
         postService.deletePostById(id);
         return "redirect:/home";  // Redirect to home after deletion
-    }
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ChangeSetPersister.NotFoundException.class)
-    public ModelAndView notFoundErrorPage(Exception exception){
-        log.error("Handling not Found exception");
-        ModelAndView model = new ModelAndView();
-        model.addObject("exception", exception);
-        model.setViewName("404error");
-        return model;
     }
 }

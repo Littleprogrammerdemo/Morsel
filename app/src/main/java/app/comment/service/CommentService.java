@@ -4,9 +4,7 @@ import app.comment.model.Comment;
 import app.comment.repository.CommentRepository;
 import app.exception.CommentNotFoundException;
 import app.post.model.Post;
-import app.post.service.PostService;
 import app.user.model.User;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,39 +14,32 @@ import java.util.UUID;
 
 @Service
 public class CommentService {
+
     private final CommentRepository commentRepository;
 
-    private final PostService postService;
     @Autowired
-    public CommentService( CommentRepository commentRepository,
-                           PostService postService) {
+    public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
-        this.postService = postService;
     }
-
-    public void addComment(UUID postId, User user, String content) {
-        Post post = postService.getPostById(postId);
+    public void addComment(Post post, User user, String content) {
         Comment comment = Comment.builder()
-                .post(post)
-                .owner(user)
+                .post(post)  // Associate the comment with the post
+                .owner(user)  // Associate the comment with the user
                 .content(content)
                 .createdOn(LocalDateTime.now())
                 .build();
+
+        // Save the comment in the repository
         commentRepository.save(comment);
     }
-
-    public List<Comment> getCommentsByPost(UUID postId) {
-        Post post = postService.getPostById(postId);
-        return commentRepository.findByPost(post);
-
+    public List<Comment> getCommentsForPost(java.util.UUID postId) {
+        return commentRepository.findByPost_Id(postId);
     }
-    public void deleteCommentById(UUID commentId) {
-        // Assuming commentRepository handles the data persistence
+
+    // Изтриване на коментар
+    public void deleteComment(UUID commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
-
         commentRepository.delete(comment);
     }
-
-
 }

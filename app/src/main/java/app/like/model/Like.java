@@ -25,9 +25,11 @@ public class Like {
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     @Column(nullable = false)
