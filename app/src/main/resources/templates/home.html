@@ -55,38 +55,7 @@
                           d="M16 4h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5"/>
                 </svg>
             </a>
-        </div>
-
-        <!-- Posts Section -->
-        <div class="posts-section">
-            <h2>User Posts</h2>
-            <div class="post">
-                <img src="photo-url.jpg" alt="Post Photo" class="post-photo" />
-                <div class="post-content">
-                    <h3 class="post-title">Post Title</h3>
-                    <p class="post-description">Post description goes here...</p>
-                </div>
-            </div>
-            <div class="post-meta">
-                    <div class="likes">
-                        <strong>Likes:</strong>
-                        <span th:text="${post.likes}">0</span>
-                    </div>
-                    <div class="ratings">
-                        <strong>Rating:</strong>
-                        <span th:text="${post.rating}">0</span>/5
-                    </div>
-                    <div class="comments">
-                        <strong>Comments:</strong>
-                        <ul>
-                            <li th:each="comment : ${post.comments}">
-                                <p><strong th:text="${comment.username}">User</strong>: <span th:text="${comment.text}">Comment text...</span></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
     </div>
 </main>
 <div class="footer" th:insert="~{fragments/common/footer :: footer}"></div>

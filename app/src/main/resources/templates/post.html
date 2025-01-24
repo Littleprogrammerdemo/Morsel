@@ -19,6 +19,7 @@
             content: '',
             image: null
         });
+        const [newComment, setNewComment] = React.useState({});
 
         const createPost = () => {
             const post = {
@@ -28,7 +29,8 @@
                 image: newPost.image,
                 likes: 0,
                 rating: 0,
-                userRatings: []
+                userRatings: [],
+                comments: [] // New comments array for each post
             };
             setPosts([...posts, post]);
             setNewPost({ title: '', content: '', image: null });
@@ -66,6 +68,40 @@
                         ...post,
                         rating: averageRating,
                         userRatings: newUserRatings
+                    };
+                }
+                return post;
+            }));
+        };
+
+        const addComment = (postId) => {
+            if (!newComment[postId] || newComment[postId].trim() === '') return;
+
+            setPosts(posts.map(post => {
+                if (post.id === postId) {
+                    const comment = {
+                        id: Date.now().toString(),
+                        text: newComment[postId],
+                        timestamp: new Date().toLocaleString()
+                    };
+                    return {
+                        ...post,
+                        comments: [...post.comments, comment]
+                    };
+                }
+                return post;
+            }));
+
+            // Clear the comment input for this post
+            setNewComment(prev => ({...prev, [postId]: ''}));
+        };
+
+        const deleteComment = (postId, commentId) => {
+            setPosts(posts.map(post => {
+                if (post.id === postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.filter(comment => comment.id !== commentId)
                     };
                 }
                 return post;
@@ -147,6 +183,47 @@
                                 <span className="ml-2">
                                     Rating: {post.rating.toFixed(1)}
                                 </span>
+                            </div>
+                        </div>
+
+                        {/* Comments Section */}
+                        <div className="mt-4">
+                            <h3 className="text-lg font-semibold mb-2">Comments</h3>
+                            {post.comments.map(comment => (
+                                <div
+                                    key={comment.id}
+                                    className="bg-gray-100 p-2 mb-2 rounded flex justify-between items-start"
+                                >
+                                    <div>
+                                        <p>{comment.text}</p>
+                                        <small className="text-gray-500">
+                                            {comment.timestamp}
+                                        </small>
+                                    </div>
+                                    <button
+                                        onClick={() => deleteComment(post.id, comment.id)}
+                                        className="bg-red-500 text-white text-xs p-1 rounded"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            ))}
+                            <div className="flex mt-2">
+                                <input
+                                    placeholder="Add a comment"
+                                    value={newComment[post.id] || ''}
+                                    onChange={(e) => setNewComment(prev => ({
+                                        ...prev,
+                                        [post.id]: e.target.value
+                                    }))}
+                                    className="border p-2 flex-grow mr-2"
+                                />
+                                <button
+                                    onClick={() => addComment(post.id)}
+                                    className="bg-blue-500 text-white p-2"
+                                >
+                                    Comment
+                                </button>
                             </div>
                         </div>
                     </div>
