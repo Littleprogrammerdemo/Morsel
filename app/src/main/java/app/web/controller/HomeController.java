@@ -29,4 +29,5 @@ public class HomeController {
 
         return "home";  // View name for the home page
     }
+
 }

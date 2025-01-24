@@ -13,5 +13,5 @@ public interface RatingRepository extends JpaRepository<Rating, UUID> {
     List<Rating> findByPostId(UUID postId);
 
     // Find a specific rating by a user for a specific post
-    Rating findByPostIdAndUserId(UUID postId, UUID userId);
+    Rating findByPostIdAndOwner_Id(UUID postId, UUID ownerId);
 }

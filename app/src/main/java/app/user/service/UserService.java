@@ -32,21 +32,13 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final PostService postService;
-    private final LikeService likeService;
-    private final RatingService ratingService;
     private final UserProperties userProperties;
-
+    @Autowired
     public UserService(PasswordEncoder passwordEncoder,
-                       UserRepository userRepository,
-                       PostService postService, RatingService ratingService,
-                       LikeService likeService, UserProperties userProperties) {
+                       UserRepository userRepository, UserProperties userProperties) {
 
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.postService = postService;
-        this.likeService = likeService;
-        this.ratingService = ratingService;
         this.userProperties = userProperties;
     }
 
@@ -123,11 +115,14 @@ public class UserService {
         return user;
     }
 
-    public String getUserByUsername(String name) {
+    public String getUserByUsername(String name)
+    {
+
         return name;
     }
 
     public User getUserById(UUID id,User user) {
+
         return user;
     }
 }

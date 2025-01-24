@@ -19,6 +19,7 @@ public class CommentService {
 
     @Autowired
     public CommentService(CommentRepository commentRepository) {
+
         this.commentRepository = commentRepository;
     }
     public void addComment(Post post, User user, String content) {

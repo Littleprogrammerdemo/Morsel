@@ -1,19 +1,16 @@
 package app.post.model;
 
-import app.comment.model.Comment;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "post_like")
+@Table(name = "posts")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +27,7 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, length = 800)
+    @Column(nullable = false, length = 2000)
     private String content;
 
     @Column(nullable = false)

@@ -1,9 +1,7 @@
 package app.post.service;
 
 import app.comment.model.Comment;
-import app.comment.repository.CommentRepository;
 import app.comment.service.CommentService;
-import app.exception.CommentNotFoundException;
 import app.like.service.LikeService;
 import app.rating.service.RatingService;
 import app.post.model.Post;
@@ -26,8 +24,7 @@ public class PostService {
     private final UserService userService;
 
     @Autowired
-    public PostService(PostRepository postRepository,
-                       CommentRepository commentRepository, CommentService commentService,
+    public PostService(PostRepository postRepository, CommentService commentService,
                        LikeService likeService,
                        RatingService ratingService,
                        UserService userService) {
@@ -102,6 +99,7 @@ public class PostService {
 
     // Изтриване на пост
     public void deletePostById(UUID postId) {
+
         postRepository.deleteById(postId);
     }
 

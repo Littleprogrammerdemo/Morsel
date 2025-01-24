@@ -10,8 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, UUID> {
-    Optional<Like> findByPostAndUser(Post post, User user);
+    Optional<Like> findByPostAndOwner(Post post, User owner);
 
 
-    int countByPost(Post post);
+
 }

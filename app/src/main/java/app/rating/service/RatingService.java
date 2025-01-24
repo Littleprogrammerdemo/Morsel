@@ -28,7 +28,7 @@ public class RatingService {
         }
 
         // Check if the user has already rated this post
-        Rating existingRating = ratingRepository.findByPostIdAndUserId(post.getId(), user.getId());
+        Rating existingRating = ratingRepository.findByPostIdAndOwner_Id(post.getId(), user.getId());
 
         if (existingRating != null) {
             // If the user has already rated, update the rating
@@ -49,6 +49,7 @@ public class RatingService {
 
     // Get all ratings for a post
     public List<Rating> getRatingsForPost(UUID postId) {
+
         return ratingRepository.findByPostId(postId);
     }
 

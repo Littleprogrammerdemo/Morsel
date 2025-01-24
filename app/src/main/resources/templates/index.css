@@ -1,0 +1,64 @@
+*:after,
+*:before {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-size: cover;
+    background: radial-gradient(circle at 90% top,
+    #3b2a57 0%,
+    #7451d2 10%,
+    #6247a2 20%,
+    #6247a2 30%,
+    #3b2a57 40%,
+    #16152c 50%,
+    #6247a2 60%,
+    #7451d2 70%,
+    #7451d2 80%,
+    #7425cb 90%,
+    #3b2a57 100%) no-repeat fixed;
+    font-style: normal;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    padding: 2% 6%;
+}
+
+.header-inner {
+    display: flex;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-inner .nav {
+    margin-left: auto;
+}
+
+.button {
+    display: inline-block;
+    text-decoration: none;
+    appearance: none;
+    padding: 10px 15px;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #f1f5ff;
+    transition: box-shadow 0.2s ease;
+}

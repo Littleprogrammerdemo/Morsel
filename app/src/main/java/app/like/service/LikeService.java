@@ -28,7 +28,7 @@ public class LikeService {
 
     // Премахване на лайк
     public void removeLike(Post post, User user) {
-        Like like = likeRepository.findByPostAndUser(post, user)
+        Like like = likeRepository.findByPostAndOwner(post, user)
                 .orElseThrow(() -> new IllegalArgumentException("Like not found"));
         likeRepository.delete(like);
     }
