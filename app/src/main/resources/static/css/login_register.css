@@ -6,7 +6,7 @@
 body {
     margin: 0;
     background-size: cover;
-    background: linear-gradient(45deg, #f56b00, #f52e71, #d94ba2, #7e4dbb, #26a3b0);
+    background: linear-gradient(45deg, #9b1747, #de238d); /* Pink to purple gradient */
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
@@ -16,13 +16,18 @@ body {
     letter-spacing: 1px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
+    justify-content: center; /* Vertically centers content */
+    align-items: center; /* Horizontally centers content */
+    overflow: visible;
 }
 
 .header {
-    padding: 4% 8%;
-    background: rgba(0, 0, 0, 0.5);
+    padding: 4% 7%;
+    background: rgba(155, 23, 71, 0.8); /* Semi-transparent background */
     border-radius: 8px;
+    width: 95%; /* Full-width with some padding */
+    max-width: 1200px; /* Limits maximum width */
 }
 
 .header-inner {
@@ -64,22 +69,41 @@ body {
     transform: scale(1.05);
 }
 
+.logo-container {
+    text-align: center; /* Centers the logo container */
+    margin-top: 50px; /* Adds space above the logo */
+}
+
+.logo-big {
+    display: inline-block;
+    max-width: 100%; /* Responsive scaling */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.logo-big img {
+    display: block;
+    width: 200%; /* Scales logo size */
+    height: auto;
+    max-width: 400px; /* Limits maximum logo size */
+    margin: 0 auto; /* Centers the logo image */
+}
+
 .form-container {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 500px;
+    margin: 20px auto; /* Centers the form container */
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
     border-radius: 10px;
     box-shadow: 0 0 40px rgba(8, 7, 16, 0.31);
 }
 
-form {
-    background-color: rgb(111, 37, 234);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 36px 35px;
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.31);
+hr {
+    width: 80%; /* Adjusts the width of the line */
+    border: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #9b1747, #de238d); /* Matches your gradient colors */
+    margin: 30px auto; /* Adds spacing and centers it */
+    border-radius: 5px; /* Slight rounding for a smoother look */
 }
 
 form h3 {
@@ -141,7 +165,7 @@ input:hover, select:hover {
 
 .form-already a {
     text-decoration: none;
-    background: radial-gradient(circle at 90% top, #746ab0 0%, #a095e6 10%, #faf9f9 20%, #c5bfff 30%, #978ef1 40%);
+    background: radial-gradient(circle at 90% top, #fc5dd6 0%, #d92665 10%, #faf9f9 20%, #fc5dd6 30%, #978ef1 40%);
     background-size: 200%;
     background-clip: text;
     -webkit-background-clip: text;

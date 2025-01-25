@@ -16,7 +16,7 @@ body {
     letter-spacing: 1px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     justify-content: center; /* Centers the content vertically */
     align-items: center; /* Centers the content horizontally */
 }
@@ -63,7 +63,7 @@ body {
 }
 
 .button:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgb(239, 205, 68);
     transform: scale(1.05);
 }
 
