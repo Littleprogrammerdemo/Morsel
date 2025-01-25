@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -41,4 +43,6 @@ public class Post {
 
     @Column(nullable = false)
     private double rating;
+
+
 }

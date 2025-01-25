@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="login_register.css">
+    <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login_register.css}">
+    <title>Login</title>
 </head>
 <body>
+
 <header>
     <h1>Login</h1>
 </header>
@@ -19,9 +22,15 @@
 
         <div class="container">
             <a th:href="@{/}" class="logo-big">
-                <img src="Morsel-logo.jpg" alt="Logo Image">
+                <img src="/image/Morsel-logo.jpg" alt="Logo Image">
             </a>
         </div>
+        <form class="form"
+              th:action="@{/login}"
+              th:method="post"
+              th:object="${loginRequest}">
+
+            <h3>Login Here</h3>
 
         <label for="username">Username</label>
         <input type="text" placeholder="Username" id="username" th:field="*{username}">
