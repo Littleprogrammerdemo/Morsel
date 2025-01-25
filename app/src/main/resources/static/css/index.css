@@ -6,39 +6,38 @@
 body {
     margin: 0;
     background-size: cover;
-    background: radial-gradient(circle at 90% top,
-    #3b2a57 0%,
-    #7451d2 10%,
-    #6247a2 20%,
-    #6247a2 30%,
-    #3b2a57 40%,
-    #16152c 50%,
-    #6247a2 60%,
-    #7451d2 70%,
-    #7451d2 80%,
-    #7425cb 90%,
-    #3b2a57 100%) no-repeat fixed;
+    background: linear-gradient(45deg, #9b1747, #de238d); /* Updated gradient: pink to purple */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
     font-style: normal;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     color: #ffffff;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    justify-content: center; /* Centers the content vertically */
+    align-items: center; /* Centers the content horizontally */
 }
 
 .header {
-    padding: 2% 6%;
+    padding: 4% 7%;
+    background: rgb(155, 23, 71);
+    border-radius: 8px;
+    width: 95%; /* Make sure the header takes up full width */
 }
 
 .header-inner {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
 }
 
 .header-inner .nav {
@@ -49,16 +48,40 @@ body {
     display: inline-block;
     text-decoration: none;
     appearance: none;
-    padding: 10px 15px;
+    padding: 12px 20px;
     background-color: transparent;
-    font-size: 20px;
-    font-weight: 300;
+    font-size: 18px;
+    font-weight: 400;
     line-height: 1;
-    color: #ffffff;
+    color: #f1f5ff;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #f1f5ff;
-    transition: box-shadow 0.2s ease;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    transition: box-shadow 0.2s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.logo-container {
+    text-align: center; /* Centers the logo */
+    margin-top: 50px; /* Adds some space from the top */
+}
+
+.logo-big {
+    display: inline-block;
+    max-width: 100%; /* Ensures it scales responsively */
+    height: auto; /* Keeps aspect ratio intact */
+}
+
+.logo-big img {
+    display: block;
+    width: 300%;
+    height: auto;
+    max-width: 700px; /* Sets a maximum width for the logo */
+    margin: 0 auto; /* Centers the image */
 }
