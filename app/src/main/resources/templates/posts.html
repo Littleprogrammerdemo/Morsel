@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Post</title>
+    <link rel="stylesheet" href="post.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="container mx-auto p-4">
+    <!-- Post Details -->
+    <div class="mb-4 border-b pb-4">
+        <h1 class="text-3xl font-bold" th:text="${post.title}">Post Title</h1>
+        <p class="mt-2 text-gray-700" th:text="${post.content}">Post content goes here.</p>
+        <div th:if="${post.image}" class="mt-4">
+            <img th:src="@{${post.image}}" alt="Post Image" class="max-w-full rounded"/>
+        </div>
+    </div>
+
+    <!-- Like and Rating Section -->
+    <div class="mt-4 flex justify-between items-center">
+        <form th:action="@{/post/{id}/like(postId=${post.id})}" method="post" class="flex items-center">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Like</button>
+            <span class="ml-2 text-gray-600" th:text="'Likes: ' + ${post.likes}">Likes: 0</span>
+        </form>
+
+        <div class="flex items-center">
+            <span class="mr-2 text-gray-600">Rate:</span>
+            <form th:action="@{/post/{id}/rate(postId=${post.id})}" method="post" class="flex">
+                <input type="hidden" name="rating" value="1">
+                <button type="submit" class="text-yellow-500 mx-1">★</button>
+                <input type="hidden" name="rating" value="2">
+                <button type="submit" class="text-yellow-500 mx-1">★</button>
+                <input type="hidden" name="rating" value="3">
+                <button type="submit" class="text-yellow-500 mx-1">★</button>
+                <input type="hidden" name="rating" value="4">
+                <button type="submit" class="text-yellow-500 mx-1">★</button>
+                <input type="hidden" name="rating" value="5">
+                <button type="submit" class="text-gray-300 mx-1">★</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="mt-8">
+        <h2 class="text-lg font-bold">Comments</h2>
+        <div class="mt-4" th:if="${comments}">
+            <div th:each="comment : ${comments}" class="bg-gray-100 p-4 rounded mb-4">
+                <p th:text="${comment.text}" class="text-gray-800">Comment text...</p>
+                <small th:text="${comment.timestamp}" class="text-gray-500">Date and time</small>
+                <form th:action="@{/comment/{commentId}/delete(commentId=${comment.id})}" method="get" class="mt-2">
+                    <button type="submit" class="text-red-500 text-sm">Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Comment Form -->
+        <form th:action="@{/post/{postId}/comment(postId=${post.id})}" method="post" class="flex mt-4">
+            <input type="text" name="content" placeholder="Write a comment..." class="border p-2 flex-grow rounded-l" required>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r">Comment</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

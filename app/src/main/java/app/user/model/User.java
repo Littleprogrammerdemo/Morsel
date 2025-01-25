@@ -70,4 +70,8 @@ public class User {
         this.email = email;
     }
 
+    private UserStatus status;
+    public boolean isBanned() {
+        return status == UserStatus.BANNED;
+    }
 }

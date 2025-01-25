@@ -13,60 +13,53 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.UUID;
 
-    @Controller
-    public class IndexController {
+@Controller
+public class IndexController {
 
-        private final UserService userService;
+    private final UserService userService;
 
-        @Autowired
-        public IndexController(UserService userService) {
-            this.userService = userService;
-        }
-
-        @GetMapping("/")
-        public String getIndexPage() {
-
-            return "index";
-        }
-
-        @GetMapping("/login")
-        public String getLoginPage() {
-
-            return "login";
-        }
-
-        @GetMapping("/register")
-        public ModelAndView getRegisterPage() {
-
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("register");
-            modelAndView.addObject("registerRequest", new RegisterRequest());
-
-            return modelAndView;
-        }
-
-        @PostMapping("/register")
-        public ModelAndView registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
-
-            if (bindingResult.hasErrors()) {
-                return new ModelAndView("register");
-            }
-
-
-            userService.register(registerRequest);
-
-            return new ModelAndView("redirect:/home");
-        }
-
-        @GetMapping("/home")
-        public ModelAndView getHomePage() {
-
-            User user = userService.getUserById(UUID.fromString("60069504-cd0a-45f0-b6fb-3d43d2d93b8c"));
-
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("home");
-            modelAndView.addObject("user", user);
-
-            return modelAndView;
-        }
+    @Autowired
+    public IndexController(UserService userService) {
+        this.userService = userService;
     }
+
+    @GetMapping("/")
+    public String getIndexPage() {
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public ModelAndView getRegisterPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("register");
+        modelAndView.addObject("registerRequest", new RegisterRequest());
+
+        return modelAndView;
+    }
+
+    @PostMapping("/register")
+    public ModelAndView registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("register");
+        }
+
+        userService.register(registerRequest);
+        return new ModelAndView("redirect:/home");
+    }
+
+    // Change this to a different path, for example '/profile'
+    @GetMapping("/profile")
+    public ModelAndView getHomePage() {
+        User user = userService.getUserById(UUID.fromString("60069504-cd0a-45f0-b6fb-3d43d2d93b8c"));
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+        modelAndView.addObject("user", user);
+
+        return modelAndView;
+    }
+}

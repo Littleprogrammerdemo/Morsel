@@ -1,0 +1,205 @@
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9fafb; /* Light gray background for a modern look */
+    color: #333; /* Dark gray text for good readability */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: #1f2937; /* Darker gray for headings */
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+/* Forms */
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+input[type="text"], textarea, input[type="file"] {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 5px;
+    font-size: 1rem;
+    background: #f9fafb;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus, textarea:focus, input[type="file"]:focus {
+    border-color: #2563eb; /* Blue border on focus */
+    outline: none;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px;
+}
+
+/* Buttons */
+button {
+    display: inline-block;
+    background: #2563eb; /* Primary blue */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #1e3a8a; /* Darker blue for hover */
+}
+
+/* Comment Buttons */
+button.delete {
+    background: #dc2626; /* Red for delete actions */
+    margin-left: 10px;
+}
+
+button.delete:hover {
+    background: #b91c1c; /* Darker red for hover */
+}
+
+/* Post Card */
+.post-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb; /* Light border */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.post-card h2 {
+    margin: 0 0 10px;
+    color: #1f2937; /* Heading color */
+}
+
+.post-card p {
+    margin: 10px 0;
+    color: #4b5563; /* Muted text color */
+}
+
+.post-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Likes and Ratings */
+.like-section, .rating-section {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.like-section span, .rating-section span {
+    margin-left: 10px;
+    color: #4b5563; /* Muted text */
+}
+
+.rating-section button {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    background: none;
+    border: none;
+    color: #d1d5db; /* Light gray stars */
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.rating-section button.active {
+    color: #fbbf24; /* Gold star for active rating */
+}
+
+.rating-section button:hover {
+    color: #f59e0b; /* Orange star on hover */
+}
+
+/* Comments */
+.comments-section {
+    margin-top: 20px;
+}
+
+.comments-section h3 {
+    margin-bottom: 10px;
+}
+
+.comment {
+    background: #f3f4f6;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.comment p {
+    margin: 0;
+    color: #4b5563;
+}
+
+.comment small {
+    display: block;
+    margin-top: 5px;
+    color: #9ca3af; /* Muted text */
+}
+
+.comment button {
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    body {
+        padding: 10px;
+    }
+
+    .post-card {
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .like-section, .rating-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rating-section button {
+        margin: 5px 0;
+    }
+}

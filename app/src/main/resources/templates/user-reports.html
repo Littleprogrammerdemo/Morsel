@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User System Report</title>
+    <link rel="stylesheet" href="user-reports.css">
+</head>
+<body>
+<div class="report-container">
+    <header>
+        <h1>User System Report</h1>
+    </header>
+
+    <section class="user-report">
+        <h2>Your Statistics</h2>
+        <ul>
+            <li>Total Posts: <span th:text="${userSystemReport.userTotalPosts}"></span></li>
+            <li>Total Likes: <span th:text="${userSystemReport.userTotalLikes}"></span></li>
+            <li>Total Comments: <span th:text="${userSystemReport.userTotalComments}"></span></li>
+        </ul>
+    </section>
+
+    <section class="community-report">
+        <h2>Community-wide Statistics</h2>
+        <ul>
+            <li>Total Community Users: <span th:text="${userSystemReport.communityTotalUsers}"></span></li>
+            <li>Total Community Posts: <span th:text="${userSystemReport.communityTotalPosts}"></span></li>
+            <li>Total Community Likes: <span th:text="${userSystemReport.communityTotalLikes}"></span></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Your Company</p>
+    </footer>
+</div>
+</body>
+</html>

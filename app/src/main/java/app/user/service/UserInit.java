@@ -22,7 +22,7 @@ public class UserInit implements CommandLineRunner {
             return;
         }
 
-        RegisterRequest registerRequest = RegisterRequest.builder()
+            RegisterRequest registerRequest = RegisterRequest.builder()
                 .username("Siu321")
                 .password("25521441")
                 .build();

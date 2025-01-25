@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Slf4j
 @Controller
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
