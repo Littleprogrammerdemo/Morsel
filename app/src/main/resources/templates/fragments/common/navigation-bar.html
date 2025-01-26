@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="navigationBar">
+    <nav>
+        <ul>
+            <li><a href="/" th:href="@{/}">Home</a></li>
+            <li><a href="/about" th:href="@{/about}">About</a></li>
+            <li><a href="/contact" th:href="@{/contact}">Contact</a></li>
+            <li><a href="/services" th:href="@{/services}">Services</a></li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

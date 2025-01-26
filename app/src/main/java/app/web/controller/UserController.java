@@ -60,4 +60,5 @@ public class UserController {
         }
         return (User) authentication.getPrincipal(); // Assumes the principal is of type User
     }
+
 }

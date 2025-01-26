@@ -1,212 +1,118 @@
-/* General Reset */
-* {
+body {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    background-color: rgb(255, 255, 255);
 }
 
-body {
-    background-color: #f4f3fc;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Navigation Bar Placeholder */
-nav {
-    background: #6a1b9a; /* Purple theme */
+header {
+    background-color: #ff6600;
     color: white;
     padding: 1rem;
-    text-align: center;
-    font-size: 1.2rem;
 }
 
-/* Main Layout */
-.main {
-    display: flex;
-    justify-content: center;
-    margin: 2rem auto;
-    max-width: 1200px;
-    padding: 0 1rem;
-}
-
-.home-section {
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-}
-
-/* Profile Section */
-.home-profile-information {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-bottom: 2rem;
-}
-
-.profile-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.profile-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #6a1b9a;
-}
-
-.profile-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.profile-status-role-container p {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: white;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    display: inline-block;
-}
-
-.active-profile {
-    background-color: #6a1b9a;
-}
-
-.inactive-profile {
-    background-color: #8e44ad;
-}
-
-.details-section {
-    margin-top: 1rem;
-}
-
-.details-section-container {
-    margin: 0.5rem 0;
-}
-
-.details-section-container strong {
-    font-weight: 700;
-    color: #555;
-}
-
-/* Profile Actions Button */
-.profile-actions-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    background-color: #6a1b9a;
-    border: none;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.profile-actions-button:hover {
-    background-color: #5e1588;
-}
-
-.profile-actions-button svg {
-    width: 1.2rem;
-    height: 1.2rem;
-}
-
-/* Posts Section */
-.posts-section {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-bottom: 2rem;
-}
-
-.posts-section h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-.post {
-    border-bottom: 1px solid #e0e0e0;
-    padding: 1.5rem 0;
-    margin-bottom: 1.5rem;
-}
-
-.post:last-child {
-    border-bottom: none;
-}
-
-/* Post Photos */
-.post-photo {
-    display: block;
-    width: 100%;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    max-height: 300px;
-    overflow: hidden;
-}
-
-.post-content {
-    margin-bottom: 1rem;
-}
-
-.post-title {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #6a1b9a;
-}
-
-.post-description {
-    font-size: 1rem;
-    color: #666;
-    margin-top: 0.5rem;
-}
-
-.post-meta {
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e0e0e0;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.likes, .ratings, .comments {
-    font-size: 0.9rem;
-    color: #555;
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
 }
 
-.comments ul {
-    margin-top: 0.5rem;
-    padding-left: 1.5rem;
-    list-style: disc;
+.search-bar {
+    display: flex;
+    align-items: center;
 }
 
-.comments li {
-    margin-bottom: 0.5rem;
+.search-bar input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
 }
 
-.comments strong {
-    font-weight: 600;
+.search-bar button {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: #ff6600;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #ffe6cc;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.recipe-feed h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.recipe-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.recipe-details {
+    padding: 1rem;
     color: #333;
 }
 
-/* Footer */
-.footer {
-    margin-top: 3rem;
+.recipe-details h2 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem;
+}
+
+.recipe-details p {
+    margin: 0.5rem 0;
+}
+
+.rating {
+    font-weight: bold;
+    color: #ff6600;
+}
+
+footer {
     text-align: center;
-    font-size: 0.9rem;
-    color: #888;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+    margin-top: 2rem;
 }
