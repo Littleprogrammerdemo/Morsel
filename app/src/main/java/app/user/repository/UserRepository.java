@@ -10,6 +10,5 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    @Fetch(FetchMode.JOIN)
     Optional<User> findByUsername(String username);
 }

@@ -4,6 +4,7 @@ import app.post.model.Post;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.web.dto.AdminSystemReport;
+import app.web.dto.UserEditRequest;
 import app.web.dto.UserSystemReport;
 import lombok.experimental.UtilityClass;
 
@@ -49,4 +50,14 @@ public class DtoMapper {
                 .communityTotalLikes(allPosts.stream().mapToLong(Post::getLikes).sum())
                 .build();
     }
+    public static UserEditRequest mapUserToUserEditRequest(User user) {
+
+        return UserEditRequest.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .profilePicture(user.getProfilePicture())
+                .build();
+    }
+
 }

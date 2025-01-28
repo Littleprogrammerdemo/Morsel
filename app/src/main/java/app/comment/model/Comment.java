@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "comment_like")
+@Table(name = "comment")
 @Builder
 @Data
 @NoArgsConstructor

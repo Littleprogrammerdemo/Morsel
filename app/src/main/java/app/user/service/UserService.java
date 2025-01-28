@@ -1,25 +1,19 @@
 package app.user.service;
 
 import app.exception.DomainException;
-import app.like.service.LikeService;
-import app.post.service.PostService;
-import app.rating.service.RatingService;
 import app.user.model.User;
+import app.user.model.UserRole;
 import app.user.property.UserProperties;
 import app.user.repository.UserRepository;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 
+import app.web.dto.UserEditRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,15 +38,16 @@ public class UserService {
 
     public User login(LoginRequest loginRequest) {
 
-        Optional<User> userOptional = userRepository.findByUsername(loginRequest.getUsername());
-        if (userOptional.isEmpty()) {
-            throw new DomainException("User with username=[%s] does not exist.".formatted(loginRequest.getUsername()), HttpStatus.BAD_REQUEST);
+        Optional<User> optionUser = userRepository.findByUsername(loginRequest.getUsername());
+        if (optionUser.isEmpty()) {
+            throw new DomainException("Username or password are incorrect.");
         }
 
-        User user = userOptional.get();
+        User user = optionUser.get();
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new DomainException("Login attempt with incorrect password for user with id [%s].".formatted(user.getId()), HttpStatus.BAD_REQUEST);
+            throw new DomainException("Username or password are incorrect.");
         }
+
 
         return user;
     }
@@ -60,16 +55,16 @@ public class UserService {
     @Transactional
     public User register(RegisterRequest registerRequest) {
 
-        Optional<User> userOptional = userRepository.findByUsername(registerRequest.getUsername());
-        if (userOptional.isPresent()) {
-            throw new DomainException("User with username=[%s] already exist.".formatted(registerRequest.getUsername()), HttpStatus.BAD_REQUEST);
+        Optional<User> optionUser = userRepository.findByUsername(registerRequest.getUsername());
+        if (optionUser.isPresent()) {
+            throw new DomainException("Username [%s] already exist.".formatted(registerRequest.getUsername()));
         }
 
         User user = userRepository.save(initializeNewUserAccount(registerRequest));
 
         log.info("Successfully created new user for username [%s] with id [%s].".formatted(user.getUsername(), user.getId()));
 
-        return userRepository.save(user);
+        return user;
     }
 
     private User initializeNewUserAccount(RegisterRequest dto) {
@@ -84,45 +79,49 @@ public class UserService {
                 .updatedOn(LocalDateTime.now())
                 .build();
     }
+    public void editUserDetails(UUID userId, UserEditRequest userEditRequest) {
+
+        User user = getByUserId(userId);
+
+        user.setFirstName(userEditRequest.getFirstName());
+        user.setLastName(userEditRequest.getLastName());
+        user.setEmail(userEditRequest.getEmail());
+        user.setProfilePicture(userEditRequest.getProfilePicture());
+
+        userRepository.save(user);
+    }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();  // Fetching all users from the repository
+
+        return userRepository.findAll();
     }
 
-    public User getUserById(UUID id) {
-        User user = null;
-        String query = "SELECT * FROM users WHERE id = ?"; // Adjust table and column names as needed
+    public User getByUserId(UUID id) {
 
-        Connection connection = null;
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setObject(1, id); // Setting the UUID as a parameter
+        return userRepository.findById(id).orElseThrow(() -> new DomainException("User with id [%s] does not exist.".formatted(id)));
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    // Assuming User has a constructor that takes these values
-                    user = new User(
-                            UUID.fromString(rs.getString("id")),
-                            rs.getString("name"),
-                            rs.getString("email")
-                            // Add other fields as necessary
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Or handle exception as appropriate
+    }
+    public void switchStatus(UUID userId) {
+
+        User user = getByUserId(userId);
+
+        user.setUpdatedOn(LocalDateTime.now());
+        user.setActive(!user.isActive());
+
+        userRepository.save(user);
+    }
+
+    public void changeUserRole(UUID userId) {
+
+        User user = getByUserId(userId);
+
+        user.setUpdatedOn(LocalDateTime.now());
+        if (user.getRole() == UserRole.ADMIN){
+            user.setRole(UserRole.USER);
+        } else {
+            user.setRole(UserRole.ADMIN);
         }
 
-        return user;
-    }
-
-    public String getUserByUsername(String name)
-    {
-
-        return name;
-    }
-
-    public User getUserById(UUID id,User user) {
-
-        return user;
+        userRepository.save(user);
     }
 }

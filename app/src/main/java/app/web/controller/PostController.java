@@ -39,15 +39,13 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public String createOrUpdatePost(@ModelAttribute PostCommand postCommand) {
-        String title = postCommand.getTitle();  // Accessing getTitle()
-        String content = postCommand.getContent();  // Accessing getContent()
-
-        // Use the postCommand data to save the post or update it
+    public String createOrUpdatePost(@RequestParam String title, @RequestParam String content) {
+        // Pass the title and content to the service for post creation
         postService.createPost(getCurrentUser(), title, content);
 
         return "redirect:/home";  // Redirect to home after successful operation
     }
+
 
     // Логика за лайкване на пост
     @PostMapping("/post/{postId}/like")

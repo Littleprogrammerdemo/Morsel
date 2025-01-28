@@ -30,7 +30,7 @@
 .single-section-box.profile-menu::before {
     width: 350px;
     height: 190px;
-    background: radial-gradient(circle, #ff60d745, #679fff);
+    background: radial-gradient(circle, #ff60d745, #ff79ff); /* Changed to pink */
     top: -90px;
     left: -100px;
 }
@@ -38,7 +38,7 @@
 .single-section-box.profile-menu::after {
     width: 400px;
     height: 130px;
-    background: radial-gradient(circle, rgb(135 102 255 / 47%), #ff676780);
+    background: radial-gradient(circle, rgb(255 102 255 / 47%), #ff676780); /* Changed to pink */
     bottom: -40px;
     right: -180px;
 }

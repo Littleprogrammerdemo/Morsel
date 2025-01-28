@@ -2,7 +2,9 @@ package app.web.controller;
 
 import app.user.model.User;
 import app.user.service.UserService;
+import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.UUID;
 
 @Controller
 public class IndexController {
@@ -29,8 +30,12 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage() {
-        return "login";
+    public ModelAndView getLoginPage() {
+
+        ModelAndView modelAndView = new ModelAndView("login");
+        modelAndView.addObject("loginRequest", new LoginRequest());
+
+        return modelAndView;
     }
 
     @GetMapping("/register")
@@ -41,25 +46,15 @@ public class IndexController {
 
         return modelAndView;
     }
+    @PostMapping("/login")
+    public String login(@Valid LoginRequest loginRequest, BindingResult bindingResult) {
 
-    @PostMapping("/register")
-    public ModelAndView registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView("register");
+        if (bindingResult.hasErrors()){
+            return "login";
         }
 
-        userService.register(registerRequest);
-        return new ModelAndView("redirect:/home");
-    }
+        userService.login(loginRequest);
 
-    // Change this to a different path, for example '/profile'
-    @GetMapping("/profile")
-    public ModelAndView getHomePage() {
-        User user = userService.getUserById(UUID.fromString("60069504-cd0a-45f0-b6fb-3d43d2d93b8c"));
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
-        modelAndView.addObject("user", user);
-
-        return modelAndView;
+        return "redirect:/home";
     }
 }

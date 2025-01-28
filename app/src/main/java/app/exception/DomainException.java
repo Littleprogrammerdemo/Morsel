@@ -1,17 +1,11 @@
 package app.exception;
+public class DomainException extends RuntimeException{
 
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
-
-@Getter
-public class DomainException extends RuntimeException {
-
-    private final String message;
-    private final HttpStatus status;
-
-    public DomainException(String message, HttpStatus status) {
+    public DomainException(String message) {
         super(message);
-        this.message = message;
-        this.status = status;
+    }
+
+    public DomainException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

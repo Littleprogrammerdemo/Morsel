@@ -1,28 +1,14 @@
 package app.web.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class PostCommand {
-
+    @NotEmpty(message = "Title cannot be empty")
+    @Size(min = 5, message = "Title must be at least 5 characters long")
     private String title;
+
+    @NotEmpty(message = "Content cannot be empty")
+    @Size(min = 20, message = "Content must be at least 20 characters long")
     private String content;
-
-    // Getter for title
-    public String getTitle() {
-        return title;
-    }
-
-    // Setter for title
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    // Getter for content
-    public String getContent() {
-        return content;
-    }
-
-    // Setter for content
-    public void setContent(String content) {
-        this.content = content;
-    }
-
 }
