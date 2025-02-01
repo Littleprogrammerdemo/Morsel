@@ -1,0 +1,51 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Header */
+h2 {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Group */
+.input-group {
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Categories List */
+.list-group {
+    max-width: 500px;
+    margin: auto;
+}
+
+.list-group-item {
+    border-radius: 6px;
+    transition: background 0.2s ease-in-out;
+}
+
+.list-group-item:hover {
+    background: #f1f1f1;
+}
+
+.btn-sm {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+}

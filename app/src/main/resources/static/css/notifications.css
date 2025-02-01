@@ -1,0 +1,31 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Notification List */
+.notifications-list {
+    max-width: 600px;
+    margin: auto;
+}
+
+/* Individual Notification */
+.notification-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Mark as Read Button */
+.btn-success {
+    align-self: flex-end;
+}

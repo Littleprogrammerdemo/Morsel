@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>Notifications</title>
+    <link rel="stylesheet" th:href="@{/css/notifications.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Morsel/a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>🔔 Notifications</h2>
+
+    <div class="notifications-list">
+        <div th:each="notification : ${notifications}" class="alert alert-info notification-item">
+            <strong th:text="${notification.type}"></strong>
+            <p th:text="${notification.message}"></p>
+            <small th:text="${#temporals.format(notification.timestamp, 'dd MMM yyyy HH:mm')}"></small>
+
+            <!-- Mark as Read Button -->
+            <form th:action="@{/api/notifications/mark-as-read/{id}(id=${notification.id})}" method="post">
+                <button type="submit" class="btn btn-success btn-sm">✔ Mark as Read</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
