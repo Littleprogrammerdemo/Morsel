@@ -1,5 +1,6 @@
 package app.web.controller;
 
+import app.category.model.Category;
 import app.category.model.CategoryType;
 import app.post.model.Post;
 import app.post.service.PostService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -47,7 +49,17 @@ public class PostController {
 
         return "redirect:/home";  // Redirect to home after successful operation
     }
+    // Search recipes by keyword
+    @GetMapping("/search")
+    public List<Post> searchPosts(@RequestParam String keyword) {
+        return postService.searchPosts(keyword);
+    }
 
+    // Filter recipes by category
+    @GetMapping("/filter")
+    public List<Post> filterByCategory(@RequestParam Category category) {
+        return postService.filterByCategory(category);
+    }
 
     // Логика за лайкване на пост
     @PostMapping("/post/{postId}/like")

@@ -73,7 +73,13 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll(); // This fetches all posts from the database
     }
+    public List<Post> searchPosts(String keyword) {
+        return postRepository.searchPosts(keyword);
+    }
 
+    public List<Post> filterByCategory(Category category) {
+        return postRepository.findByCategory(category);
+    }
     // Get comments for a post
     public List<Comment> getCommentsForPost(UUID postId) {
         return commentService.getCommentsForPost(postId);

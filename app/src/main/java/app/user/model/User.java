@@ -71,6 +71,8 @@ public class User {
     }
 
     private UserStatus status;
+
+
     public boolean isBanned() {
         return status == UserStatus.BANNED;
     }
