@@ -1,5 +1,7 @@
 package app.web.controller;
 
+import app.category.model.CategoryType;
+import app.post.model.Post;
 import app.post.service.PostService;
 import app.user.model.User;
 import app.web.dto.PostCommand;
@@ -39,9 +41,9 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public String createOrUpdatePost(@RequestParam String title, @RequestParam String content) {
+    public String createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category) {
         // Pass the title and content to the service for post creation
-        postService.createPost(getCurrentUser(), title, content);
+        postService.createPost(getCurrentUser(), title, content,category);
 
         return "redirect:/home";  // Redirect to home after successful operation
     }
@@ -81,6 +83,10 @@ public class PostController {
             throw new IllegalStateException("No authenticated user found");
         }
         return (User) authentication.getPrincipal();  // Assumes the principal is of type User
+    }
+    @PostMapping("/add-to-category/{categoryId}")
+    public Post addRecipeToCategory(@PathVariable UUID categoryId, @RequestBody Post recipe) {
+        return postService.addRecipeToCategory(categoryId, recipe);
     }
 
     // Изтриване на пост

@@ -1,6 +1,10 @@
 
 package app.post.service;
 
+import app.category.model.Category;
+import app.category.model.CategoryType;
+import app.category.repository.CategoryRepository;
+import app.category.service.CategoryService;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
 import app.like.service.LikeService;
@@ -12,6 +16,7 @@ import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,26 +32,29 @@ public class PostService {
     private final CommentService commentService;
     private final LikeService likeService;
     private final RatingService ratingService;
+    private final CategoryService categoryService;
     private final UserService userService;
 
     @Autowired
     public PostService(PostRepository postRepository, CommentService commentService,
                        LikeService likeService,
-                       RatingService ratingService,
+                       RatingService ratingService, CategoryService categoryService,
                        UserService userService) {
         this.postRepository = postRepository;
         this.commentService = commentService;
         this.likeService = likeService;
         this.ratingService = ratingService;
+        this.categoryService = categoryService;
         this.userService = userService;
     }
 
     // Create a post
-    public void createPost(User user, String title, String content) {
+    public void createPost(User user, String title, String content, CategoryType category) {
         Post post = Post.builder()
                 .owner(user)
                 .title(title)
                 .content(content)
+                .category_type(category)
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
                 .likes(0)
@@ -149,10 +157,15 @@ public class PostService {
     }
 
 
-    // Upload image logic (implement as needed)
+    // Upload image logic
     public String uploadImage(MultipartFile image) throws IOException {
         // Handle image upload logic (store it on disk, cloud storage, etc.)
         return "image-url"; // Example URL to the image
+    }
+    public Post addRecipeToCategory(UUID categoryId, Post recipe) {
+        Category category = categoryService.getCategoryById(categoryId); // No need for orElseThrow
+        recipe.setCategory(category);
+        return postRepository.save(recipe);
     }
 
     // Save post to the repository

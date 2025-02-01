@@ -1,12 +1,12 @@
 package app.post.model;
 
+import app.category.model.Category;
+import app.category.model.CategoryType;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -47,4 +47,11 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.ACTIVE;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CategoryType category_type;
 }
