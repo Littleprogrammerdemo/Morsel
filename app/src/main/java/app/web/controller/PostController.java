@@ -85,9 +85,9 @@ public class PostController {
 
     // Изтриване на пост
     @GetMapping("/post/{id}/delete")
-    public String deletePost(@PathVariable UUID id) {
+    public String deletePost(@PathVariable UUID id, @PathVariable User user) {
         log.debug("Deleting post with id: {}", id);
-        postService.deletePostById(id);
+        postService.deletePost(id,user);
         return "redirect:/home";  // Redirect to home after deletion
     }
 }

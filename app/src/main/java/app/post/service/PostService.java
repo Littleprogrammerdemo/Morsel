@@ -4,10 +4,12 @@ package app.post.service;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
 import app.like.service.LikeService;
+import app.post.model.PostStatus;
 import app.rating.service.RatingService;
 import app.post.model.Post;
 import app.post.repository.PostRepository;
 import app.user.model.User;
+import app.user.model.UserRole;
 import app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,11 +105,49 @@ public class PostService {
         postRepository.save(post);
     }
 
-    // Delete a post
-    public boolean deletePostById(UUID postId) {
-        postRepository.deleteById(postId);
-        return true;
+    // Check if the user is an admin
+    private boolean isAdmin(User user) {
+        return user != null && user.getRole() == UserRole.ADMIN;
     }
+
+    // Delete post (only Admin can delete)
+    public void deletePost(UUID postId, User user) {
+        if (!isAdmin(user)) {
+            throw new RuntimeException("Only admins can delete posts.");
+        }
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Delete the post
+        postRepository.delete(post);
+    }
+
+    // Update the status of a post
+    public void updatePostStatus(UUID postId, PostStatus status) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        post.setStatus(status);
+        postRepository.save(post);
+    }
+    // Check if user is the creator of the post
+    private boolean isPostCreator(User user, Post post) {
+        return user != null && post != null && user.getId().equals(post.getOwner());
+    }
+    // Delete post (only Admin or Creator can delete)
+    public void deletePostByUser(UUID postId, User user) {
+        if (!isAdmin(user) && !isPostCreator(user, postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found")))) {
+            throw new RuntimeException("Only admins or creators can delete posts.");
+        }
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Delete the post
+        postRepository.delete(post);
+    }
+
 
     // Upload image logic (implement as needed)
     public String uploadImage(MultipartFile image) throws IOException {

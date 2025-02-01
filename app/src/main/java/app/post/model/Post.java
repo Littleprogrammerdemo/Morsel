@@ -45,4 +45,6 @@ public class Post {
     private double rating;
 
 
+    @Enumerated(EnumType.STRING)
+    private PostStatus status = PostStatus.ACTIVE;
 }

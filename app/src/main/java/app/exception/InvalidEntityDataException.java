@@ -1,7 +1,10 @@
 package app.exception;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class InvalidEntityDataException extends RuntimeException {
     private List<String> constraintViolations = List.of();
     public InvalidEntityDataException() {
@@ -38,7 +41,4 @@ public class InvalidEntityDataException extends RuntimeException {
         this.constraintViolations = constraintViolations;
     }
 
-    public List<String> getConstraintViolations() {
-        return constraintViolations;
-    }
 }
