@@ -12,6 +12,11 @@
     justify-content: center;
     overflow: hidden;
 }
+.side_navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 
 .profile-header {
     margin-bottom: 14px;

@@ -38,6 +38,12 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
                                     </svg>
                                 </a>
+                                <a class="messages" href="/messages">
+                                    <p>Messages</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18m-6-6 6 6-6 6"></path>
+                                    </svg>
+                                </a>
                                 <!-- Notifications -->
                                 <a href="/notifications" class="flex items-center space-x-2">
                                     <p>Notifications</p>
@@ -45,8 +51,6 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22s4-2 4-6V9a4 4 0 0 0-8 0v7c0 4 4 6 4 6z"></path>
                                     </svg>
                                 </a>
-
-
 
                                 <!-- Followers/Following -->
                                 <a href="/followers" class="flex items-center space-x-2">
@@ -65,12 +69,6 @@
                                     <p>Bookmarks</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 20.943V3.057L4.447 8.672l7.553 12.271z"></path>
-                                    </svg>
-                                </a>
-                                <a href="/about">
-                                    <p>About Us</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 3v18M3 12h18"></path>
                                     </svg>
                                 </a>
                                 <a href="/admin">
@@ -105,7 +103,8 @@
                     </div>
                 </div>
             </nav>
-
+        </nav>
+    </div></div>
 <main>
     <section class="recipe-feed">
         <h1>Recipes</h1>
@@ -123,9 +122,8 @@
             </div>
         </div>
     </section>
+
 </main>
 
-<footer>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-</footer>
-</html>
+            <th:block th:insert="fragments/footer :: footer"></th:block>
+</body></html>
