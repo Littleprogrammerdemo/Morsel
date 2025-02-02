@@ -20,6 +20,7 @@ import java.util.UUID;
 
 import static app.security.SessionInterceptor.USER_ID_SESSION_ATTRIBUTE;
 
+
 @Controller
 @RequestMapping("/reports")
 public class ReportsController {

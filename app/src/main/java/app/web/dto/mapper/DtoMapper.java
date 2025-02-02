@@ -44,7 +44,7 @@ public class DtoMapper {
         return UserSystemReport.builder()
                 .userTotalPosts(userPosts)
                 .userTotalLikes(userLikes)
-                .userTotalComments(0) // You'd need to implement comment counting logic
+                .userTotalComments(0)
                 .communityTotalUsers(allUsers.size())
                 .communityTotalPosts(allPosts.size())
                 .communityTotalLikes(allPosts.stream().mapToLong(Post::getLikes).sum())

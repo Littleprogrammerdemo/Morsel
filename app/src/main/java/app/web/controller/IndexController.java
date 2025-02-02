@@ -1,8 +1,10 @@
 package app.web.controller;
 
+import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.UUID;
 
 
 @Controller
@@ -30,10 +34,23 @@ public class IndexController {
     @GetMapping("/login")
     public ModelAndView getLoginPage() {
 
-        ModelAndView modelAndView = new ModelAndView("login");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
         modelAndView.addObject("loginRequest", new LoginRequest());
 
         return modelAndView;
+    }
+    @PostMapping("/login")
+    public String login(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            return "login";
+        }
+
+        User loggedInUser = userService.login(loginRequest);
+        session.setAttribute("user_id", loggedInUser.getId());
+
+        return "redirect:/home";
     }
 
     @GetMapping("/register")
@@ -44,15 +61,36 @@ public class IndexController {
 
         return modelAndView;
     }
-    @PostMapping("/login")
-    public String login(@Valid LoginRequest loginRequest, BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()){
-            return "login";
+    @PostMapping("/register")
+    public ModelAndView registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("register");
         }
 
-        userService.login(loginRequest);
+        userService.register(registerRequest);
 
-        return "redirect:/home";
+        return new ModelAndView("redirect:/home");
+    }
+
+    @GetMapping("/index")
+    public ModelAndView getHomePage(HttpSession session) {
+
+        UUID userId = (UUID) session.getAttribute("user_id");
+        User user = userService.getByUserId(userId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        modelAndView.addObject("user", user);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/logout")
+    public String getLogoutPage(HttpSession session) {
+
+        session.invalidate();
+        return "redirect:/";
     }
 }
