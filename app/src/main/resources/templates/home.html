@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <title>Recipe Feed</title>
 </head>
 <body>
@@ -19,6 +19,92 @@
         </div>
     </nav>
 </header>
+    <div class="nav-bar"><div class="side-bar-container">
+        <nav>
+            <nav>
+                <div class="nav-bar">
+                    <div class="side-bar-container">
+                        <div class="side_navbar">
+                            <!-- App Name -->
+                            <div class="app-nav-bar">
+                                <div class="app-nav-bar-name">Morsel</div>
+                                <div class="app-nav-bar-version">v1.0.0</div>
+                            </div>
+                            <div class="func-block">
+                                <!-- My Profile -->
+                                <a href="/profile" class="flex items-center space-x-2">
+                                    <p>My Profile</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+                                    </svg>
+                                </a>
+                                <!-- Notifications -->
+                                <a href="/notifications" class="flex items-center space-x-2">
+                                    <p>Notifications</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22s4-2 4-6V9a4 4 0 0 0-8 0v7c0 4 4 6 4 6z"></path>
+                                    </svg>
+                                </a>
+
+
+
+                                <!-- Followers/Following -->
+                                <a href="/followers" class="flex items-center space-x-2">
+                                    <p>Followers / Following</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 21v-4a4 4 0 1 1 8 0v4m4 0v-4a4 4 0 1 1 8 0v4M9 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
+                                    </svg>
+                                </a>
+                                <a href="/recipes">
+                                    <p>MyRecipes</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18M9 6l6 6-6 6"></path>
+                                    </svg>
+                                </a>
+                                <a href="/bookmarks">
+                                    <p>Bookmarks</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 20.943V3.057L4.447 8.672l7.553 12.271z"></path>
+                                    </svg>
+                                </a>
+                                <a href="/about">
+                                    <p>About Us</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 3v18M3 12h18"></path>
+                                    </svg>
+                                </a>
+                                <a href="/admin">
+                                    <p>Admin Panel</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 12h12m-6-6 6 6-6 6"></path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Other Quick Links -->
+                            <div class="func-block">
+                                <span>Quick Links</span>
+                                <a href="/new-recipe">
+                                    <p>Add Recipe</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Logout -->
+                            <div class="func-block">
+                                <a class="logout" href="/logout">
+                                    <p>Logout</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l4-4-4-4M20 12H8"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
 
 <main>
     <section class="recipe-feed">
@@ -40,7 +126,6 @@
 </main>
 
 <footer>
-    <th:block th:insert="fragments/footer :: footer"></th:block>
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </footer>
-</body>
 </html>
