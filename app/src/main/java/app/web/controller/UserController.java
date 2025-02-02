@@ -21,11 +21,11 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/{id}/profile")
     public ModelAndView getProfileMenu(@PathVariable UUID id) {
 
