@@ -55,4 +55,19 @@ public class UserController {
 
         return new ModelAndView("redirect:/home");
     }
+    @PutMapping("/{id}/status")
+    public String switchUserStatus(@PathVariable UUID id) {
+
+        userService.switchStatus(id);
+
+        return "redirect:/users";
+    }
+
+    @PutMapping("/{id}/role")
+    public String switchUserRole(@PathVariable UUID id) {
+
+        userService.changeUserRole(id);
+
+        return "redirect:/users";
+    }
 }

@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.UUID;
 
-import static app.security.SessionInterceptor.USER_ID_SESSION_ATTRIBUTE;
 
 
 @Controller
@@ -47,20 +46,25 @@ public class ReportsController {
 
         return modelAndView;
     }
-
     @GetMapping("/user")
     public ModelAndView getUserSystemReports(HttpSession session) {
-        UUID userId = (UUID) session.getAttribute(USER_ID_SESSION_ATTRIBUTE);
+        UUID userId = (UUID) session.getAttribute("user_id");
+        if (userId == null) {
+            throw new IllegalStateException("User not found in session");
+        }
+
         User currentUser = userService.getByUserId(userId);
-        List<Post> allPosts = postService.getAllPosts();
-        List<User> allUsers = userService.getAllUsers();
+        if (currentUser == null) {
+            throw new IllegalStateException("User does not exist");
+        }
 
-        UserSystemReport userSystemReport = DtoMapper.mapToUserSystemReport(currentUser, allPosts, allUsers);
+        UserSystemReport userSystemReport = DtoMapper.mapToUserSystemReport(
+                currentUser,
+                postService.getAllPosts(),
+                userService.getAllUsers()
+        );
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userSystemReports", userSystemReport);
-        modelAndView.setViewName("user-reports");
-
-        return modelAndView;
+        return new ModelAndView("user-reports", "userSystemReports", userSystemReport);
     }
+
 }
