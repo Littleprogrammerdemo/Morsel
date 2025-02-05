@@ -1,15 +1,15 @@
 package app.web.dto.mapper;
 
+import app.notification.model.NotificationType;
 import app.post.model.Post;
 import app.user.model.User;
 import app.user.model.UserRole;
-import app.web.dto.AdminSystemReport;
-import app.web.dto.UserEditRequest;
-import app.web.dto.UserSystemReport;
+import app.web.dto.*;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @UtilityClass
 public class DtoMapper {
@@ -23,9 +23,6 @@ public class DtoMapper {
                 .totalCountPosts(posts.size())
                 .totalCountLikedPosts(posts.stream().filter(post -> post.getLikes() > 0).count())
                 .totalLikes(BigDecimal.valueOf(posts.stream().mapToLong(Post::getLikes).sum()))
-                // Add more admin-specific metrics as needed
-                .totalReportedContent(0) // You'd need to implement this logic
-                .totalBannedUsers(users.stream().filter(User::isBanned).count())
                 .build();
     }
 
@@ -59,5 +56,53 @@ public class DtoMapper {
                 .profilePicture(user.getProfilePicture())
                 .build();
     }
+    public static BookmarkRequest mapToBookmarkRequest(UUID userId, UUID postId) {
+        return BookmarkRequest.builder()
+                .userId(userId)
+                .postId(postId)
+                .build();
+    }
 
-}
+    public static CategoryRequest mapToCategoryRequest(String name) {
+        return CategoryRequest.builder()
+                .name(name)
+                .build();
+    }
+
+    public static FollowRequest mapToFollowRequest(UUID followerId, UUID followedId) {
+        return FollowRequest.builder()
+                .followerId(followerId)
+                .followedId(followedId)
+                .build();
+    }
+
+    public static LoginRequest mapToLoginRequest(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername(username);
+        loginRequest.setPassword(password);
+        return loginRequest;
+    }
+
+    public static MessageRequest mapToMessageRequest(UUID senderId, UUID receiverId, String content) {
+        return MessageRequest.builder()
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .content(content)
+                .build();
+    }
+
+    public static NotificationRequest mapToNotificationRequest(UUID userId, String message, NotificationType type) {
+        return NotificationRequest.builder()
+                .userId(userId)
+                .message(message)
+                .type(type)
+                .build();
+    }
+
+        public static PostCommand mapToPostCommand(Post post) {
+            return PostCommand.builder()
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .build();
+        }
+    }
