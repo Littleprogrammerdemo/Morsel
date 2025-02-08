@@ -32,7 +32,7 @@ public class Post {
     @Column(nullable = false, length = 2000)
     private String content;
 
-    @Column(nullable = false)
+    @Column(name = "creation_date",nullable = false)
     private LocalDateTime createdOn;
 
     @Column(nullable = false)
