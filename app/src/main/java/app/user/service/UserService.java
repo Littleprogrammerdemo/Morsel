@@ -2,6 +2,10 @@ package app.user.service;
 
 import app.exception.DomainException;
 import app.user.model.User;
+import app.security.AuthenticationMetadata;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import app.user.model.UserRole;
 import app.user.property.UserProperties;
 import app.user.repository.UserRepository;
@@ -22,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -36,21 +40,7 @@ public class UserService {
         this.userProperties = userProperties;
     }
 
-    public User login(LoginRequest loginRequest) {
 
-        Optional<User> optionUser = userRepository.findByUsername(loginRequest.getUsername());
-        if (optionUser.isEmpty()) {
-            throw new DomainException("Username or password are incorrect.");
-        }
-
-        User user = optionUser.get();
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new DomainException("Username or password are incorrect.");
-        }
-
-
-        return user;
-    }
 
     @Transactional
     public User register(RegisterRequest registerRequest) {
@@ -123,5 +113,10 @@ public class UserService {
         }
 
         userRepository.save(user);
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new DomainException("User with this username does not exist."));
+        return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole(), user.isActive());
     }
 }
