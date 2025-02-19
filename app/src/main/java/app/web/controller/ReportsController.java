@@ -2,7 +2,6 @@ package app.web.controller;
 
 import app.post.model.Post;
 import app.post.service.PostService;
-import app.security.RequireAdminRole;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.AdminSystemReport;
@@ -33,7 +32,6 @@ public class ReportsController {
     }
 
     @GetMapping
-    @RequireAdminRole
     public ModelAndView getAdminSystemReports(HttpSession session) {
         List<User> users = userService.getAllUsers();
         List<Post> posts = postService.getAllPosts();
