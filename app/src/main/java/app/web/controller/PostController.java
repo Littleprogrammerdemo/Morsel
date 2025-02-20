@@ -10,8 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,66 +28,69 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/post/{id}")
-    public String viewPost(@PathVariable UUID id, Model model) {
+    @GetMapping("/{id}")
+    public ModelAndView viewPost(@PathVariable UUID id) {
         log.debug("Viewing post with id: {}", id);
-        model.addAttribute("post", postService.getPostById(id));
-        model.addAttribute("comments", postService.getCommentsForPost(id));  // Добавяне на коментари
-        return "post/view";
+        ModelAndView modelAndView = new ModelAndView("post/view");
+        modelAndView.addObject("posts", postService.getPostById(id));
+        modelAndView.addObject("posts", postService.getCommentsForPost(id));  // Add comments
+        return modelAndView;
     }
 
     @GetMapping("/post/new")
-    public String createPostForm(Model model) {
+    public ModelAndView createPostForm() {
         log.debug("Creating new post");
-        model.addAttribute("post", new PostCommand());  // Prepare form object
-        return "post/create";
+        ModelAndView modelAndView = new ModelAndView("post/create");
+        modelAndView.addObject("createRecipe", new PostCommand());  // Prepare form object
+        return modelAndView;
     }
 
     @PostMapping("/post")
-    public String createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category) {
+    public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category) {
         // Pass the title and content to the service for post creation
-        postService.createPost(getCurrentUser(), title, content,category);
+        postService.createPost(getCurrentUser(), title, content, category);
 
-        return "redirect:/home";  // Redirect to home after successful operation
+        return new ModelAndView("redirect:/home");  // Redirect to home after successful operation
     }
-    // Search recipes by keyword
+
     @GetMapping("/search")
-    public List<Post> searchPosts(@RequestParam String keyword) {
-        return postService.searchPosts(keyword);
+    public ModelAndView searchPosts(@RequestParam String keyword) {
+        List<Post> posts = postService.searchPosts(keyword);
+        ModelAndView modelAndView = new ModelAndView("post/searchResults");
+        modelAndView.addObject("posts", posts);
+        return modelAndView;
     }
 
-    // Filter recipes by category
     @GetMapping("/filter")
-    public List<Post> filterByCategory(@RequestParam Category category) {
-        return postService.filterByCategory(category);
+    public ModelAndView filterByCategory(@RequestParam Category category) {
+        List<Post> posts = postService.filterByCategory(category);
+        ModelAndView modelAndView = new ModelAndView("post/filterResults");
+        modelAndView.addObject("posts", posts);
+        return modelAndView;
     }
 
-    // Логика за лайкване на пост
     @PostMapping("/post/{postId}/like")
-    public String likePost(@PathVariable UUID postId) {
+    public ModelAndView likePost(@PathVariable UUID postId) {
         postService.likePost(postId, getCurrentUser());
-        return "redirect:/post/" + postId;  // Redirect back to the post
+        return new ModelAndView("redirect:/post/" + postId);  // Redirect back to the post
     }
 
-    // Логика за рейтинг на пост
     @PostMapping("/post/{postId}/rate")
-    public String ratePost(@PathVariable UUID postId, @RequestParam double rating) {
+    public ModelAndView ratePost(@PathVariable UUID postId, @RequestParam double rating) {
         postService.ratePost(postId, rating, getCurrentUser());
-        return "redirect:/post/" + postId;  // Redirect back to the post
+        return new ModelAndView("redirect:/post/" + postId);  // Redirect back to the post
     }
 
-    // Добавяне на коментар
     @PostMapping("/post/{postId}/comment")
-    public String addComment(@PathVariable UUID postId, @RequestParam String content) {
+    public ModelAndView addComment(@PathVariable UUID postId, @RequestParam String content) {
         postService.addComment(postId, getCurrentUser(), content);
-        return "redirect:/post/" + postId;  // Redirect to the post page after the comment is added
+        return new ModelAndView("redirect:/post/" + postId);  // Redirect to the post page after the comment is added
     }
 
-    // Изтриване на коментар
     @GetMapping("/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable UUID commentId) {
+    public ModelAndView deleteComment(@PathVariable UUID commentId) {
         postService.deleteCommentFromPost(commentId);
-        return "redirect:/home";  // Redirect to home after deletion
+        return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
 
     private User getCurrentUser() {
@@ -96,16 +100,18 @@ public class PostController {
         }
         return (User) authentication.getPrincipal();  // Assumes the principal is of type User
     }
+
     @PostMapping("/add-to-category/{categoryId}")
-    public Post addRecipeToCategory(@PathVariable UUID categoryId, @RequestBody Post recipe) {
-        return postService.addRecipeToCategory(categoryId, recipe);
+    public ModelAndView addRecipeToCategory(@PathVariable UUID categoryId, @RequestBody Post recipe) {
+        Post updatedPost = postService.addRecipeToCategory(categoryId, recipe);
+        ModelAndView modelAndView = new ModelAndView("redirect:/post/" + updatedPost.getId());  // Redirect to the post page after adding
+        return modelAndView;
     }
 
-    // Изтриване на пост
     @GetMapping("/post/{id}/delete")
-    public String deletePost(@PathVariable UUID id, @PathVariable User user) {
+    public ModelAndView deletePost(@PathVariable UUID id) {
         log.debug("Deleting post with id: {}", id);
-        postService.deletePost(id,user);
-        return "redirect:/home";  // Redirect to home after deletion
+        postService.deletePost(id, getCurrentUser());
+        return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
 }
