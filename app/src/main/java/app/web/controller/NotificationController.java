@@ -27,6 +27,11 @@ public class NotificationController {
         User user = userService.getByUserId(userId);
         notificationService.sendNotification(user, message, type);
     }
+    @PostMapping("/send-by-email")
+    public void sendNotificationByEmail(@RequestParam UUID userId, @RequestParam String message, @RequestParam NotificationType type) {
+        User user = userService.getByUserId(userId);
+        notificationService.sendNotificationByEmail(user, message, type);
+    }
 
     @GetMapping("/unread/{userId}")
     public List<Notification> getUnreadNotifications(@PathVariable UUID userId) {

@@ -31,7 +31,7 @@ public class ReportsController {
         this.postService = postService;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     public ModelAndView getAdminSystemReports(HttpSession session) {
         List<User> users = userService.getAllUsers();
         List<Post> posts = postService.getAllPosts();

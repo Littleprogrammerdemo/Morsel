@@ -37,7 +37,7 @@ public class PostController {
         return modelAndView;
     }
 
-    @GetMapping("/post/new")
+    @GetMapping("/new")
     public ModelAndView createPostForm() {
         log.debug("Creating new post");
         ModelAndView modelAndView = new ModelAndView("post/create");
@@ -45,7 +45,7 @@ public class PostController {
         return modelAndView;
     }
 
-    @PostMapping("/post")
+    @PostMapping("/update")
     public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category) {
         // Pass the title and content to the service for post creation
         postService.createPost(getCurrentUser(), title, content, category);
@@ -69,25 +69,25 @@ public class PostController {
         return modelAndView;
     }
 
-    @PostMapping("/post/{postId}/like")
+    @PostMapping("/{postId}/like")
     public ModelAndView likePost(@PathVariable UUID postId) {
         postService.likePost(postId, getCurrentUser());
         return new ModelAndView("redirect:/post/" + postId);  // Redirect back to the post
     }
 
-    @PostMapping("/post/{postId}/rate")
+    @PostMapping("/{postId}/rate")
     public ModelAndView ratePost(@PathVariable UUID postId, @RequestParam double rating) {
         postService.ratePost(postId, rating, getCurrentUser());
         return new ModelAndView("redirect:/post/" + postId);  // Redirect back to the post
     }
 
-    @PostMapping("/post/{postId}/comment")
+    @PostMapping("/{postId}/comment")
     public ModelAndView addComment(@PathVariable UUID postId, @RequestParam String content) {
         postService.addComment(postId, getCurrentUser(), content);
         return new ModelAndView("redirect:/post/" + postId);  // Redirect to the post page after the comment is added
     }
 
-    @GetMapping("/comment/{commentId}/delete")
+    @GetMapping("/{commentId}/delete")
     public ModelAndView deleteComment(@PathVariable UUID commentId) {
         postService.deleteCommentFromPost(commentId);
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
@@ -108,7 +108,7 @@ public class PostController {
         return modelAndView;
     }
 
-    @GetMapping("/post/{id}/delete")
+    @GetMapping("/{postId}/delete")
     public ModelAndView deletePost(@PathVariable UUID id) {
         log.debug("Deleting post with id: {}", id);
         postService.deletePost(id, getCurrentUser());
