@@ -3,6 +3,7 @@
     import jakarta.validation.constraints.NotEmpty;
     import jakarta.validation.constraints.Size;
     import lombok.*;
+    import org.springframework.web.multipart.MultipartFile;
 
     @Getter
     @Setter
@@ -18,4 +19,6 @@
         @NotEmpty(message = "Content cannot be empty")
         @Size(min = 20, message = "Content must be at least 20 characters long")
         private String content;
+        private String categoryType;
+        private MultipartFile imageFile;
     }

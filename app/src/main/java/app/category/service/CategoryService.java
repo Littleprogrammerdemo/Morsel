@@ -1,9 +1,11 @@
 package app.category.service;
 
 import app.category.model.Category;
+import app.category.model.CategoryType;
 import app.category.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -46,9 +47,9 @@ public class PostController {
     }
 
     @PostMapping("/update")
-    public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category) {
+    public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category,@RequestParam("image") MultipartFile imageFile) {
         // Pass the title and content to the service for post creation
-        postService.createPost(getCurrentUser(), title, content, category);
+        postService.createPost(getCurrentUser(), title, content, category,imageFile);
 
         return new ModelAndView("redirect:/home");  // Redirect to home after successful operation
     }

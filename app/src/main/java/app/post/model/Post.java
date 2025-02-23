@@ -35,6 +35,9 @@ public class Post {
     @Column(name = "creation_date",nullable = false)
     private LocalDateTime createdOn;
 
+    @Lob  // Use @Lob to store large objects (binary data)
+    private byte[] image;  // Store image as byte array
+
     @Column(nullable = false)
     private LocalDateTime updatedOn;
 

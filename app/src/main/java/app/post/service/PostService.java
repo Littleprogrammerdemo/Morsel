@@ -49,7 +49,17 @@ public class PostService {
     }
 
     // Create a post
-    public void createPost(User user, String title, String content, CategoryType category) {
+    public void createPost(User user, String title, String content, CategoryType category, MultipartFile imageFile) {
+        byte[] imageData = null;
+
+        // Process the image if it's provided
+        try {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                imageData = imageFile.getBytes();  // Convert the image to a byte array
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error processing image file", e);
+        }
         Post post = Post.builder()
                 .owner(user)
                 .title(title)
@@ -59,6 +69,7 @@ public class PostService {
                 .updatedOn(LocalDateTime.now())
                 .likes(0)
                 .rating(0)  // Default rating is 0
+                .image(imageData)  // Save the image in the post
                 .build();
         postRepository.save(post);
     }
