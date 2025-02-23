@@ -70,7 +70,7 @@ public class IndexController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("post", user);
 
         return modelAndView;
     }

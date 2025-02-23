@@ -1,6 +1,5 @@
 package app.scheduler;
 
-import app.notification.model.Notification;
 import app.notification.model.NotificationType;
 import app.notification.service.NotificationService;
 import app.user.model.User;
@@ -22,9 +21,26 @@ public class NotificationScheduler {
         this.userService = userService;
     }
 
-    // Scheduled task that runs periodically, but only sends notifications if needed
-    @Scheduled(fixedRate = 5000) // Executes every 5 seconds
-    public void sendAutomatedNotifications() {
+    // Scheduled task for morning (8:00 AM)
+    @Scheduled(cron = "0 0 8 * * ?") // Executes at 8:00 AM every day
+    public void sendMorningNotifications() {
+        sendAutomatedNotifications("Morning notifications");
+    }
+
+    // Scheduled task for afternoon (1:00 PM)
+    @Scheduled(cron = "0 0 13 * * ?") // Executes at 1:00 PM every day
+    public void sendAfternoonNotifications() {
+        sendAutomatedNotifications("Afternoon notifications");
+    }
+
+    // Scheduled task for night (8:00 PM)
+    @Scheduled(cron = "0 0 20 * * ?") // Executes at 8:00 PM every day
+    public void sendNightNotifications() {
+        sendAutomatedNotifications("Night notifications");
+    }
+
+    // General method to send notifications
+    public void sendAutomatedNotifications(String message) {
         // Get the list of users with unread notifications
         List<User> usersWithUnreadNotifications = getUsersWithUnreadNotifications();
 
@@ -32,8 +48,8 @@ public class NotificationScheduler {
         if (!usersWithUnreadNotifications.isEmpty()) {
             // Loop through the users and send notifications
             for (User user : usersWithUnreadNotifications) {
-                notificationService.sendNotification(user, "Automated message", NotificationType.INFO);
-                notificationService.sendNotificationByEmail(user, "Automated message", NotificationType.INFO);
+                notificationService.sendNotification(user, message, NotificationType.INFO);
+                notificationService.sendNotificationByEmail(user, message, NotificationType.INFO);
             }
         } else {
             System.out.println("No unread notifications, skipping automated notifications.");
