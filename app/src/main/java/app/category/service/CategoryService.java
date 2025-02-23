@@ -19,14 +19,6 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category createCategory(String name) {
-        if (categoryRepository.findByName(name).isPresent()) {
-            throw new RuntimeException("Category already exists");
-        }
-        Category category = new Category();
-        category.setName(name);
-        return categoryRepository.save(category);
-    }
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
@@ -37,7 +29,4 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
-    public void deleteCategory(UUID id) {
-        categoryRepository.deleteById(id);
-    }
 }

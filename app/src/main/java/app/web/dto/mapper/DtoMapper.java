@@ -63,12 +63,6 @@ public class DtoMapper {
                 .build();
     }
 
-    public static CategoryRequest mapToCategoryRequest(String name) {
-        return CategoryRequest.builder()
-                .name(name)
-                .build();
-    }
-
     public static FollowRequest mapToFollowRequest(UUID followerId, UUID followedId) {
         return FollowRequest.builder()
                 .followerId(followerId)

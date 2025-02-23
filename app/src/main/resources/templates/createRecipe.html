@@ -112,6 +112,7 @@
             <textarea th:field="*{content}" type="text" id="content" name="content" placeholder="Enter post content" class="border p-2 w-full rounded" ></textarea>
             <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-warning"style="font-size: 15px">Error Text Here</small>
         </div>
+        <form th:action="@{/api/categories}" method="post" class="mb-4">
         <div class="form-group">
             <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
             <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
@@ -121,6 +122,7 @@
                 <p th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-warning"></p>
             </select>
         </div>
+        </form>
         <div class="form-group">
             <label for="image" class="block text-gray-600 font-semibold mb-2">Upload Image</label>
             <input type="file" id="image" name="image" accept="image/*" th:field="*{imageFile}" class="block w-full text-gray-600 border p-2 rounded">

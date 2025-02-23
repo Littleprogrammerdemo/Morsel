@@ -17,11 +17,6 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/create")
-    public Category createCategory(@RequestParam String name) {
-        return categoryService.createCategory(name);
-    }
-
     @GetMapping
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
@@ -32,9 +27,5 @@ public class CategoryController {
         return categoryService.getCategoryById(id);
     }
 
-    @DeleteMapping("/{id}/delete")
-    public void deleteCategory(@PathVariable UUID id) {
-        categoryService.deleteCategory(id);
-    }
 
 }
