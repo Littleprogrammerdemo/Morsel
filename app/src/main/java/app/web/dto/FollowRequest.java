@@ -1,11 +1,13 @@
 package app.web.dto;
 
+import app.user.model.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -14,9 +16,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FollowRequest {
 
-    @NotNull(message = "Follower ID cannot be null")
+    @NotNull
     private UUID followerId;
 
-    @NotNull(message = "Followed ID cannot be null")
+    @NotNull
     private UUID followedId;
+    private List<User> followers;  // List of users who follow the given user
+    private List<User> followedUsers;  // List of users the given user is following
 }

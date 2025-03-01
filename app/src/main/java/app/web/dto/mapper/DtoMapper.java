@@ -1,6 +1,5 @@
 package app.web.dto.mapper;
 
-import app.notification.model.NotificationType;
 import app.post.model.Post;
 import app.user.model.User;
 import app.user.model.UserRole;
@@ -82,14 +81,6 @@ public class DtoMapper {
                 .senderId(senderId)
                 .receiverId(receiverId)
                 .content(content)
-                .build();
-    }
-
-    public static NotificationRequest mapToNotificationRequest(UUID userId, String message, NotificationType type) {
-        return NotificationRequest.builder()
-                .userId(userId)
-                .message(message)
-                .type(type)
                 .build();
     }
 

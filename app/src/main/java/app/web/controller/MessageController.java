@@ -2,29 +2,45 @@ package app.web.controller;
 
 import app.message.model.Message;
 import app.message.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import app.user.model.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/messages")
+@Controller
+@RequestMapping("/messages")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    @PostMapping("/send")
-    public Message sendMessage(@RequestParam UUID senderId,
-                               @RequestParam UUID receiverId,
-                               @RequestParam String content) {
-        return messageService.sendMessage(senderId, receiverId, content);
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @GetMapping("/history")
-    public List<Message> getChatHistory(@RequestParam UUID senderId,
-                                        @RequestParam UUID receiverId) {
-        return messageService.getChatHistory(senderId, receiverId);
+    public ModelAndView getMessageHistory(@AuthenticationPrincipal User authenticatedUser,
+                                          @RequestParam(required = false) UUID chatPartnerId) {
+        if (chatPartnerId == null) {
+            return new ModelAndView("error").addObject("message", "Chat partner ID is required.");
+        }
+
+        List<Message> messages = messageService.getChatHistory(authenticatedUser.getId(), chatPartnerId);
+
+        ModelAndView modelAndView = new ModelAndView("messages/history");
+        modelAndView.addObject("messages", messages);
+        modelAndView.addObject("user", authenticatedUser);
+        return modelAndView;
+    }
+
+    @PostMapping("/send")
+    public String sendMessage(@AuthenticationPrincipal User authenticatedUser,
+                              @RequestParam UUID receiverId,
+                              @RequestParam String content) {
+        messageService.sendMessage(authenticatedUser.getId(), receiverId, content);
+        return "redirect:/messages/history?chatPartnerId=" + receiverId;
     }
 }

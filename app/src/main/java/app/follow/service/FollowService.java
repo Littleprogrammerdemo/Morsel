@@ -49,4 +49,12 @@ public class FollowService {
                 .map(Follow::getFollowed)
                 .collect(Collectors.toList());
     }
+    public List<User> getFollowers(UUID followedId) {
+        User followed = userService.getByUserId(followedId);
+
+        return followRepository.findByFollowed(followed)
+                .stream()
+                .map(Follow::getFollower)
+                .collect(Collectors.toList());
+    }
 }

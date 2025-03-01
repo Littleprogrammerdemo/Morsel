@@ -4,10 +4,13 @@ import app.category.model.Category;
 import app.category.model.CategoryType;
 import app.post.model.Post;
 import app.post.service.PostService;
+import app.security.AuthenticationMetadata;
 import app.user.model.User;
+import app.user.service.UserService;
 import app.web.dto.PostCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +27,21 @@ import java.util.UUID;
 public class PostController {
 
     private final PostService postService;
+    private final UserService userService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public ModelAndView getAllPosts(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        List<Post> posts = postService.getAllPosts();
+        ModelAndView modelAndView = new ModelAndView("posts"); // Create a new view for displaying posts
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("posts", posts);
+        return modelAndView;
     }
 
     @GetMapping("/{id}")
@@ -57,7 +72,7 @@ public class PostController {
     @GetMapping("/search")
     public ModelAndView searchPosts(@RequestParam String keyword) {
         List<Post> posts = postService.searchPosts(keyword);
-        ModelAndView modelAndView = new ModelAndView("post/searchResults");
+        ModelAndView modelAndView = new ModelAndView("posts/searchResults");
         modelAndView.addObject("posts", posts);
         return modelAndView;
     }
@@ -65,7 +80,7 @@ public class PostController {
     @GetMapping("/filter")
     public ModelAndView filterByCategory(@RequestParam Category category) {
         List<Post> posts = postService.filterByCategory(category);
-        ModelAndView modelAndView = new ModelAndView("post/filterResults");
+        ModelAndView modelAndView = new ModelAndView("posts/filterResults");
         modelAndView.addObject("posts", posts);
         return modelAndView;
     }
@@ -73,19 +88,19 @@ public class PostController {
     @PostMapping("/{postId}/like")
     public ModelAndView likePost(@PathVariable UUID postId) {
         postService.likePost(postId, getCurrentUser());
-        return new ModelAndView("redirect:/post/" + postId);  // Redirect back to the post
+        return new ModelAndView("redirect:/posts/" + postId);  // Redirect back to the post
     }
 
     @PostMapping("/{postId}/rate")
     public ModelAndView ratePost(@PathVariable UUID postId, @RequestParam double rating) {
         postService.ratePost(postId, rating, getCurrentUser());
-        return new ModelAndView("redirect:/post/" + postId);  // Redirect back to the post
+        return new ModelAndView("redirect:/posts/" + postId);  // Redirect back to the post
     }
 
     @PostMapping("/{postId}/comment")
     public ModelAndView addComment(@PathVariable UUID postId, @RequestParam String content) {
         postService.addComment(postId, getCurrentUser(), content);
-        return new ModelAndView("redirect:/post/" + postId);  // Redirect to the post page after the comment is added
+        return new ModelAndView("redirect:/posts/" + postId);  // Redirect to the post page after the comment is added
     }
 
     @GetMapping("/{commentId}/delete")

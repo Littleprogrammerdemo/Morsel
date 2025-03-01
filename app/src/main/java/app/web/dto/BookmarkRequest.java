@@ -14,9 +14,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BookmarkRequest {
 
-    @NotNull(message = "User ID cannot be null")
+    @NotNull
     private UUID userId;
 
-    @NotNull(message = "Post ID cannot be null")
+    @NotNull
     private UUID postId;
 }

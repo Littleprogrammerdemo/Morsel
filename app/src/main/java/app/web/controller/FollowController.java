@@ -2,6 +2,7 @@ package app.web.controller;
 
 import app.user.model.User;
 import app.follow.service.FollowService;
+import app.web.dto.FollowRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,21 @@ public class FollowController {
 
     public FollowController(FollowService followService) {
         this.followService = followService;
+    }
+
+    @GetMapping()
+    public ResponseEntity<FollowRequest> getFollowersAndFollowing(@PathVariable UUID userId) {
+        // Get both followers and followed users
+        List<User> followers = followService.getFollowers(userId);
+        List<User> followedUsers = followService.getFollowedUsers(userId);
+
+        // Create and populate the response DTO
+        FollowRequest response = new FollowRequest();
+        response.setFollowers(followers);
+        response.setFollowedUsers(followedUsers);
+
+        // Return the response as a DTO
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/follow/{followedId}")

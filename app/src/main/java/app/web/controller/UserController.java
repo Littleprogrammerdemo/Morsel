@@ -1,10 +1,12 @@
 package app.web.controller;
 
+import app.post.service.PostService;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.service.UserService;
 import app.web.dto.UserEditRequest;
+import app.web.dto.UserSystemReport;
 import app.web.dto.mapper.DtoMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,32 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,PostService postService) {
         this.userService = userService;
+        this.postService = postService;
+    }
+    @GetMapping("/reports")
+    public ModelAndView getUserSystemReports(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        if (authenticationMetadata == null || authenticationMetadata.getUserId() == null) {
+            return new ModelAndView("error").addObject("message", "Unauthorized access");
+        }
+
+        User currentUser = userService.getByUserId(authenticationMetadata.getUserId());
+
+        if (currentUser == null) {
+            return new ModelAndView("error").addObject("message", "User does not exist");
+        }
+
+        UserSystemReport userSystemReport = DtoMapper.mapToUserSystemReport(
+                currentUser,
+                postService.getAllPosts(),
+                userService.getAllUsers()
+        );
+
+        return new ModelAndView("user-reports").addObject("userSystemReports", userSystemReport);
     }
 
     @GetMapping

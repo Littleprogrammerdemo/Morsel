@@ -44,7 +44,7 @@ public class BookmarkService {
         bookmarkRepository.deleteByUserAndPost(user, post);
     }
 
-    public List<Post> getUserBookmarks(UUID userId) {
+    public List<Post> getBookmarksForUser(UUID userId) {
         User user = userService.getByUserId(userId);
         return bookmarkRepository.findByUser(user).stream().map(Bookmark::getPost).collect(Collectors.toList());
     }

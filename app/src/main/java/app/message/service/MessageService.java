@@ -6,6 +6,7 @@ import app.user.model.User;
 import app.user.service.UserService;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,6 @@ import java.util.UUID;
 public class MessageService {
 
     private final MessageRepository messageRepository;
-
     private final SimpMessagingTemplate messagingTemplate;
     private final UserService userService;
 
@@ -24,9 +24,14 @@ public class MessageService {
         this.userService = userService;
     }
 
+    @Transactional
     public Message sendMessage(UUID senderId, UUID receiverId, String content) {
         User sender = userService.getByUserId(senderId);
         User receiver = userService.getByUserId(receiverId);
+
+        if (sender == null || receiver == null) {
+            throw new IllegalArgumentException("Invalid sender or receiver.");
+        }
 
         Message message = new Message();
         message.setSender(sender);
@@ -41,9 +46,7 @@ public class MessageService {
         return message;
     }
 
-
     public List<Message> getChatHistory(UUID senderId, UUID receiverId) {
         return messageRepository.findBySenderIdAndReceiverIdOrderByTimestamp(senderId, receiverId);
     }
 }
-

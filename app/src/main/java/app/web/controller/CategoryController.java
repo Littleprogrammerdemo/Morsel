@@ -17,11 +17,6 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
-    }
-
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable UUID id) {
         return categoryService.getCategoryById(id);
