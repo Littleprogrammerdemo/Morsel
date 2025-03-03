@@ -9,19 +9,15 @@ import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.PostCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @Controller
 @RequestMapping("/posts")
 public class PostController {
@@ -38,7 +34,7 @@ public class PostController {
     public ModelAndView getAllPosts(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
         List<Post> posts = postService.getAllPosts();
-        ModelAndView modelAndView = new ModelAndView("posts"); // Create a new view for displaying posts
+        ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("user", user);
         modelAndView.addObject("posts", posts);
         return modelAndView;
@@ -46,33 +42,34 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ModelAndView viewPost(@PathVariable UUID id) {
-        log.debug("Viewing post with id: {}", id);
         ModelAndView modelAndView = new ModelAndView("post/view");
-        modelAndView.addObject("posts", postService.getPostById(id));
-        modelAndView.addObject("posts", postService.getCommentsForPost(id));  // Add comments
+        modelAndView.addObject("post", postService.getPostById(id));
+        modelAndView.addObject("comments", postService.getCommentsForPost(id));  // Add comments
         return modelAndView;
     }
 
     @GetMapping("/new")
-    public ModelAndView createPostForm() {
-        log.debug("Creating new post");
-        ModelAndView modelAndView = new ModelAndView("post/create");
+    public ModelAndView createPostForm(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId()); // Get the user from AuthenticationMetadata
+        ModelAndView modelAndView = new ModelAndView("createRecipe");
         modelAndView.addObject("createRecipe", new PostCommand());  // Prepare form object
+        modelAndView.addObject("user", user);  // Add user to the model
         return modelAndView;
     }
 
     @PostMapping("/update")
-    public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content, @RequestParam CategoryType category,@RequestParam("image") MultipartFile imageFile) {
-        // Pass the title and content to the service for post creation
-        postService.createPost(getCurrentUser(), title, content, category,imageFile);
-
+    public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content,
+                                           @RequestParam CategoryType category, @RequestParam("image") MultipartFile imageFile,
+                                           @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        postService.createPost(user, title, content, category, imageFile);
         return new ModelAndView("redirect:/home");  // Redirect to home after successful operation
     }
 
     @GetMapping("/search")
     public ModelAndView searchPosts(@RequestParam String keyword) {
         List<Post> posts = postService.searchPosts(keyword);
-        ModelAndView modelAndView = new ModelAndView("posts/searchResults");
+        ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("posts", posts);
         return modelAndView;
     }
@@ -80,26 +77,31 @@ public class PostController {
     @GetMapping("/filter")
     public ModelAndView filterByCategory(@RequestParam Category category) {
         List<Post> posts = postService.filterByCategory(category);
-        ModelAndView modelAndView = new ModelAndView("posts/filterResults");
+        ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("posts", posts);
         return modelAndView;
     }
 
     @PostMapping("/{postId}/like")
-    public ModelAndView likePost(@PathVariable UUID postId) {
-        postService.likePost(postId, getCurrentUser());
+    public ModelAndView likePost(@PathVariable UUID postId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        postService.likePost(postId, user);
         return new ModelAndView("redirect:/posts/" + postId);  // Redirect back to the post
     }
 
     @PostMapping("/{postId}/rate")
-    public ModelAndView ratePost(@PathVariable UUID postId, @RequestParam double rating) {
-        postService.ratePost(postId, rating, getCurrentUser());
+    public ModelAndView ratePost(@PathVariable UUID postId, @RequestParam double rating,
+                                 @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        postService.ratePost(postId, rating, user);
         return new ModelAndView("redirect:/posts/" + postId);  // Redirect back to the post
     }
 
     @PostMapping("/{postId}/comment")
-    public ModelAndView addComment(@PathVariable UUID postId, @RequestParam String content) {
-        postService.addComment(postId, getCurrentUser(), content);
+    public ModelAndView addComment(@PathVariable UUID postId, @RequestParam String content,
+                                   @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        postService.addComment(postId, user, content);
         return new ModelAndView("redirect:/posts/" + postId);  // Redirect to the post page after the comment is added
     }
 
@@ -109,25 +111,10 @@ public class PostController {
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
 
-    private User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new IllegalStateException("No authenticated user found");
-        }
-        return (User) authentication.getPrincipal();  // Assumes the principal is of type User
-    }
-
-    @PostMapping("/add-to-category/{categoryId}")
-    public ModelAndView addRecipeToCategory(@PathVariable UUID categoryId, @RequestBody Post recipe) {
-        Post updatedPost = postService.addRecipeToCategory(categoryId, recipe);
-        ModelAndView modelAndView = new ModelAndView("redirect:/post/" + updatedPost.getId());  // Redirect to the post page after adding
-        return modelAndView;
-    }
-
-    @GetMapping("/{postId}/delete")
-    public ModelAndView deletePost(@PathVariable UUID id) {
-        log.debug("Deleting post with id: {}", id);
-        postService.deletePost(id, getCurrentUser());
+    @PostMapping("/{postId}/delete")
+    public ModelAndView deletePost(@PathVariable UUID postId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        postService.deletePost(postId, user);
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
 }
