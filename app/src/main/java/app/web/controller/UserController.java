@@ -65,9 +65,8 @@ public class UserController {
         return modelAndView;
     }
     @GetMapping("/{id}/profile")
-    public ModelAndView getProfileMenu(@PathVariable UUID id) {
-
-        User user = userService.getByUserId(id);
+    public ModelAndView getProfileMenu(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profile-menu");
