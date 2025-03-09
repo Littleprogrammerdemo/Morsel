@@ -1,31 +1,107 @@
 /* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff0f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 /* Navbar */
 .navbar {
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Notification List */
-.notifications-list {
-    max-width: 600px;
-    margin: auto;
-}
-
-/* Individual Notification */
-.notification-item {
+    background-color: #ff66b2;
+    padding: 15px 30px;
     display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    align-items: center;
 }
 
-/* Mark as Read Button */
-.btn-success {
-    align-self: flex-end;
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+/* Sidebar */
+.side-bar-container {
+    background-color: #ffe6f2;
+    width: 250px;
+    min-height: 100vh;
+    padding: 20px;
+    position: fixed;
+}
+
+.side_navbar a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    margin: 8px 0;
+    color: #ff66b2;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.side_navbar a:hover {
+    background-color: #ffb3d9;
+}
+
+/* Home Section */
+.home-section {
+    margin-left: 270px;
+    padding: 30px;
+}
+
+.notification-preferences-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+h2 {
+    color: #ff66b2;
+}
+
+.details-section {
+    margin-top: 15px;
+    padding: 10px;
+    background: #ffe6f2;
+    border-radius: 8px;
+}
+
+.details-section strong {
+    color: #ff3385;
+}
+
+.enabled-notification-status {
+    color: green;
+    font-weight: bold;
+}
+
+.disabled-notification-status {
+    color: red;
+    font-weight: bold;
+}
+
+/* Buttons */
+.profile-actions-button {
+    background-color: #ff66b2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.profile-actions-button:hover {
+    background-color: #ff3385;
 }
