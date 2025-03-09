@@ -105,13 +105,13 @@
 <div class="container mt-4">
     <h2>📌 My Bookmarked Recipes</h2>
     <div class="row">
-        <div th:each="recipe : ${bookmarkedRecipes}" class="col-md-4">
+        <div th:each="posts : ${bookmarkedPosts}" class="col-md-4">
             <div class="card mb-4">
-                <img th:src="@{${recipe.imageUrl}}" class="card-img-top" alt="Recipe Image">
+                <img th:src="@{${posts.imageUrl}}" class="card-img-top" alt="Recipe Image">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${recipe.title}"></h5>
-                    <p class="card-text" th:text="${recipe.shortDescription}"></p>
-                    <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="btn btn-primary">View Recipe</a>
+                    <h5 class="card-title" th:text="${posts.title}"></h5>
+                    <p class="card-text" th:text="${posts.content}"></p>
+                    <a th:href="@{/posts/{id}(id=${posts.id})}" class="btn btn-primary">View Recipe</a>
                     <form th:action="@{/api/bookmarks/remove/{id}(id=${recipe.id})}" method="post">
                         <input type="hidden" name="userId" th:value="${#authentication.principal.id}" />
                         <button class="btn btn-danger">❌ Remove Bookmark</button>
