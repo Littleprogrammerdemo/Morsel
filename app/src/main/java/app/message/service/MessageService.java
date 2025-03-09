@@ -4,6 +4,7 @@ import app.message.model.Message;
 import app.message.repository.MessageRepository;
 import app.user.model.User;
 import app.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class MessageService {
 
     private final MessageRepository messageRepository;

@@ -4,13 +4,14 @@ import app.post.model.Post;
 import app.rating.model.Rating;
 import app.rating.repository.RatingRepository;
 import app.user.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
+@Slf4j
 @Service
 public class RatingService {
 

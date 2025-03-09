@@ -12,9 +12,5 @@ public class UserSystemReport {
     private long userTotalLikes;
     private long userTotalComments;
 
-    // Community-wide statistics (safe to share)
-    private long communityTotalUsers;
-    private long communityTotalPosts;
-    private long communityTotalLikes;
 
 }

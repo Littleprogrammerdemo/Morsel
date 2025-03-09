@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import app.user.model.UserRole;
 import app.user.property.UserProperties;
 import app.user.repository.UserRepository;
-import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 
 import app.web.dto.UserEditRequest;

@@ -5,6 +5,7 @@ import app.comment.repository.CommentRepository;
 import app.exception.CommentNotFoundException;
 import app.post.model.Post;
 import app.user.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class CommentService {
 
     private final CommentRepository commentRepository;

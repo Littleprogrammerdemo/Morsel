@@ -4,6 +4,7 @@ import app.follow.model.Follow;
 import app.user.model.User;
 import app.follow.repository.FollowRepository;
 import app.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class FollowService {
     private final FollowRepository followRepository;
     private final UserService userService;

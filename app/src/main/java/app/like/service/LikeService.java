@@ -4,10 +4,12 @@ import app.like.model.Like;
 import app.like.repository.LikeRepository;
 import app.post.model.Post;
 import app.user.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class LikeService {
 
     private final LikeRepository likeRepository;

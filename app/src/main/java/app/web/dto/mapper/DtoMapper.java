@@ -40,10 +40,7 @@ public class DtoMapper {
         return UserSystemReport.builder()
                 .userTotalPosts(userPosts)
                 .userTotalLikes(userLikes)
-                .userTotalComments(0)
-                .communityTotalUsers(allUsers.size())
-                .communityTotalPosts(allPosts.size())
-                .communityTotalLikes(allPosts.stream().mapToLong(Post::getLikes).sum())
+                .userTotalComments(0) //default
                 .build();
     }
     public static UserEditRequest mapUserToUserEditRequest(User user) {

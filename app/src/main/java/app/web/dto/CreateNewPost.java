@@ -5,11 +5,10 @@
     import lombok.*;
     import org.springframework.web.multipart.MultipartFile;
 
-    @Getter
-    @Setter
+    @Data
     @Builder
     @NoArgsConstructor  // Required for Spring to instantiate using the default constructor
-    @AllArgsConstructor // Generates a constructor with all fields (title, content)
+    @AllArgsConstructor // Generates a constructor with all fields
     public class CreateNewPost {
 
         @NotEmpty(message = "Title cannot be empty")
