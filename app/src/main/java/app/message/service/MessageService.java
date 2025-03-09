@@ -4,6 +4,7 @@ import app.message.model.Message;
 import app.message.repository.MessageRepository;
 import app.user.model.User;
 import app.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final SimpMessagingTemplate messagingTemplate;
     private final UserService userService;
-
+    @Autowired
     public MessageService(MessageRepository messageRepository, SimpMessagingTemplate messagingTemplate, UserService userService) {
         this.messageRepository = messageRepository;
         this.messagingTemplate = messagingTemplate;

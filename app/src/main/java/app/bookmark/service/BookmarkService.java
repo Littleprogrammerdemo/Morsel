@@ -6,6 +6,7 @@ import app.post.service.PostService;
 import app.bookmark.repository.BookmarkRepository;
 import app.user.model.User;
 import app.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
     private final UserService userService;
     private final PostService postService;
-
+    @Autowired
     public BookmarkService(BookmarkRepository bookmarkRepository, UserService userService, PostService postService) {
         this.bookmarkRepository = bookmarkRepository;
         this.userService = userService;

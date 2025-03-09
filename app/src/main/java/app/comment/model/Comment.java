@@ -15,7 +15,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "comment")
 @Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
