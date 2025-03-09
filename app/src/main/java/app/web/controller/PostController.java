@@ -82,39 +82,40 @@ public class PostController {
         return modelAndView;
     }
 
-    @PostMapping("/{postId}/like")
-    public ModelAndView likePost(@PathVariable UUID postId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+    @PostMapping("/{id}/like")
+    public ModelAndView likePost(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.likePost(postId, user);
-        return new ModelAndView("redirect:/posts/" + postId);  // Redirect back to the post
+        postService.likePost(id, user);
+        return new ModelAndView("redirect:/posts/" + id);  // Redirect back to the post
     }
 
-    @PostMapping("/{postId}/rate")
-    public ModelAndView ratePost(@PathVariable UUID postId, @RequestParam double rating,
+    @PostMapping("/{id}/rate")
+    public ModelAndView ratePost(@PathVariable UUID id, @RequestParam double rating,
                                  @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.ratePost(postId, rating, user);
-        return new ModelAndView("redirect:/posts/" + postId);  // Redirect back to the post
+        postService.ratePost(id, rating, user);
+        return new ModelAndView("redirect:/posts/" + id);  // Redirect back to the post
     }
 
-    @PostMapping("/{postId}/comment")
-    public ModelAndView addComment(@PathVariable UUID postId, @RequestParam String content,
+    @PostMapping("/{id}/comment")
+    public ModelAndView addComment(@PathVariable UUID id, @RequestParam String content,
                                    @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.addComment(postId, user, content);
-        return new ModelAndView("redirect:/posts/" + postId);  // Redirect to the post page after the comment is added
+        postService.addComment(id, user, content);
+        return new ModelAndView("redirect:/posts/" + id);  // Redirect to the post page after the comment is added
     }
 
-    @GetMapping("/{commentId}/delete")
+    @DeleteMapping("/{commentId}")
     public ModelAndView deleteComment(@PathVariable UUID commentId) {
         postService.deleteCommentFromPost(commentId);
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
 
-    @PostMapping("/{postId}/delete")
-    public ModelAndView deletePost(@PathVariable UUID postId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+    @DeleteMapping("/{id}")
+    public ModelAndView deletePost(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.deletePost(postId, user);
+        postService.deletePost(id, user);
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
+
 }
