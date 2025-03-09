@@ -112,12 +112,46 @@
                     <h5 class="card-title" th:text="${posts.title}"></h5>
                     <p class="card-text" th:text="${posts.content}"></p>
                     <a th:href="@{/posts/{id}(id=${posts.id})}" class="btn btn-primary">View Recipe</a>
-                    <form th:action="@{/api/bookmarks/remove/{id}(id=${recipe.id})}" method="post">
+                    <form th:action="@{/api/bookmarks/remove/{id}(id=${posts.id})}" method="post">
                         <input type="hidden" name="userId" th:value="${#authentication.principal.id}" />
                         <button class="btn btn-danger">❌ Remove Bookmark</button>
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Check if there are no bookmarked posts -->
+<div th:if="${#lists.isEmpty(bookmarkedPosts)}">
+    <div class="col-12 text-center">
+        <div class="alert alert-info">
+            <h4 class="alert-heading">No Bookmarked Recipes</h4>
+            <p>It looks like you haven't bookmarked any recipes yet. Start saving your favorite recipes now!</p>
+            <hr>
+            <p class="mb-0">Click on the heart ❤️ icon next to a recipe to bookmark it.</p>
+        </div>
+        <img src="path/to/empty-bookmark-icon.svg" alt="Empty bookmark icon" class="empty-bookmark-icon mt-4">
+    </div>
+</div>
+
+<!-- Display bookmarked posts -->
+<div th:each="posts : ${bookmarkedPosts}" class="col-md-4">
+    <div class="card mb-4">
+        <!-- Recipe image -->
+        <img th:src="@{${posts.imageUrl}}" class="card-img-top" alt="Recipe Image">
+        <div class="card-body">
+            <!-- Recipe title -->
+            <h5 class="card-title" th:text="${posts.title}"></h5>
+            <!-- Recipe description -->
+            <p class="card-text" th:text="${posts.content}"></p>
+            <!-- View recipe button -->
+            <a th:href="@{/posts/{id}(id=${posts.id})}" class="btn btn-primary">View Recipe</a>
+
+            <!-- Remove bookmark button -->
+            <form th:action="@{/api/bookmarks/remove/{id}(id=${posts.id})}" method="post">
+                <input type="hidden" name="userId" th:value="${#authentication.principal.id}" />
+                <button class="btn btn-danger mt-2">❌ Remove Bookmark</button>
+            </form>
         </div>
     </div>
 </div>

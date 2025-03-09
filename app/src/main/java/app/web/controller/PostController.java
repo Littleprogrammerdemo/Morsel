@@ -7,8 +7,7 @@ import app.post.service.PostService;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
-import app.web.dto.PostCommand;
-import lombok.extern.slf4j.Slf4j;
+import app.web.dto.CreateNewPost;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +51,7 @@ public class PostController {
     public ModelAndView createPostForm(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId()); // Get the user from AuthenticationMetadata
         ModelAndView modelAndView = new ModelAndView("createRecipe");
-        modelAndView.addObject("createRecipe", new PostCommand());  // Prepare form object
+        modelAndView.addObject("createRecipe", new CreateNewPost());  // Prepare form object
         modelAndView.addObject("user", user);  // Add user to the model
         return modelAndView;
     }

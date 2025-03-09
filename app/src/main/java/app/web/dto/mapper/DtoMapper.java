@@ -84,8 +84,8 @@ public class DtoMapper {
                 .build();
     }
 
-        public static PostCommand mapToPostCommand(Post post) {
-            return PostCommand.builder()
+        public static CreateNewPost mapToPostCommand(Post post) {
+            return CreateNewPost.builder()
                     .title(post.getTitle())
                     .content(post.getContent())
                     .build();

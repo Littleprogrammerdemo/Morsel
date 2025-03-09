@@ -10,7 +10,7 @@
     @Builder
     @NoArgsConstructor  // Required for Spring to instantiate using the default constructor
     @AllArgsConstructor // Generates a constructor with all fields (title, content)
-    public class PostCommand {
+    public class CreateNewPost {
 
         @NotEmpty(message = "Title cannot be empty")
         @Size(min = 5, message = "Title must be at least 5 characters long")
