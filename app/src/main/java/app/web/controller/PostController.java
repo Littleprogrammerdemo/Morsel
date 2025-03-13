@@ -8,6 +8,7 @@ import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.CreateNewPost;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -56,12 +57,11 @@ public class PostController {
         return modelAndView;
     }
 
-    @PostMapping()
-    public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content,
-                                           @RequestParam CategoryType category, @RequestParam("image") MultipartFile imageFile,
+    @PostMapping("/new")
+    public ModelAndView createOrUpdatePost(@Valid CreateNewPost createNewPost,
                                            @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.createPost(user, title, content, category, imageFile);
+        postService.createPost(user, createNewPost);
         return new ModelAndView("redirect:/home");  // Redirect to home after successful operation
     }
 

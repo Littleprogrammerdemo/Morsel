@@ -25,4 +25,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Post> recipes;
+    @Enumerated(EnumType.STRING)
+    private CategoryType type;
 }

@@ -32,4 +32,9 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
+    public Category getCategoryByType(String categoryType) {
+        return categoryRepository.findByType(CategoryType.valueOf(categoryType))
+                .orElseThrow(() -> new RuntimeException("Category not found for type: " + categoryType));
+    }
+
 }

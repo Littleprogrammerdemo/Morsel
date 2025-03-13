@@ -50,8 +50,8 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.ACTIVE;
+
     @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
 
     @Enumerated(EnumType.STRING)

@@ -15,6 +15,7 @@ import app.post.repository.PostRepository;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.service.UserService;
+import app.web.dto.CreateNewPost;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -51,30 +52,34 @@ public class PostService {
     }
 
     // Create a post
-    public void createPost(User user, String title, String content, CategoryType category, MultipartFile imageFile) {
-        byte[] imageData = null;
+    public void createPost(User user, CreateNewPost createNewPost) {
 
-        // Process the image if it's provided
+        Category category = categoryService.getCategoryByType(createNewPost.getCategoryType()); // Convert properly
+
+        byte[] imageData = null;
         try {
-            if (imageFile != null && !imageFile.isEmpty()) {
-                imageData = imageFile.getBytes();  // Convert the image to a byte array
+            if (createNewPost.getImageFile() != null && !createNewPost.getImageFile().isEmpty()) {
+                imageData = createNewPost.getImageFile().getBytes();
             }
         } catch (IOException e) {
             throw new RuntimeException("Error processing image file", e);
         }
+
         Post post = Post.builder()
                 .owner(user)
-                .title(title)
-                .content(content)
-                .category_type(category)
+                .title(createNewPost.getTitle())
+                .content(createNewPost.getContent())
+                .category(category)
+                .image(imageData)
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
                 .likes(0)
-                .rating(0)  // Default rating is 0
-                .image(imageData)  // Save the image in the post
+                .rating(0)
                 .build();
+
         postRepository.save(post);
     }
+
 
     // Get a post by ID
     public Post getPostById(UUID postId) {

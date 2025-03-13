@@ -18,7 +18,7 @@
 
         @NotEmpty(message = "Content cannot be empty")
         private String content;
-        @NotNull
+        @NotEmpty
         private String categoryType;
 
         private MultipartFile imageFile;
