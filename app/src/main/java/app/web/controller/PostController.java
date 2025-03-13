@@ -42,7 +42,7 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ModelAndView viewPost(@PathVariable UUID id) {
-        ModelAndView modelAndView = new ModelAndView("post/view");
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("post", postService.getPostById(id));
         modelAndView.addObject("comments", postService.getCommentsForPost(id));  // Add comments
         return modelAndView;

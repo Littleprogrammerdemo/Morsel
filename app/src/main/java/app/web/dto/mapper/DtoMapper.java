@@ -66,13 +66,6 @@ public class DtoMapper {
                 .build();
     }
 
-    public static LoginRequest mapToLoginRequest(String username, String password) {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername(username);
-        loginRequest.setPassword(password);
-        return loginRequest;
-    }
-
     public static MessageRequest mapToMessageRequest(UUID senderId, UUID receiverId, String content) {
         return MessageRequest.builder()
                 .senderId(senderId)

@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, UUID> {
     List<Message> findBySenderIdAndReceiverIdOrderByTimestamp(UUID senderId, UUID receiverId);
+    List<Message> findByReceiverIdAndStatus(UUID receiverId, String status);
 }

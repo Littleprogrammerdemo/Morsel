@@ -29,4 +29,6 @@ public class Message {
 
     private String content;
     private LocalDateTime timestamp = LocalDateTime.now();
+    @Enumerated(EnumType.STRING)
+    private MessageStatus status;
 }
