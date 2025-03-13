@@ -9,7 +9,8 @@
 <body>
 <header>
     <nav class="navbar">
-        <a href="/home" class="logo">Morsel</a>
+            <div class="app-nav-bar-name">Morsel</div>
+            <div class="app-nav-bar-version">v1.0.0</div>
     </nav>
 </header>
 <div class="nav-bar"><div class="side-bar-container">
@@ -19,10 +20,6 @@
                 <div class="side-bar-container">
                     <div class="side_navbar">
                         <!-- App Name -->
-                        <div class="app-nav-bar">
-                            <div class="app-nav-bar-name">Morsel</div>
-                            <div class="app-nav-bar-version">v1.0.0</div>
-                        </div>
                         <div class="func-block">
                             <a class="home" href="/home">
                                 <p>Home</p>
@@ -116,9 +113,7 @@
         <div class="form-group">
             <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
             <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
-                <option th:each="category : ${T(app.category.model.CategoryType).values()}"
-                        th:value="${categoryType}"
-                        th:text="${categoryType}">Select category</option>
+                <option th:each="categoryType : ${T(app.category.model.CategoryType).values()}" th:value="${categoryType}" th:text="${categoryType}"></option>
                 <p th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-warning"></p>
             </select>
         </div>
@@ -128,7 +123,9 @@
             <input type="file" id="image" name="image" accept="image/*" th:field="*{imageFile}" class="block w-full text-gray-600 border p-2 rounded">
         </div>
 
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create Post</button>
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-info  mb-3">Create post</button>
+        </div>
     </form>
 </div>
 </body>

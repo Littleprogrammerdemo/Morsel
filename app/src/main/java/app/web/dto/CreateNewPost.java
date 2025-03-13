@@ -1,6 +1,7 @@
     package app.web.dto;
 
     import jakarta.validation.constraints.NotEmpty;
+    import jakarta.validation.constraints.NotNull;
     import jakarta.validation.constraints.Size;
     import lombok.*;
     import org.springframework.web.multipart.MultipartFile;
@@ -16,8 +17,9 @@
         private String title;
 
         @NotEmpty(message = "Content cannot be empty")
-        @Size(min = 20, message = "Content must be at least 20 characters long")
         private String content;
+        @NotNull
         private String categoryType;
+
         private MultipartFile imageFile;
     }

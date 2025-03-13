@@ -56,7 +56,7 @@ public class PostController {
         return modelAndView;
     }
 
-    @PostMapping("/update")
+    @PostMapping()
     public ModelAndView createOrUpdatePost(@RequestParam String title, @RequestParam String content,
                                            @RequestParam CategoryType category, @RequestParam("image") MultipartFile imageFile,
                                            @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
