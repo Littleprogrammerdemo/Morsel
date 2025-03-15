@@ -177,7 +177,104 @@ main {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}/* Centering and Styling the Welcome Card */
+.welcome-card {
+    max-width: 800px; /* Increased width of the card */
+    background: #fff;
+    padding: 3rem;
+    border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin: 2rem auto;
+    animation: fadeIn 0.8s ease-in-out;
 }
+
+/* Styling the Welcome Image */
+.welcome-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.welcome-image img {
+    max-width: 55%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Typography */
+.welcome-card h1 {
+    font-size: 2.2rem; /* Larger font size for the title */
+    color: #000000;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.welcome-card p {
+    font-size: 1.2rem; /* Increased text size */
+    color: #000000;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
+/* Bold Text Styling */
+.welcome-card p strong {
+    color: #c42e64; /* More vibrant color */
+    font-size: 1.3rem;
+    font-weight: 600; /* Make it stand out more */
+}
+
+/* Highlighted Text Styling */
+.welcome-card p:nth-child(2) {
+    font-size: 1.3rem;
+    color: #34495e; /* Slightly darker text for emphasis */
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .welcome-card {
+        padding: 2.5rem;
+    }
+
+    .welcome-card h1 {
+        font-size: 2rem;
+    }
+
+    .welcome-card p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-card {
+        padding: 2rem;
+    }
+
+    .welcome-card h1 {
+        font-size: 1.8rem;
+    }
+
+    .welcome-card p {
+        font-size: 1rem;
+    }
+}
+
+/* Subtle Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -214,5 +311,3 @@ main {
         padding: 1rem;
     }
 }
-
-/* Footer */

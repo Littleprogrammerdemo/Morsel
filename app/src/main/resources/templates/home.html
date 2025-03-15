@@ -19,108 +19,122 @@
         </div>
     </nav>
 </header>
-    <div class="nav-bar"><div class="side-bar-container">
+<div class="nav-bar"><div class="side-bar-container">
+    <nav>
         <nav>
-            <nav>
-                <div class="nav-bar">
-                    <div class="side-bar-container">
-                        <div class="side_navbar">
-                            <!-- App Name -->
-                            <div class="app-nav-bar">
-                                <div class="app-nav-bar-name">Morsel</div>
-                                <div class="app-nav-bar-version">v1.0.0</div>
-                            </div>
-                            <div class="func-block">
-                                <!-- My Profile -->
-                                <a href="/users/{id}/profile" class="flex items-center space-x-2">
-                                    <p>My Profile</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
-                                    </svg>
-                                </a>
-                                <a class="messages" href="/api/messages">
-                                    <p>Messages</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 16c0 1.1.9 2 2 2h3v3l4-3h7c1.1 0 1.99-.9 1.99-2L22 4c0-1.1-.9-2-2-2z"></path>
-                                    </svg>
-                                </a>
-                                <!-- Notifications -->
-                                <a href="/notifications" class="flex items-center space-x-2">
-                                    <p>Notifications</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 1.99 2zm6-6V9c0-3.31-2.69-6-6-6S6 5.69 6 9v7l-2 2v1h16v-1l-2-2z"></path>
-                                    </svg>
-                                </a>
+            <div class="nav-bar">
+                <div class="side-bar-container">
+                    <div class="side_navbar">
+                        <!-- App Name -->
+                        <div class="app-nav-bar">
+                            <div class="app-nav-bar-name">Morsel</div>
+                            <div class="app-nav-bar-version">v1.0.0</div>
+                        </div>
+                        <div class="func-block">
+                            <!-- My Profile -->
+                            <a href="/users/{id}/profile" class="flex items-center space-x-2">
+                                <p>My Profile</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+                                </svg>
+                            </a>
+                            <a class="messages" href="/api/messages">
+                                <p>Messages</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 16c0 1.1.9 2 2 2h3v3l4-3h7c1.1 0 1.99-.9 1.99-2L22 4c0-1.1-.9-2-2-2z"></path>
+                                </svg>
+                            </a>
+                            <!-- Notifications -->
+                            <a href="/notifications" class="flex items-center space-x-2">
+                                <p>Notifications</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 1.99 2zm6-6V9c0-3.31-2.69-6-6-6S6 5.69 6 9v7l-2 2v1h16v-1l-2-2z"></path>
+                                </svg>
+                            </a>
 
-                                <!-- Followers/Following -->
-                                <a href="/api/followers" class="flex items-center space-x-2">
-                                    <p>Followers / Following</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 21v-4a4 4 0 1 1 8 0v4m4 0v-4a4 4 0 1 1 8 0v4M9 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
-                                    </svg>
-                                </a>
-                                <a href="/posts">
-                                    <p>MyRecipes</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 3h16c1.1 0 1.99.9 1.99 2L22 19c0 1.1-.9 2-2 2H4c-1.1 0-1.99-.9-1.99-2L2 5c0-1.1.9-2 2-2zM12 8h4v4h-4z"></path>
-                                    </svg>
-                                </a>
-                                <a href="/api/bookmarks">
-                                    <p>Bookmarks</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15 0H5c-1.1 0-1.99.9-1.99 2L3 22l8-4 8 4V2c0-1.1-.9-2-2-2z"></path>
-                                    </svg>
-                                </a>
-                                <a href="/users">
-                                    <p>Admin Panel</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"></path>
-                                    </svg>
-                                </a>
-                            </div>
+                            <!-- Followers/Following -->
+                            <a href="/api/followers" class="flex items-center space-x-2">
+                                <p>Followers / Following</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 21v-4a4 4 0 1 1 8 0v4m4 0v-4a4 4 0 1 1 8 0v4M9 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
+                                </svg>
+                            </a>
+                            <a href="/posts">
+                                <p>MyRecipes</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 3h16c1.1 0 1.99.9 1.99 2L22 19c0 1.1-.9 2-2 2H4c-1.1 0-1.99-.9-1.99-2L2 5c0-1.1.9-2 2-2zM12 8h4v4h-4z"></path>
+                                </svg>
+                            </a>
+                            <a href="/api/bookmarks">
+                                <p>Bookmarks</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15 0H5c-1.1 0-1.99.9-1.99 2L3 22l8-4 8 4V2c0-1.1-.9-2-2-2z"></path>
+                                </svg>
+                            </a>
+                            <a href="/users">
+                                <p>Admin Panel</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"></path>
+                                </svg>
+                            </a>
+                        </div>
 
-                            <div class="func-block">
-                                <a href="/posts/new">
-                                    <p>Add Recipe</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
-                                    </svg>
-                                </a>
-                            </div>
+                        <div class="func-block">
+                            <a href="/posts/new">
+                                <p>Add Recipe</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+                                </svg>
+                            </a>
+                        </div>
 
-                            <!-- Logout -->
-                            <div class="func-block">
-                                <a class="logout" href="/logout">
-                                    <p>Logout</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l4-4-4-4M20 12H8"></path>
-                                    </svg>
-                                </a>
-                            </div>
+                        <!-- Logout -->
+                        <div class="func-block">
+                            <a class="logout" href="/logout">
+                                <p>Logout</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l4-4-4-4M20 12H8"></path>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </div>
         </nav>
-    </div></div>
+    </nav>
+</div></div>
 <main>
-    <section class="recipe-feed">
-        <h1>Recipes</h1>
-        <div class="recipes-grid" th:if="${posts}" th:each="posts : ${posts}">
-            <div class="recipe-card">
-                <img th:src="${posts.imageUrl}" alt="Recipe image" class="recipe-image"/>
-                <div class="recipe-details">
-                    <h2 th:text="${posts.title}">Recipe Title</h2>
+    <!-- Check if the posts list is empty -->
+    <div th:if="${#lists.isEmpty(posts)}">
+        <section class="welcome-card">
+            <div class="welcome-image">
+                <img src="/image/Welcome.jpg" alt="Welcome Image">
+            </div>
+            <h1>Welcome to Morsel - Our Beautiful Recipe App!</h1>
+            <p>Step into a world brimming with endless culinary possibilities, where every recipe is crafted with love by home cooks just like you. Whether you're looking to quickly whip up a comforting dish, try something adventurous and bold, or impress your friends and family with a new creation, we've got a recipe that will spark your taste buds and inspire your kitchen creativity.</p>
+            <p><strong>Do you have a dish you’re passionate about?</strong> Share it with our community and help us grow this delicious collection! Add your recipe today, and inspire fellow food lovers to try something new.</p>
+        </section>
+    </div>
 
-                    <p>By <span th:text="${posts.owner}">Author Name</span></p>
-                    <p class="rating">Rating:
-                        <span th:text="${posts.rating}">4.5</span>
-                        <span>stars</span>
-                    </p>
+    <!-- Check if the posts list is not empty -->
+    <div th:if="${!#lists.isEmpty(posts)}">
+        <section class="recipe-feed">
+            <h1>Recipes</h1>
+            <div class="recipes-grid" th:each="posts : ${posts}">
+                <div class="recipe-card">
+                    <img th:src="${posts.imageUrl}" alt="Recipe image" class="recipe-image"/>
+                    <div class="recipe-details">
+                        <h2 th:text="${posts.title}">Recipe Title</h2>
+                        <p>By <span th:text="${posts.owner}">Author Name</span></p>
+                        <p class="rating">Rating:
+                            <span th:text="${posts.rating}">4.5</span>
+                            <span>stars</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
 </main>
 

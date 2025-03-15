@@ -9,8 +9,8 @@
 <body>
 <header>
     <nav class="navbar">
-            <div class="app-nav-bar-name">Morsel</div>
-            <div class="app-nav-bar-version">v1.0.0</div>
+        <div class="app-nav-bar-name">Morsel</div>
+        <div class="app-nav-bar-version">v1.0.0</div>
     </nav>
 </header>
 <div class="nav-bar"><div class="side-bar-container">
@@ -93,11 +93,11 @@
 <div class="container mx-auto p-4">
     <h1 class="text-3xl font-bold mb-4">Create a New Post</h1>
     <form th:action="@{/posts}" th:method="POST" th:object="${createRecipe}">
-    <h3>Add post</h3>
+        <h3>Add post</h3>
         <div class="form-group">
             <div class= "label-holder justify-content-center text-gray-600 font-semibold mb-2">
                 <label for="title" class="h3 mb-2">Title</label>
-        </div>
+            </div>
             <input type="text" placeholder="Title" id="title" name="title" th:field="*{title}">
             <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-warning"style="font-size: 15px">Error Text Here</small>
         </div>
@@ -110,13 +110,13 @@
             <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-warning"style="font-size: 15px">Error Text Here</small>
         </div>
         <form th:action="@{/api/categories}" method="post" class="mb-4">
-        <div class="form-group">
-            <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
-            <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
-                <option th:each="categoryType : ${T(app.category.model.CategoryType).values()}" th:value="${categoryType}" th:text="${categoryType}"></option>
-                <p th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-warning"></p>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
+                <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
+                    <option th:each="categoryType : ${T(app.category.model.CategoryType).values()}" th:value="${categoryType}" th:text="${categoryType}"></option>
+                    <p th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-warning"></p>
+                </select>
+            </div>
         </form>
         <div class="form-group">
             <label for="image" class="block text-gray-600 font-semibold mb-2">Upload Image</label>
