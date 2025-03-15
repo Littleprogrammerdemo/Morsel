@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Inbox</title>
+</head>
+<body>
+<h1>Inbox for <span th:text="${username}"></span></h1>
+<ul>
+    <li th:each="message : ${messages}">
+        <strong th:text="${message.sender}"></strong>:
+        <span th:text="${message.content}"></span>
+    </li>
+</ul>
+</body>
+</html>

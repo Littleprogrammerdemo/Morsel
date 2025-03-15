@@ -19,16 +19,18 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
-
-    @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    private String sender;
+    private String receiver;
 
     private String content;
     private LocalDateTime timestamp = LocalDateTime.now();
     @Enumerated(EnumType.STRING)
     private MessageStatus status;
+
+    public Message(String sender, String receiver, String content) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.content = content;
+        this.timestamp = LocalDateTime.now(); // Automatically set timestamp
+    }
 }

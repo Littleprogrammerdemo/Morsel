@@ -16,11 +16,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class MessageRequest {
 
-    @NotNull(message = "Sender ID cannot be null")
-    private UUID senderId;
+    @NotNull(message = "Sender cannot be null")
+    private String sender;
 
-    @NotNull(message = "Receiver ID cannot be null")
-    private UUID receiverId;
+    @NotNull(message = "Receiver cannot be null")
+    private String receiver;
 
     @NotBlank(message = "Message content cannot be empty")
     @Size(max = 1000, message = "Message content can't have more than 1000 characters")

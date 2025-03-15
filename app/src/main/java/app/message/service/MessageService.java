@@ -1,67 +1,40 @@
 package app.message.service;
 
-import app.message.model.Message;
-import app.message.model.MessageStatus;
-import app.message.repository.MessageRepository;
-import app.user.model.User;
-import app.user.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import app.web.dto.MessageRequest;
+import  app.message.model.Message;
+import  app.message.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.UUID;
-    @Service
-    @Slf4j
-    public class MessageService {
 
-        private final MessageRepository messageRepository;
-        private final SimpMessagingTemplate messagingTemplate;
-        private final UserService userService;
+@Service
+public class MessageService {
 
-        @Autowired
-        public MessageService(MessageRepository messageRepository, SimpMessagingTemplate messagingTemplate, UserService userService) {
-            this.messageRepository = messageRepository;
-            this.messagingTemplate = messagingTemplate;
-            this.userService = userService;
-        }
+    @Autowired
+    private MessageRepository messageRepository;
 
-        @Transactional
-        public Message sendMessage(UUID senderId, UUID receiverId, String content) {
-            User sender = userService.getByUserId(senderId);
-            User receiver = userService.getByUserId(receiverId);
-
-            if (sender == null || receiver == null) {
-                throw new IllegalArgumentException("Invalid sender or receiver.");
-            }
-
-            // Create and save the message
-            Message message = new Message();
-            message.setSender(sender);
-            message.setReceiver(receiver);
-            message.setContent(content);
-            message.setStatus(MessageStatus.valueOf("UNREAD"));  // New messages are initially marked as "UNREAD"
-            messageRepository.save(message);
-
-            // Send the message to the receiver in real-time via WebSocket
-            messagingTemplate.convertAndSendToUser(receiver.getId().toString(), "/queue/messages", message);
-
-            // Optionally, notify the sender that the message was successfully sent
-            return message;
-        }
-
-        public List<Message> getChatHistory(UUID senderId, UUID receiverId) {
-            // Fetch the chat history and mark unread messages as read when fetched
-            List<Message> messages = messageRepository.findBySenderIdAndReceiverIdOrderByTimestamp(senderId, receiverId);
-            for (Message message : messages) {
-                if ("UNREAD".equals(message.getStatus())) {
-                    message.setStatus(MessageStatus.valueOf("READ"));  // Mark message as read when fetching
-                    messageRepository.save(message);  // Save the updated status
-                }
-            }
-            return messages;
-        }
+    // Get messages received by user (Inbox)
+    public List<Message> getInbox(String receiver) {
+        return messageRepository.findByReceiver(receiver);
     }
 
+    // Get chat history between two users
+    public List<Message> getChatHistory(String user1, String user2) {
+        return messageRepository.findChatHistory(user1, user2);
+    }
+
+    // Get list of people user has chatted with
+    public List<String> getChatPartners(String user) {
+        return messageRepository.findChatPartners(user);
+    }
+
+    // Send a new message
+    public Message sendMessage(MessageRequest messageRequest) {
+        Message message = new Message(
+                messageRequest.getSender(),
+                messageRequest.getReceiver(),
+                messageRequest.getContent()
+        );
+        return messageRepository.save(message);
+    }
+}

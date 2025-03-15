@@ -1,46 +1,61 @@
 package app.web.controller;
 
+import app.web.dto.MessageRequest;
 import app.message.model.Message;
 import app.message.service.MessageService;
-import app.user.model.User;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/messages")
 public class MessageController {
 
-    private final MessageService messageService;
+    @Autowired
+    private MessageService messageService;
 
-    public MessageController(MessageService messageService) {
-        this.messageService = messageService;
+    // 1. Get messages received by user (Inbox)
+    @GetMapping("/inbox/{username}")
+    public String getInbox(@PathVariable String username, Model model) {
+        List<Message> messages = messageService.getInbox(username);
+        model.addAttribute("messages", messages);
+        model.addAttribute("username", username);
+        return "inbox"; // Thymeleaf template
     }
 
-    @GetMapping("/history")
-    public ModelAndView getMessageHistory(@AuthenticationPrincipal User authenticatedUser,
-                                          @RequestParam(required = false) UUID chatPartnerId) {
-        if (chatPartnerId == null) {
-            return new ModelAndView("error").addObject("message", "Chat partner ID is required.");
-        }
-
-        List<Message> messages = messageService.getChatHistory(authenticatedUser.getId(), chatPartnerId);
-
-        ModelAndView modelAndView = new ModelAndView("messages");
-        modelAndView.addObject("messages", messages);
-        modelAndView.addObject("user", authenticatedUser);
-        return modelAndView;
+    // 2. Get chat with a specific person
+    @GetMapping("/chat/{user1}/{user2}")
+    public String getChatHistory(@PathVariable String user1, @PathVariable String user2, Model model) {
+        List<Message> messages = messageService.getChatHistory(user1, user2);
+        model.addAttribute("messages", messages);
+        model.addAttribute("user1", user1);
+        model.addAttribute("user2", user2);
+        return "chat"; // Thymeleaf template
     }
 
+    // 3. Get chat history overview (all contacts user has messaged)
+    @GetMapping("/history/{username}")
+    public String getChatPartners(@PathVariable String username, Model model) {
+        List<String> chatPartners = messageService.getChatPartners(username);
+        model.addAttribute("chatPartners", chatPartners);
+        model.addAttribute("username", username);
+        return "chat-history"; // Thymeleaf template
+    }
+
+    // 4. Send a new message (Using DTO with Validation)
     @PostMapping("/send")
-    public String sendMessage(@AuthenticationPrincipal User authenticatedUser,
-                              @RequestParam UUID receiverId,
-                              @RequestParam String content) {
-        messageService.sendMessage(authenticatedUser.getId(), receiverId, content);
-        return "redirect:/messages/history?chatPartnerId=" + receiverId;
+    public String sendMessage(@ModelAttribute @Valid MessageRequest messageRequest) {
+        messageService.sendMessage(messageRequest);
+        return "redirect:/messages/chat/" + messageRequest.getSender() + "/" + messageRequest.getReceiver();
     }
+    @GetMapping("/send")
+    public String showSendMessageForm(Model model) {
+        model.addAttribute("messageRequest", new MessageRequest());
+        return "send_message_form"; // Thymeleaf template for sending messages
+    }
+
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Send Message</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<h1>Send a Message</h1>
+
+<form action="/messages/send" method="post">
+    <label>Sender: <input type="text" name="sender" required></label>
+    <label>Receiver: <input type="text" name="receiver" required></label>
+    <label>Message: <textarea name="content" required></textarea></label>
+    <button type="submit">Send</button>
+</form>
+
+<p><a href="/messages/history" th:href="@{/messages/history/{username}(username=${sender})}">View Chat History</a></p>
+</body>
+</html>

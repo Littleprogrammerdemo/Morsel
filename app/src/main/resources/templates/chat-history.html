@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat History</title>
+</head>
+<body>
+<h1>Chat History for <span th:text="${username}"></span></h1>
+<ul>
+    <li th:each="partner : ${chatPartners}">
+        <a th:href="@{'/messages/chat/' + ${username} + '/' + ${partner}}">
+            <span th:text="${partner}"></span>
+        </a>
+    </li>
+</ul>
+</body>
+</html>
