@@ -4,13 +4,14 @@ import app.user.model.User;
 import app.follow.service.FollowService;
 import app.web.dto.FollowRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/followers")
+@Controller
+@RequestMapping("/followers")
 public class FollowController {
 
     private final FollowService followService;

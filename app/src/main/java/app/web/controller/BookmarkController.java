@@ -5,16 +5,16 @@ import app.post.model.Post;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/bookmarks")
+@Controller
+@RequestMapping("/bookmarks")
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
@@ -24,6 +24,7 @@ public class BookmarkController {
         this.bookmarkService = bookmarkService;
         this.userService = userService;
     }
+
     @GetMapping()
     public ModelAndView getBookmarkNotifications(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
@@ -38,15 +39,38 @@ public class BookmarkController {
 
         return modelAndView;
     }
+
     @PostMapping("/add/{postId}")
-    public ResponseEntity<String> addBookmark(@RequestParam UUID userId, @PathVariable UUID postId) {
-        bookmarkService.addBookmark(userId, postId);
-        return ResponseEntity.ok("Recipe bookmarked!");
+    public ModelAndView addBookmark(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata, @PathVariable UUID postId) {
+
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+
+        bookmarkService.addBookmark(user.getId(), postId);
+
+        ModelAndView modelAndView = new ModelAndView("bookmarks");
+        modelAndView.addObject("message", "Recipe bookmarked!");
+
+        List<Post> userBookmarks = bookmarkService.getBookmarksForUser(user.getId());
+        modelAndView.addObject("bookmarks", userBookmarks);
+        modelAndView.addObject("user", user);
+
+        return modelAndView;
     }
 
     @DeleteMapping("/remove/{postId}")
-    public ResponseEntity<String> removeBookmark(@RequestParam UUID userId, @PathVariable UUID postId) {
-        bookmarkService.removeBookmark(userId, postId);
-        return ResponseEntity.ok("Bookmark removed!");
+    public ModelAndView removeBookmark(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata, @PathVariable UUID postId) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+
+        bookmarkService.removeBookmark(user.getId(), postId);
+
+        ModelAndView modelAndView = new ModelAndView("bookmarks");
+        modelAndView.addObject("message", "Bookmark removed!");
+
+        // Fetch updated list of bookmarks for the user
+        List<Post> userBookmarks = bookmarkService.getBookmarksForUser(user.getId());
+        modelAndView.addObject("bookmarks", userBookmarks);
+        modelAndView.addObject("user", user);
+
+        return modelAndView;
     }
 }

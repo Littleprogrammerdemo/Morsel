@@ -2,13 +2,13 @@ package app.web.controller;
 
 import app.category.model.Category;
 import app.category.service.CategoryService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/categories")
+@Controller
+@RequestMapping("/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
