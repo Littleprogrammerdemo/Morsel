@@ -39,8 +39,6 @@ public class UserService implements UserDetailsService {
         this.userProperties = userProperties;
     }
 
-
-
     @Transactional
     public User register(RegisterRequest registerRequest) {
 
@@ -76,6 +74,7 @@ public class UserService implements UserDetailsService {
         user.setLastName(userEditRequest.getLastName());
         user.setEmail(userEditRequest.getEmail());
         user.setProfilePicture(userEditRequest.getProfilePicture());
+
 
         userRepository.save(user);
     }

@@ -24,25 +24,6 @@ public class DtoMapper {
                 .totalLikes(BigDecimal.valueOf(posts.stream().mapToLong(Post::getLikes).sum()))
                 .build();
     }
-
-    public static UserSystemReport mapToUserSystemReport(User currentUser, List<Post> allPosts, List<User> allUsers) {
-        // Calculate user-specific metrics
-        long userPosts = allPosts.stream()
-                .filter(post -> post.getOwner().getId().equals(currentUser.getId()))
-                .count();
-
-        long userLikes = allPosts.stream()
-                .filter(post -> post.getOwner().getId().equals(currentUser.getId()))
-                .mapToLong(Post::getLikes)
-                .sum();
-
-        // Calculate community-wide metrics
-        return UserSystemReport.builder()
-                .userTotalPosts(userPosts)
-                .userTotalLikes(userLikes)
-                .userTotalComments(0) //default
-                .build();
-    }
     public static UserEditRequest mapUserToUserEditRequest(User user) {
 
         return UserEditRequest.builder()
