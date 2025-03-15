@@ -30,7 +30,7 @@ public class MessageController {
 
         List<Message> messages = messageService.getChatHistory(authenticatedUser.getId(), chatPartnerId);
 
-        ModelAndView modelAndView = new ModelAndView("messages/history");
+        ModelAndView modelAndView = new ModelAndView("messages");
         modelAndView.addObject("messages", messages);
         modelAndView.addObject("user", authenticatedUser);
         return modelAndView;
