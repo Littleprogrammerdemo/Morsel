@@ -8,7 +8,6 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @UtilityClass
 public class DtoMapper {
@@ -33,32 +32,4 @@ public class DtoMapper {
                 .profilePicture(user.getProfilePicture())
                 .build();
     }
-    public static BookmarkRequest mapToBookmarkRequest(UUID userId, UUID postId) {
-        return BookmarkRequest.builder()
-                .userId(userId)
-                .postId(postId)
-                .build();
-    }
-
-    public static FollowRequest mapToFollowRequest(UUID followerId, UUID followedId) {
-        return FollowRequest.builder()
-                .followerId(followerId)
-                .followedId(followedId)
-                .build();
-    }
-
-    public static MessageRequest mapToMessageRequest(UUID senderId, UUID receiverId, String content) {
-        return MessageRequest.builder()
-                .senderId(senderId)
-                .receiverId(receiverId)
-                .content(content)
-                .build();
-    }
-
-        public static CreateNewPost mapToPostCommand(Post post) {
-            return CreateNewPost.builder()
-                    .title(post.getTitle())
-                    .content(post.getContent())
-                    .build();
-        }
     }
