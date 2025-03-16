@@ -37,13 +37,13 @@ public class PostController {
         List<Post> posts = postService.getAllPosts();
         ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("posts", posts);
+        modelAndView.addObject("post", posts);
         return modelAndView;
     }
 
     @GetMapping("/{id}")
     public ModelAndView viewPost(@PathVariable UUID id) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("post", postService.getPostById(id));
         modelAndView.addObject("comments", postService.getCommentsForPost(id));  // Add comments
         return modelAndView;
@@ -70,7 +70,7 @@ public class PostController {
     public ModelAndView searchPosts(@RequestParam String keyword) {
         List<Post> posts = postService.searchPosts(keyword);
         ModelAndView modelAndView = new ModelAndView("posts");
-        modelAndView.addObject("posts", posts);
+        modelAndView.addObject("post", posts);
         return modelAndView;
     }
 
@@ -78,7 +78,7 @@ public class PostController {
     public ModelAndView filterByCategory(@RequestParam Category category) {
         List<Post> posts = postService.filterByCategory(category);
         ModelAndView modelAndView = new ModelAndView("posts");
-        modelAndView.addObject("posts", posts);
+        modelAndView.addObject("post", posts);
         return modelAndView;
     }
     @PostMapping("/{id}/like")

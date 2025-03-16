@@ -25,30 +25,30 @@
                         </div>
                         <div class="func-block">
                             <div class="func-block">
-                                <a class="home" href="/home">
-                                    <p>Home</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18m-6-6 6 6-6 6"></path>
-                                    </svg>
-                                </a>
+                                    <a class="home" href="/home">
+                                        <p>Home</p>
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                                        </svg>
+                                    </a>
                                 <!-- My Profile -->
-                                <a href="/profile" class="flex items-center space-x-2">
+                                <a href="/users/{id}/profile" class="flex items-center space-x-2">
                                     <p>My Profile</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
                                     </svg>
                                 </a>
-                                <a class="messages" href="/messages">
+                                <a class="messages" href="/messages/send">
                                     <p>Messages</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18m-6-6 6 6-6 6"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 16c0 1.1.9 2 2 2h3v3l4-3h7c1.1 0 1.99-.9 1.99-2L22 4c0-1.1-.9-2-2-2z"></path>
                                     </svg>
                                 </a>
                                 <!-- Notifications -->
                                 <a href="/notifications" class="flex items-center space-x-2">
                                     <p>Notifications</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22s4-2 4-6V9a4 4 0 0 0-8 0v7c0 4 4 6 4 6z"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 1.99 2zm6-6V9c0-3.31-2.69-6-6-6S6 5.69 6 9v7l-2 2v1h16v-1l-2-2z"></path>
                                     </svg>
                                 </a>
 
@@ -59,24 +59,22 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 21v-4a4 4 0 1 1 8 0v4m4 0v-4a4 4 0 1 1 8 0v4M9 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
                                     </svg>
                                 </a>
-                                <a href="/recipes">
-                                    <p>MyRecipes</p>
+                                <a href="/posts">
+                                    <p>My Posts</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18M9 6l6 6-6 6"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 3h16c1.1 0 1.99.9 1.99 2L22 19c0 1.1-.9 2-2 2H4c-1.1 0-1.99-.9-1.99-2L2 5c0-1.1.9-2 2-2zM12 8h4v4h-4z"></path>
                                     </svg>
                                 </a>
-                                <a href="/admin">
+                                <a href="/users">
                                     <p>Admin Panel</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 12h12m-6-6 6 6-6 6"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"></path>
                                     </svg>
                                 </a>
                             </div>
 
-                            <!-- Other Quick Links -->
                             <div class="func-block">
-                                <span>Quick Links</span>
-                                <a href="/new-recipe">
+                                <a href="/posts/new">
                                     <p>Add Recipe</p>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>

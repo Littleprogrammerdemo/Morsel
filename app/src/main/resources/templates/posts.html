@@ -31,29 +31,30 @@
                             <a class="home" href="/home">
                                 <p>Home</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18m-6-6 6 6-6 6"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
                                 </svg>
                             </a>
                             <!-- My Profile -->
-                            <a href="/profile" class="flex items-center space-x-2">
+                            <a href="/users/{id}/profile" class="flex items-center space-x-2">
                                 <p>My Profile</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
                                 </svg>
                             </a>
-                            <a class="messages" href="/messages">
+                            <a class="messages" href="/messages/send">
                                 <p>Messages</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3 12h18m-6-6 6 6-6 6"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 16c0 1.1.9 2 2 2h3v3l4-3h7c1.1 0 1.99-.9 1.99-2L22 4c0-1.1-.9-2-2-2z"></path>
                                 </svg>
                             </a>
                             <!-- Notifications -->
                             <a href="/notifications" class="flex items-center space-x-2">
                                 <p>Notifications</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22s4-2 4-6V9a4 4 0 0 0-8 0v7c0 4 4 6 4 6z"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 1.99 2zm6-6V9c0-3.31-2.69-6-6-6S6 5.69 6 9v7l-2 2v1h16v-1l-2-2z"></path>
                                 </svg>
                             </a>
+
                             <!-- Followers/Following -->
                             <a href="/followers" class="flex items-center space-x-2">
                                 <p>Followers / Following</p>
@@ -64,21 +65,19 @@
                             <a href="/bookmarks">
                                 <p>Bookmarks</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 20.943V3.057L4.447 8.672l7.553 12.271z"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15 0H5c-1.1 0-1.99.9-1.99 2L3 22l8-4 8 4V2c0-1.1-.9-2-2-2z"></path>
                                 </svg>
                             </a>
-                            <a href="/admin">
+                            <a href="/users">
                                 <p>Admin Panel</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 12h12m-6-6 6 6-6 6"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"></path>
                                 </svg>
                             </a>
                         </div>
 
-                        <!-- Other Quick Links -->
                         <div class="func-block">
-                            <span>Quick Links</span>
-                            <a href="/new-recipe">
+                            <a href="/posts/new">
                                 <p>Add Recipe</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
@@ -105,29 +104,29 @@
 <div class="container mx-auto p-4">
     <!-- Post Details -->
     <div class="mb-4 border-b pb-4">
-        <h1 class="text-3xl font-bold" th:text="${posts.title}">Post Title</h1>
-        <p class="mt-2 text-gray-700" th:text="${posts.content}">Post content goes here.</p>
-        <div th:if="${posts.image}" class="mt-4">
-            <img th:src="@{${posts.image}}" alt="Post Image" class="max-w-full rounded"/>
+        <h1 class="text-3xl font-bold" th:text="${post.title}">Post Title</h1>
+        <p class="mt-2 text-gray-700" th:text="${post.content}">Post content goes here.</p>
+        <div th:if="${post.image}" class="mt-4">
+            <img th:src="@{${post.image}}" alt="Post Image" class="max-w-full rounded"/>
         </div>
     </div>
 
     <!-- Like,Share and Rating Section -->
     <div class="mt-4 flex justify-between items-center">
         <!-- Like button -->
-        <form th:action="@{/posts/{id}/like(id=${posts.id})}" method="post" class="flex items-center">
+        <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" class="flex items-center">
             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Like</button>
-            <span class="ml-2 text-gray-600" th:text="'Likes: ' + ${posts.likes}">Likes: 0</span>
+            <span class="ml-2 text-gray-600" th:text="'Likes: ' + ${post.likes}">Likes: 0</span>
         </form>
         <!-- Share Section -->
-        <form th:action="@{/posts/{id}/share(id=${posts.id})}" method="post">
+        <form th:action="@{/posts/{id}/share(id=${post.id})}" method="post">
             <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Share</button>
-            <span th:text="'Shares: ' + ${posts.shares}"></span>
+            <span th:text="'Shares: ' + ${post.shares}"></span>
         </form>
         <!-- Rating Section -->
         <div class="flex items-center">
             <span class="mr-2 text-gray-600">Rate:</span>
-            <form th:action="@{/posts/{id}/rate(id=${posts.id})}" method="post" class="flex">
+            <form th:action="@{/posts/{id}/rate(id=${post.id})}" method="post" class="flex">
                 <!-- Rating buttons (1 to 5 stars) -->
                 <input type="hidden" name="rating" value="1">
                 <button type="submit" class="text-yellow-500 mx-1">★</button>
@@ -158,7 +157,7 @@
         </div>
 
         <!-- Add Comment Form -->
-        <form th:action="@{/posts/{id}/comment(id=${posts.id})}" method="post" class="flex mt-4">
+        <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post" class="flex mt-4">
             <input type="text" name="content" placeholder="Write a comment..." class="border p-2 flex-grow rounded-l" required>
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r">Comment</button>
         </form>
