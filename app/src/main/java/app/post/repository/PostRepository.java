@@ -22,4 +22,6 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     // Намира рецепти с нула лайкове и създадени преди повече от 1 година
     List<Post> findByLikesAndCreatedOnBefore(int likes, LocalDateTime createdOn);
     List<Post> findByUser(User user);
+
+    List<Post> findTop10ByOrderByLikesDescViewsDesc();
 }

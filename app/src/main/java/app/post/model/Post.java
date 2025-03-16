@@ -13,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "posts")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +34,7 @@ public class Post {
     @Column(nullable = false, length = 2000)
     private String content;
 
-    @Column(name = "creation_date",nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdOn;
 
     @Lob  // Use @Lob to store large objects (binary data)
@@ -43,7 +42,7 @@ public class Post {
 
     @Column(nullable = false)
     private LocalDateTime updatedOn;
-
+    private int views;
     private int likes;
     private double rating;
     private int shares;

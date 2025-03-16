@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "categories")
 public class Category {
 
     @Id

@@ -12,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "follows", uniqueConstraints = @UniqueConstraint(columnNames = {"follower_id", "followed_id"}))
 public class Follow {
 
     @Id
@@ -20,10 +19,10 @@ public class Follow {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "follower_id", nullable = false)
+    @JoinColumn(nullable = false)
     private User follower;
 
     @ManyToOne
-    @JoinColumn(name = "followed_id", nullable = false)
+    @JoinColumn(nullable = false)
     private User following;
 }

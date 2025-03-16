@@ -41,7 +41,7 @@ public class User {
 
     @Column(length = 255)
     private String bio;
-
+    private LocalDateTime lastLogin;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
