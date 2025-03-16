@@ -112,16 +112,23 @@
         </div>
     </div>
 
-    <!-- Like and Rating Section -->
+    <!-- Like,Share and Rating Section -->
     <div class="mt-4 flex justify-between items-center">
+        <!-- Like button -->
         <form th:action="@{/posts/{id}/like(id=${posts.id})}" method="post" class="flex items-center">
             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Like</button>
             <span class="ml-2 text-gray-600" th:text="'Likes: ' + ${posts.likes}">Likes: 0</span>
         </form>
-
+        <!-- Share Section -->
+        <form th:action="@{/posts/{id}/share(id=${posts.id})}" method="post">
+            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Share</button>
+            <span th:text="'Shares: ' + ${posts.shares}"></span>
+        </form>
+        <!-- Rating Section -->
         <div class="flex items-center">
             <span class="mr-2 text-gray-600">Rate:</span>
             <form th:action="@{/posts/{id}/rate(id=${posts.id})}" method="post" class="flex">
+                <!-- Rating buttons (1 to 5 stars) -->
                 <input type="hidden" name="rating" value="1">
                 <button type="submit" class="text-yellow-500 mx-1">★</button>
                 <input type="hidden" name="rating" value="2">
@@ -135,6 +142,7 @@
             </form>
         </div>
     </div>
+
 
     <!-- Comments Section -->
     <div class="mt-8">

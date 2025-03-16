@@ -83,6 +83,34 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll(); // This fetches all posts from the database
     }
+    // Like a post
+    public void likePost(UUID postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+        post.setLikes(post.getLikes() + 1);
+        postRepository.save(post);
+    }
+
+    // Share a post
+    public void sharePost(UUID postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+        post.setShares(post.getShares() + 1);
+        postRepository.save(post);
+    }
+    // Method to rate a post
+    public void ratePost(UUID postId, User user, int rating) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Rating should be between 1 and 5.");
+        }
+
+        post.setRating(rating);
+
+        postRepository.save(post);
+    }
     public List<Post> searchPosts(String keyword) {
         return postRepository.searchPosts(keyword);
     }

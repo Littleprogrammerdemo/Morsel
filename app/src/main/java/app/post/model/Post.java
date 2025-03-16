@@ -44,11 +44,9 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime updatedOn;
 
-    @Column(nullable = false)
     private int likes;
-
-    @Column(nullable = false)
     private double rating;
+    private int shares;
 
 
     @Enumerated(EnumType.STRING)
