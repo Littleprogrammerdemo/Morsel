@@ -35,7 +35,7 @@ public class CommentService {
         // Save the comment in the repository
         commentRepository.save(comment);
     }
-    public List<Comment> getCommentsForPost(java.util.UUID postId) {
+    public List<Comment> getCommentsForPost(UUID postId) {
         return commentRepository.findByPost_Id(postId);
     }
 

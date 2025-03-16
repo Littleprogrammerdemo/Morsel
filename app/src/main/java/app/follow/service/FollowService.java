@@ -4,6 +4,7 @@ import app.follow.model.Follow;
 import app.user.model.User;
 import app.follow.repository.FollowRepository;
 import app.web.dto.FollowRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @Service
 public class FollowService {
     private final FollowRepository followRepository;
-
+    @Autowired
     public FollowService(FollowRepository followRepository) {
         this.followRepository = followRepository;
     }

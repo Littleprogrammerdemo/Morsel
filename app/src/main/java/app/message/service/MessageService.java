@@ -1,5 +1,6 @@
 package app.message.service;
 
+import app.follow.repository.FollowRepository;
 import app.web.dto.MessageRequest;
 import  app.message.model.Message;
 import  app.message.repository.MessageRepository;
@@ -10,8 +11,11 @@ import java.util.List;
 @Service
 public class MessageService {
 
+    private final MessageRepository messageRepository;
     @Autowired
-    private MessageRepository messageRepository;
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
 
     // Get messages received by user (Inbox)
     public List<Message> getInbox(String receiver) {
