@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -23,6 +24,8 @@ public class Post {
     private UUID id;
 
     // Много постове могат да принадлежат на един потребител
+    @ManyToOne
+    private User user;
     @ManyToOne
     private User owner;
 
@@ -57,4 +60,5 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CategoryType category_type;
+
 }

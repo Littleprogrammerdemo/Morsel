@@ -10,9 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, UUID> {
-    Optional<Follow> findByFollowerAndFollowed(User follower, User followed);
-    List<Follow> findByFollower(User follower);
-    List<Follow> findByFollowed(User followed);
-
-    void deleteByFollowerAndFollowed(User follower, User followed);
+    List<Follow> findByFollower(User user);
+    List<Follow> findByFollowing(User user);
+    boolean existsByFollowerAndFollowing(User follower, User following);
+    void deleteByFollowerAndFollowing(User follower, User following);
 }

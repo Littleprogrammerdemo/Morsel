@@ -2,6 +2,7 @@ package app.post.repository;
 
 import app.category.model.Category;
 import app.post.model.Post;
+import app.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,5 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     List<Post> findByCategory(Category category);
     // Намира рецепти с нула лайкове и създадени преди повече от 1 година
     List<Post> findByLikesAndCreatedOnBefore(int likes, LocalDateTime createdOn);
+    List<Post> findByUser(User user);
 }

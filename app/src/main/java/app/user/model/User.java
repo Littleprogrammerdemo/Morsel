@@ -1,15 +1,14 @@
 package app.user.model;
 
-import app.comment.model.Comment;
-import app.like.model.Like;
+import app.follow.model.Follow;
 import app.post.model.Post;
-import app.rating.model.Rating;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -40,6 +39,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(length = 255)
+    private String bio;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
@@ -55,19 +57,11 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
-    private List<Like> likes = new ArrayList<>();
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
+    private Set<Follow> following;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL)
+    private Set<Follow> followers;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
-    private List<Rating> ratings = new ArrayList<>();
-
-    public User(UUID id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
 
 }

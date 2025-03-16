@@ -24,6 +24,6 @@ public class Follow {
     private User follower;
 
     @ManyToOne
-    @JoinColumn(name = "followed_id", nullable = false)
-    private User followed;
+    @JoinColumn(name = "following_id", nullable = false)
+    private User following;
 }

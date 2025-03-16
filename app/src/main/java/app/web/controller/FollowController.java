@@ -1,54 +1,96 @@
 package app.web.controller;
 
+import app.post.model.Post;
 import app.user.model.User;
 import app.follow.service.FollowService;
+import app.user.service.UserService;
 import app.web.dto.FollowRequest;
-import org.springframework.http.ResponseEntity;
+import app.post.service.PostService;  // Assuming PostService is available
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/followers")
 public class FollowController {
 
+    private final UserService userService;
     private final FollowService followService;
+    private final PostService postService;  // Assuming PostService is available
 
-    public FollowController(FollowService followService) {
+    @Autowired
+    public FollowController(UserService userService, FollowService followService, PostService postService) {
+        this.userService = userService;
         this.followService = followService;
+        this.postService = postService;
     }
 
-    @GetMapping()
-    public ResponseEntity<FollowRequest> getFollowersAndFollowing(@PathVariable UUID userId) {
-        // Get both followers and followed users
-        List<User> followers = followService.getFollowers(userId);
-        List<User> followedUsers = followService.getFollowedUsers(userId);
+    @GetMapping("/{username}")
+    public String viewProfile(@PathVariable String username, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        Optional<User> user = userService.findByUsername(username);
+        if (user.isEmpty()) {
+            return "error"; // Handle user not found
+        }
 
-        // Create and populate the response DTO
-        FollowRequest response = new FollowRequest();
-        response.setFollowers(followers);
-        response.setFollowedUsers(followedUsers);
+        // Retrieve the current user and check if they are following the target user
+        boolean isFollowing = userService.findByUsername(userDetails.getUsername())
+                .map(currentUser -> followService.getFollowing(currentUser).stream()
+                        .anyMatch(follow -> follow.getFollowing().equals(user.get())))
+                .orElse(false);
 
-        // Return the response as a DTO
-        return ResponseEntity.ok(response);
+        // Retrieve the user's posts (you might have a PostService to fetch posts)
+        List<Post> posts = postService.getPostsByUser(user.get());
+
+        // Add user details, follow status, posts, and bio to the model
+        model.addAttribute("user", user.get());
+        model.addAttribute("isFollowing", isFollowing);
+        model.addAttribute("posts", posts);
+        model.addAttribute("bio", user.get().getBio());  // Assuming bio is a field in User
+
+        return "profile";  // Your profile template
     }
 
-    @PostMapping("/follow/{followedId}")
-    public ResponseEntity<String> followUser(@RequestParam UUID followerId, @PathVariable UUID followedId) {
-        followService.followUser(followerId, followedId);
-        return ResponseEntity.ok("You are now following this user!");
+    @PostMapping("/{username}/follow")
+    public String followUser(@PathVariable String username, @AuthenticationPrincipal UserDetails userDetails) {
+        Optional<User> userToFollow = userService.findByUsername(username);
+        Optional<User> currentUser = userService.findByUsername(userDetails.getUsername());
+
+        if (userToFollow.isPresent() && currentUser.isPresent()) {
+            FollowRequest followRequest = FollowRequest.builder()
+                    .followerId(currentUser.get().getId())
+                    .followedId(userToFollow.get().getId())
+                    .followers(List.of(currentUser.get()))
+                    .followedUsers(List.of(userToFollow.get()))
+                    .build();
+
+            followService.followUser(followRequest);
+        }
+
+        return "redirect:/users/" + username;
     }
 
-    @DeleteMapping("/unfollow/{followedId}")
-    public ResponseEntity<String> unfollowUser(@RequestParam UUID followerId, @PathVariable UUID followedId) {
-        followService.unfollowUser(followerId, followedId);
-        return ResponseEntity.ok("You have unfollowed this user!");
-    }
+    @PostMapping("/{username}/unfollow")
+    public String unfollowUser(@PathVariable String username, @AuthenticationPrincipal UserDetails userDetails) {
+        Optional<User> userToUnfollow = userService.findByUsername(username);
+        Optional<User> currentUser = userService.findByUsername(userDetails.getUsername());
 
-    @GetMapping("/following/{followerId}")
-    public ResponseEntity<List<User>> getFollowedUsers(@PathVariable UUID followerId) {
-        return ResponseEntity.ok(followService.getFollowedUsers(followerId));
+        if (userToUnfollow.isPresent() && currentUser.isPresent()) {
+            FollowRequest followRequest = FollowRequest.builder()
+                    .followerId(currentUser.get().getId())
+                    .followedId(userToUnfollow.get().getId())
+                    .followers(List.of(currentUser.get()))
+                    .followedUsers(List.of(userToUnfollow.get()))
+                    .build();
+
+            followService.unfollowUser(followRequest);
+        }
+
+        return "redirect:/users/" + username;
     }
 }

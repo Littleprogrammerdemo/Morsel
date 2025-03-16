@@ -3,13 +3,10 @@ package app.post.service;
 
 import app.category.model.Category;
 import app.category.model.CategoryType;
-import app.category.repository.CategoryRepository;
 import app.category.service.CategoryService;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
-import app.like.service.LikeService;
 import app.post.model.PostStatus;
-import app.rating.service.RatingService;
 import app.post.model.Post;
 import app.post.repository.PostRepository;
 import app.user.model.User;
@@ -33,20 +30,15 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentService commentService;
-    private final LikeService likeService;
-    private final RatingService ratingService;
     private final CategoryService categoryService;
     private final UserService userService;
 
     @Autowired
     public PostService(PostRepository postRepository, CommentService commentService,
-                       LikeService likeService,
-                       RatingService ratingService, CategoryService categoryService,
+                        CategoryService categoryService,
                        UserService userService) {
         this.postRepository = postRepository;
         this.commentService = commentService;
-        this.likeService = likeService;
-        this.ratingService = ratingService;
         this.categoryService = categoryService;
         this.userService = userService;
     }
@@ -66,7 +58,7 @@ public class PostService {
         }
 
         Post post = Post.builder()
-                .owner(user)
+                .user(user)
                 .title(createNewPost.getTitle())
                 .content(createNewPost.getContent())
                 .category(category)
@@ -114,28 +106,6 @@ public class PostService {
         commentService.deleteComment(commentId); // Calling deleteComment from CommentService
     }
 
-    // Like a post
-    public void likePost(UUID postId, User user) {
-        Post post = getPostById(postId);
-        likeService.addLike(post, user);
-        post.setLikes(post.getLikes() + 1); // Increment like count
-        postRepository.save(post);
-    }
-
-    // Rate a post
-    public void ratePost(UUID postId, double rating, User user) {
-        Post post = getPostById(postId);
-
-        // Call RatingService to add or update the rating
-        ratingService.ratePost(post, user, rating);
-
-        // Calculate the new average rating for the post
-        double newRating = ratingService.calculateAverageRating(postId);
-        post.setRating(newRating);
-
-        // Save the updated post to the database
-        postRepository.save(post);
-    }
 
     // Check if the user is an admin
     private boolean isAdmin(User user) {
@@ -163,9 +133,10 @@ public class PostService {
         post.setStatus(status);
         postRepository.save(post);
     }
+    
     // Check if user is the creator of the post
     private boolean isPostCreator(User user, Post post) {
-        return user != null && post != null && user.getId().equals(post.getOwner());
+        return user != null && post != null && user.getId().equals(post.getUser());
     }
     // Delete post (only Admin or Creator can delete)
     public void deletePostByUser(UUID postId, User user) {
@@ -181,19 +152,13 @@ public class PostService {
     }
 
 
-    // Upload image logic
-    public String uploadImage(MultipartFile image) throws IOException {
-        // Handle image upload logic (store it on disk, cloud storage, etc.)
-        return "image-url"; // Example URL to the image
-    }
     public Post addRecipeToCategory(UUID categoryId, Post recipe) {
         Category category = categoryService.getCategoryById(categoryId); // No need for orElseThrow
         recipe.setCategory(category);
         return postRepository.save(recipe);
     }
 
-    // Save post to the repository
-    public void savePost(Post post) {
-        postRepository.save(post);
+    public List<Post> getPostsByUser(User user) {
+        return postRepository.findByUser(user);  // Fetches all posts created by the specified user
     }
 }

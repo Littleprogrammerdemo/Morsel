@@ -20,6 +20,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/css/**", "/js/**", "/image/**").permitAll() // Allow static files
                         .requestMatchers("/", "/register").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN") // Админ панел само за админи
+                        .requestMatchers("/users/**").authenticated() // Само логнати потребители виждат профили
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

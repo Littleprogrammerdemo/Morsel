@@ -81,21 +81,6 @@ public class PostController {
         return modelAndView;
     }
 
-    @PostMapping("/{id}/like")
-    public ModelAndView likePost(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.likePost(id, user);
-        return new ModelAndView("redirect:/posts/" + id);  // Redirect back to the post
-    }
-
-    @PostMapping("/{id}/rate")
-    public ModelAndView ratePost(@PathVariable UUID id, @RequestParam double rating,
-                                 @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.ratePost(id, rating, user);
-        return new ModelAndView("redirect:/posts/" + id);  // Redirect back to the post
-    }
-
     @PostMapping("/{id}/comment")
     public ModelAndView addComment(@PathVariable UUID id, @RequestParam String content,
                                    @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
