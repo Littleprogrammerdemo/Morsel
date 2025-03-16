@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("/messages")
 public class MessageController {
 
-    @Autowired
     private MessageService messageService;
+
+    @Autowired
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     // 1. Get messages received by user (Inbox)
     @GetMapping("/inbox/{username}")

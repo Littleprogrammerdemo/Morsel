@@ -4,6 +4,7 @@ import app.follow.model.Follow;
 import app.user.model.User;
 import app.follow.repository.FollowRepository;
 import app.web.dto.FollowRequest;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class FollowService {
         this.followRepository = followRepository;
     }
 
-    public void followUser(FollowRequest followRequest) {
+    public void followUser(@NotNull FollowRequest followRequest) {
         // Get followers and following users using their IDs from the FollowRequest
         Optional<User> follower = followRequest.getFollowers().stream()
                 .filter(user -> user.getId().equals(followRequest.getFollowerId()))
@@ -40,7 +41,7 @@ public class FollowService {
         }
     }
 
-    public void unfollowUser(FollowRequest followRequest) {
+    public void unfollowUser(@NotNull FollowRequest followRequest) {
         // Get followers and following users using their IDs from the FollowRequest
         Optional<User> follower = followRequest.getFollowers().stream()
                 .filter(user -> user.getId().equals(followRequest.getFollowerId()))

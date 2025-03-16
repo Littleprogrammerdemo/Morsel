@@ -9,6 +9,7 @@ import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.CreateNewPost;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
-
+    @Autowired
     public PostController(PostService postService, UserService userService) {
         this.postService = postService;
         this.userService = userService;

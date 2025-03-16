@@ -5,6 +5,7 @@ import app.post.model.Post;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
     private final UserService userService;
-
+    @Autowired
     public BookmarkController(BookmarkService bookmarkService, UserService userService) {
         this.bookmarkService = bookmarkService;
         this.userService = userService;
