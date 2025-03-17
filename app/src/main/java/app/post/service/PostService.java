@@ -112,13 +112,7 @@ public class PostService {
         post.setRating(rating);
         postRepository.save(post);
     }
-    public List<Post> searchPosts(String keyword) {
-        return postRepository.searchPosts(keyword);
-    }
 
-    public List<Post> filterByCategory(Category category) {
-        return postRepository.findByCategory(category);
-    }
     // Get comments for a post
     public List<Comment> getCommentsForPost(UUID postId) {
         return commentService.getCommentsForPost(postId);
@@ -138,7 +132,6 @@ public class PostService {
         return postRepository.findByUser(user);  // Fetches all posts created by the specified user
     }
 
-    // In PostService.java
     public void deletePost(UUID postId, User user) {
         // Check if the post exists
         Post post = postRepository.findById(postId)

@@ -66,21 +66,6 @@ public class PostController {
         return new ModelAndView("redirect:/home");  // Redirect to home after successful operation
     }
 
-    @GetMapping("/search")
-    public ModelAndView searchPosts(@RequestParam String keyword) {
-        List<Post> posts = postService.searchPosts(keyword);
-        ModelAndView modelAndView = new ModelAndView("posts");
-        modelAndView.addObject("post", posts);
-        return modelAndView;
-    }
-
-    @GetMapping("/filter")
-    public ModelAndView filterByCategory(@RequestParam Category category) {
-        List<Post> posts = postService.filterByCategory(category);
-        ModelAndView modelAndView = new ModelAndView("posts");
-        modelAndView.addObject("post", posts);
-        return modelAndView;
-    }
     @PostMapping("/{id}/like")
     public ModelAndView likePost(@PathVariable UUID id) {
         postService.likePost(id);

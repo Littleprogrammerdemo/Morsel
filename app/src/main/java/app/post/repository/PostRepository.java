@@ -14,11 +14,6 @@ import java.util.UUID;
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> {
 
-    @Query("SELECT p FROM Post p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.content) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Post> searchPosts(@Param("keyword") String keyword);
-
-    // Filter by category
-    List<Post> findByCategory(Category category);
     // Намира рецепти с нула лайкове и създадени преди повече от 1 година
     List<Post> findByLikesAndCreatedOnBefore(int likes, LocalDateTime createdOn);
     List<Post> findByUser(User user);
