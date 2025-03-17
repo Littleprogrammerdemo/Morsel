@@ -1,107 +1,211 @@
-/* General Styles */
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #fff5f8; /* Soft pink background */
-    color: #333;
+/* Base Reset */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Container */
-.container {
-    max-width: 600px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 40px auto;
-    border: 2px solid #ffb6c1; /* Light pink border */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Light background for the page */
+    color: #333;
+    line-height: 1.6;
+    padding-top: 20px;
 }
 
-/* Title */
-h1 {
-    text-align: center;
-    font-size: 28px;
-    color: #d63384; /* Deep pink */
+/* Header Styling */
+header {
+    background-color: white;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Styles */
-form {
+.navbar {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Labels */
-.label-holder label {
+.app-nav-bar-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff66b2; /* Soft Pink */
+}
+
+.app-nav-bar-version {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Sidebar Styling */
+.side-navbar {
+    width: 250px;
+    height: 100vh;
+    background-color: #de238d;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    padding-top: 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.side-navbar a {
     display: block;
+    color: #333;
+    padding: 12px 20px;
+    text-decoration: none;
     font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.side-navbar a:hover {
+    background-color: #ff66b2;
+    color: white;
+}
+
+.side-navbar a svg {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Main Content */
+.container {
+    margin-left: 270px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+/* Form Styling */
+h1 {
+    font-size: 32px;
+    color: #ff66b2; /* Soft Pink */
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+h3 {
+    font-size: 24px;
+    color: #333;
     font-weight: 600;
-    margin-bottom: 6px;
-    color: #444;
+    margin-bottom: 15px;
 }
 
-/* Inputs & Textarea */
-input[type="text"],
-textarea,
-select {
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, textarea, select {
     width: 100%;
-    padding: 10px;
-    border: 2px solid #ffb6c1; /* Soft pink border */
-    border-radius: 6px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     font-size: 16px;
-    transition: 0.3s;
+    margin-top: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: #d63384; /* Darker pink focus */
+input:focus, textarea:focus, select:focus {
+    border-color: #ff66b2;
     outline: none;
 }
 
-/* Textarea */
 textarea {
     resize: vertical;
-    min-height: 120px;
+    height: 150px;
 }
 
-/* File Upload */
 input[type="file"] {
     padding: 8px;
-    font-size: 16px;
-    border: none;
-    background: #f8f9fa;
-}
-
-/* Error Message */
-.text-warning {
-    color: #ff4d6d;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* Button */
-button {
-    background: #ff4d6d; /* Vibrant pink */
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 12px;
-    border: none;
+    background-color: #f4f4f4;
     border-radius: 8px;
+}
+
+small {
+    color: #ff3333;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Button Styling */
+button {
+    background-color: #ff66b2; /* Soft Pink */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 18px;
     cursor: pointer;
-    transition: 0.3s;
-    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: inline-block;
 }
 
 button:hover {
-    background: #d63384; /* Darker pink */
-    transform: translateY(-2px);
+    background-color: #e55a99; /* Darker Pink on Hover */
 }
 
-/* Responsive */
+button:focus {
+    outline: none;
+}
+
+/* Form Section */
+.form-section {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    color: #888;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .side-navbar {
+        width: 100%;
+        position: static;
+        box-shadow: none;
+        padding-top: 20px;
+    }
+
+    .side-navbar a {
+        padding: 10px 15px;
+    }
+
     .container {
-        max-width: 90%;
+        margin-left: 0;
+    }
+
+    button {
+        width: 100%;
     }
 }

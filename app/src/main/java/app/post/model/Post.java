@@ -22,7 +22,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    // Много постове могат да принадлежат на един потребител
+    // Many posts can belong to one user
     @ManyToOne
     private User user;
     @ManyToOne
@@ -37,16 +37,16 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime createdOn;
 
-    @Lob  // Use @Lob to store large objects (binary data)
-    private byte[] image;  // Store image as byte array
+    // Store the Cloudinary image URL
+    private String imageUrl;  // Use URL to store image location
 
     @Column(nullable = false)
     private LocalDateTime updatedOn;
+
     private int views;
     private int likes;
     private double rating;
     private int shares;
-
 
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.ACTIVE;
@@ -56,6 +56,5 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CategoryType category_type;
-
+    private CategoryType categoryType;
 }

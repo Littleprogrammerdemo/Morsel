@@ -1,13 +1,13 @@
-
 package app.post.service;
 
 import app.category.model.Category;
-import app.category.model.CategoryType;
 import app.category.service.CategoryService;
+import app.cloudinary.CloudinaryService;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
-import app.post.model.PostStatus;
+import app.exception.CloudinaryException;
 import app.post.model.Post;
+import app.post.model.PostStatus;
 import app.post.repository.PostRepository;
 import app.user.model.User;
 import app.user.model.UserRole;
@@ -15,11 +15,8 @@ import app.user.service.UserService;
 import app.web.dto.CreateNewPost;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -29,49 +26,52 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final CommentService commentService;
+    private final CloudinaryService cloudinaryService;
     private final CategoryService categoryService;
+    private final CommentService commentService;
     private final UserService userService;
 
     @Autowired
-    public PostService(PostRepository postRepository, CommentService commentService,
-                        CategoryService categoryService,
-                       UserService userService) {
+    public PostService(PostRepository postRepository, CommentService commentService,CloudinaryService cloudinaryService,
+                       CategoryService categoryService, UserService userService) {
         this.postRepository = postRepository;
-        this.commentService = commentService;
+        this.cloudinaryService = cloudinaryService;
         this.categoryService = categoryService;
         this.userService = userService;
+        this.commentService = commentService;
     }
 
-    // Create a post
+    // Create a post with image upload
     public void createPost(User user, CreateNewPost createNewPost) {
+        Category category = categoryService.getCategoryByType(createNewPost.getCategoryType());
 
-        Category category = categoryService.getCategoryByType(createNewPost.getCategoryType()); // Convert properly
-
-        byte[] imageData = null;
-        try {
-            if (createNewPost.getImageFile() != null && !createNewPost.getImageFile().isEmpty()) {
-                imageData = createNewPost.getImageFile().getBytes();
+        // Upload image to Cloudinary if file is provided
+        String imageUrl = null;
+        if (createNewPost.getImageFile() != null && !createNewPost.getImageFile().isEmpty()) {
+            try {
+                imageUrl = cloudinaryService.uploadRecipeImage(createNewPost.getImageFile(), "recipeId", 1);
+            } catch (CloudinaryException e) {
+                log.error("Failed to upload image to Cloudinary", e);
+                throw new RuntimeException("Failed to upload image", e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error processing image file", e);
         }
 
+        // Build post object
         Post post = Post.builder()
                 .user(user)
                 .title(createNewPost.getTitle())
                 .content(createNewPost.getContent())
                 .category(category)
-                .image(imageData)
+                .imageUrl(imageUrl) // Store Cloudinary URL
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
                 .likes(0)
                 .rating(0)
+                .status(PostStatus.ACTIVE)
                 .build();
 
         postRepository.save(post);
     }
-
 
     // Get a post by ID
     public Post getPostById(UUID postId) {
@@ -81,8 +81,9 @@ public class PostService {
 
     // Get all posts
     public List<Post> getAllPosts() {
-        return postRepository.findAll(); // This fetches all posts from the database
+        return postRepository.findAll();
     }
+
     // Like a post
     public void likePost(UUID postId) {
         Post post = postRepository.findById(postId)
@@ -98,6 +99,7 @@ public class PostService {
         post.setShares(post.getShares() + 1);
         postRepository.save(post);
     }
+
     // Method to rate a post
     public void ratePost(UUID postId, User user, int rating) {
         Post post = postRepository.findById(postId)
@@ -108,7 +110,6 @@ public class PostService {
         }
 
         post.setRating(rating);
-
         postRepository.save(post);
     }
     public List<Post> searchPosts(String keyword) {
@@ -133,60 +134,33 @@ public class PostService {
     public void deleteCommentFromPost(UUID commentId) {
         commentService.deleteComment(commentId); // Calling deleteComment from CommentService
     }
+    public List<Post> getPostsByUser(User user) {
+        return postRepository.findByUser(user);  // Fetches all posts created by the specified user
+    }
 
+    // In PostService.java
+    public void deletePost(UUID postId, User user) {
+        // Check if the post exists
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
 
-    // Check if the user is an admin
+        // Check if the user is an admin or the post creator
+        if (!isAdmin(user) && !isPostCreator(user, post)) {
+            throw new RuntimeException("Only admins or creators can delete posts.");
+        }
+
+        // Delete the post
+        postRepository.delete(post);
+    }
+
     private boolean isAdmin(User user) {
         return user != null && user.getRole() == UserRole.ADMIN;
     }
 
-    // Delete post (only Admin can delete)
-    public void deletePost(UUID postId, User user) {
-        if (!isAdmin(user)) {
-            throw new RuntimeException("Only admins can delete posts.");
-        }
-
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-
-        // Delete the post
-        postRepository.delete(post);
-    }
-
-    // Update the status of a post
-    public void updatePostStatus(UUID postId, PostStatus status) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-
-        post.setStatus(status);
-        postRepository.save(post);
-    }
-    
-    // Check if user is the creator of the post
     private boolean isPostCreator(User user, Post post) {
-        return user != null && post != null && user.getId().equals(post.getUser());
-    }
-    // Delete post (only Admin or Creator can delete)
-    public void deletePostByUser(UUID postId, User user) {
-        if (!isAdmin(user) && !isPostCreator(user, postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found")))) {
-            throw new RuntimeException("Only admins or creators can delete posts.");
-        }
-
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-
-        // Delete the post
-        postRepository.delete(post);
+        return user != null && post != null && user.getId().equals(post.getUser().getId());
     }
 
 
-    public Post addRecipeToCategory(UUID categoryId, Post recipe) {
-        Category category = categoryService.getCategoryById(categoryId); // No need for orElseThrow
-        recipe.setCategory(category);
-        return postRepository.save(recipe);
-    }
-
-    public List<Post> getPostsByUser(User user) {
-        return postRepository.findByUser(user);  // Fetches all posts created by the specified user
-    }
 }
+
