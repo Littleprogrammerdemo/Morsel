@@ -6,11 +6,6 @@
 </head>
 <body>
 
-<nav>
-    <a th:href="@{'/messages/inbox/' + ${sender}}">Inbox</a> |
-    <a th:href="@{'/messages/history/' + ${sender}}">Chat History</a>
-</nav>
-
 <div class="container">
     <h1>Send a Message</h1>
 
@@ -21,7 +16,6 @@
         <button type="submit">Send</button>
     </form>
 
-    <p><a th:href="@{'/messages/history/' + ${sender}}">View Chat History</a></p>
 </div>
 
 </body>
