@@ -25,8 +25,6 @@ public class Post {
     // Many posts can belong to one user
     @ManyToOne
     private User user;
-    @ManyToOne
-    private User owner;
 
     @Column(nullable = false)
     private String title;
