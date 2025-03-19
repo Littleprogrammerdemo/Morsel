@@ -70,8 +70,8 @@ public class PostService {
     }
 
     // Get a post by ID
-    public Post getPostById(UUID postId) {
-        return postRepository.findById(postId)
+    public Post getPostById(UUID id) {
+        return postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
     }
 
@@ -81,24 +81,24 @@ public class PostService {
     }
 
     // Like a post
-    public void likePost(UUID postId) {
-        Post post = postRepository.findById(postId)
+    public void likePost(UUID id) {
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
         post.setLikes(post.getLikes() + 1);
         postRepository.save(post);
     }
 
     // Share a post
-    public void sharePost(UUID postId) {
-        Post post = postRepository.findById(postId)
+    public void sharePost(UUID id) {
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
         post.setShares(post.getShares() + 1);
         postRepository.save(post);
     }
 
     // Method to rate a post
-    public void ratePost(UUID postId, User user, int rating) {
-        Post post = postRepository.findById(postId)
+    public void ratePost(UUID id, User user, int rating) {
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         if (rating < 1 || rating > 5) {
@@ -115,8 +115,8 @@ public class PostService {
     }
 
     // Add a comment to a post
-    public void addComment(UUID postId, User user, String content) {
-        Post post = getPostById(postId);
+    public void addComment(UUID id, User user, String content) {
+        Post post = getPostById(id);
         commentService.addComment(post, user, content);
     }
 
@@ -128,9 +128,9 @@ public class PostService {
         return postRepository.findByUser(user);  // Fetches all posts created by the specified user
     }
 
-    public void deletePost(UUID postId, User user) {
+    public void deletePost(UUID id, User user) {
         // Check if the post exists
-        Post post = postRepository.findById(postId)
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         // Check if the user is an admin or the post creator
