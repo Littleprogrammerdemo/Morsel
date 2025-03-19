@@ -1,0 +1,168 @@
+package app.user;
+
+import app.post.service.PostService;
+import app.security.AuthenticationMetadata;
+import app.user.model.User;
+import app.user.service.UserService;
+import app.web.controller.UserController;
+import app.web.dto.UserEditRequest;
+import app.web.dto.mapper.DtoMapper;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class UserControllerUnitTest {
+
+    @Mock
+    private UserService userService;
+    @Mock
+    private AuthenticationMetadata authMetadata;
+
+
+    @Mock
+    private PostService postService;
+
+    @Mock
+    private Model model;
+
+    @Mock
+    private BindingResult bindingResult;
+
+    @InjectMocks
+    private UserController userController;
+
+
+    @Test
+    void givenAdminUser_whenGetAllUsers_thenReturnModelAndView() {
+        // Given
+        List<User> users = List.of(new User(), new User());
+        when(userService.getAllUsers()).thenReturn(users);
+
+        // When
+        ModelAndView modelAndView = userController.getAllUsers(mock(AuthenticationMetadata.class));
+
+        // Then
+        assertEquals("admin-reports", modelAndView.getViewName());
+        assertEquals(users, modelAndView.getModel().get("users"));
+    }
+
+    @Test
+    void givenExistingUsername_whenViewProfile_thenReturnProfilePage() {
+        // Given
+        User user = new User();
+        user.setUsername("testUser");
+        when(userService.findByUsername("testUser")).thenReturn(Optional.of(user));
+
+        // When
+        String viewName = userController.viewProfile("testUser", model);
+
+        // Then
+        assertEquals("profile", viewName);
+        verify(model, times(1)).addAttribute("user", user);
+    }
+
+    @Test
+    void givenNonExistingUsername_whenViewProfile_thenReturnErrorPage() {
+        // Given
+        when(userService.findByUsername("unknownUser")).thenReturn(Optional.empty());
+
+        // When
+        String viewName = userController.viewProfile("unknownUser", model);
+
+        // Then
+        assertEquals("error", viewName);
+    }
+
+    @Test
+    void givenAuthenticatedUser_whenGetProfileMenu_thenReturnProfileMenu() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        when(authMetadata.getUserId()).thenReturn(userId); // Mock method properly
+
+        User user = new User();
+        user.setId(userId);
+        when(userService.getByUserId(userId)).thenReturn(user);
+        when(DtoMapper.mapUserToUserEditRequest(user)).thenReturn(new UserEditRequest());
+
+        // When
+        ModelAndView modelAndView = userController.getProfileMenu(authMetadata);
+
+        // Then
+        assertEquals("profile-menu", modelAndView.getViewName());
+        assertEquals(user, modelAndView.getModel().get("user"));
+        assertNotNull(modelAndView.getModel().get("userEditRequest"));
+    }
+
+
+    @Test
+    void givenValidUserEditRequest_whenUpdateUserProfile_thenRedirectToHome() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        UserEditRequest editRequest = new UserEditRequest();
+        when(bindingResult.hasErrors()).thenReturn(false);
+        doNothing().when(userService).editUserDetails(userId, editRequest);
+
+        // When
+        ModelAndView modelAndView = userController.updateUserProfile(userId, editRequest, bindingResult);
+
+        // Then
+        assertEquals("redirect:/home", modelAndView.getViewName());
+    }
+
+    @Test
+    void givenInvalidUserEditRequest_whenUpdateUserProfile_thenReturnProfileMenu() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        UserEditRequest editRequest = new UserEditRequest();
+        when(bindingResult.hasErrors()).thenReturn(true);
+        User user = new User();
+        when(userService.getByUserId(userId)).thenReturn(user);
+
+        // When
+        ModelAndView modelAndView = userController.updateUserProfile(userId, editRequest, bindingResult);
+
+        // Then
+        assertEquals("profile-menu", modelAndView.getViewName());
+        assertEquals(user, modelAndView.getModel().get("user"));
+        assertEquals(editRequest, modelAndView.getModel().get("userEditRequest"));
+    }
+
+    @Test
+    void givenUserId_whenSwitchUserStatus_thenRedirectToUsers() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        doNothing().when(userService).switchStatus(userId);
+
+        // When
+        String viewName = userController.switchUserStatus(userId);
+
+        // Then
+        assertEquals("redirect:/users", viewName);
+    }
+
+    @Test
+    void givenUserId_whenSwitchUserRole_thenRedirectToUsers() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        doNothing().when(userService).changeUserRole(userId);
+
+        // When
+        String viewName = userController.switchUserRole(userId);
+
+        // Then
+        assertEquals("redirect:/users", viewName);
+    }
+}
