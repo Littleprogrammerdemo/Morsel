@@ -2,13 +2,16 @@ package app.web.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
 @Data
+@Getter
+@Setter
 @Builder
-public class UserEditRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class    UserEditRequest {
 
     @Size(max = 15, message = "First name can't have more than 15 symbols")
     private String firstName;
