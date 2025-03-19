@@ -1,7 +1,5 @@
 package app.web.controller;
 
-import app.category.model.Category;
-import app.category.model.CategoryType;
 import app.post.model.Post;
 import app.post.service.PostService;
 import app.security.AuthenticationMetadata;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;

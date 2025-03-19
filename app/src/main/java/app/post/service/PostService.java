@@ -1,7 +1,6 @@
 package app.post.service;
 
-import app.category.model.Category;
-import app.category.service.CategoryService;
+import app.category.model.CategoryType;
 import app.cloudinary.CloudinaryService;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
@@ -27,23 +26,20 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CloudinaryService cloudinaryService;
-    private final CategoryService categoryService;
     private final CommentService commentService;
     private final UserService userService;
 
     @Autowired
     public PostService(PostRepository postRepository, CommentService commentService,CloudinaryService cloudinaryService,
-                       CategoryService categoryService, UserService userService) {
+                        UserService userService) {
         this.postRepository = postRepository;
         this.cloudinaryService = cloudinaryService;
-        this.categoryService = categoryService;
         this.userService = userService;
         this.commentService = commentService;
     }
 
     // Create a post with image upload
     public void createPost(User user, CreateNewPost createNewPost) {
-        Category category = categoryService.getCategoryByType(createNewPost.getCategoryType());
 
         // Upload image to Cloudinary if file is provided
         String imageUrl = null;
@@ -61,7 +57,7 @@ public class PostService {
                 .user(user)
                 .title(createNewPost.getTitle())
                 .content(createNewPost.getContent())
-                .category(category)
+                .categoryType(CategoryType.valueOf(createNewPost.getCategoryType()))
                 .imageUrl(imageUrl) // Store Cloudinary URL
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())

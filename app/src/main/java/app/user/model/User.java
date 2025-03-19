@@ -38,8 +38,6 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-
-    @Column(length = 255)
     private String bio;
     private LocalDateTime lastLogin;
     @Enumerated(EnumType.STRING)
