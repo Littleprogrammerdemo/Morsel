@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,13 +55,25 @@ public class PostController {
         modelAndView.addObject("user", user);  // Add user to the model
         return modelAndView;
     }
-
-    @PostMapping("/new")
+    @PostMapping()
     public ModelAndView createOrUpdatePost(@Valid CreateNewPost createNewPost,
+                                           BindingResult bindingResult,
                                            @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
+
+        // If there are errors in the binding (e.g., validation errors), return the same form view
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("createRecipe");
+            modelAndView.addObject("createRecipe", createNewPost);  // Populate the form with the invalid data
+            modelAndView.addObject("user", user);  // Add user to the model
+            return modelAndView;
+        }
+
+        // If no errors, create the post
         postService.createPost(user, createNewPost);
-        return new ModelAndView("redirect:/home");  // Redirect to home after successful operation
+
+        // Redirect to the posts page after successful creation
+        return new ModelAndView("redirect:/posts");
     }
 
     @PostMapping("/{id}/like")

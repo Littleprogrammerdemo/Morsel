@@ -100,7 +100,7 @@ class CloudinaryServiceUnitTest {
 
         // Then
         assertEquals(expectedUrl, uploadedUrl);
-        verify(cloudinary.uploader(), times(1)).upload(any(String.class), any(Map.class));  
+        verify(cloudinary.uploader(), times(1)).upload(any(String.class), any(Map.class));
     }
 
     @Test
