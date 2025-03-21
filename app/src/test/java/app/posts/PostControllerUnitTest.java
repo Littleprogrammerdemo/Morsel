@@ -97,7 +97,7 @@ class PostControllerUnitTest {
         when(userService.getByUserId(user.getId())).thenReturn(user);
         when(bindingResult.hasErrors()).thenReturn(false);
 
-        ModelAndView modelAndView = postController.createOrUpdatePost(createNewPost, bindingResult, authenticationMetadata);
+        ModelAndView modelAndView = postController.createPost(createNewPost, bindingResult, authenticationMetadata);
 
         verify(postService, times(1)).createPost(user, createNewPost);
         assertEquals("redirect:/posts", modelAndView.getViewName());
@@ -110,7 +110,7 @@ class PostControllerUnitTest {
         when(userService.getByUserId(user.getId())).thenReturn(user);
         when(bindingResult.hasErrors()).thenReturn(true);
 
-        ModelAndView modelAndView = postController.createOrUpdatePost(createNewPost, bindingResult, authenticationMetadata);
+        ModelAndView modelAndView = postController.createPost(createNewPost, bindingResult, authenticationMetadata);
 
         assertEquals("createRecipe", modelAndView.getViewName());
         assertEquals(user, modelAndView.getModel().get("user"));

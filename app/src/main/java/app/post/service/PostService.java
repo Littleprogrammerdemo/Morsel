@@ -12,6 +12,7 @@ import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.service.UserService;
 import app.web.dto.CreateNewPost;
+import app.web.dto.UpdatePostRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,33 @@ public class PostService {
 
         postRepository.save(post);
     }
+    // Update a post with new image, title, content, and category
+    public void updatePost(UUID id, UpdatePostRequest updatePost) {
+        Post post = getPostById(id);
+
+        // Update fields if they are not null
+        if (updatePost.getTitle() != null) post.setTitle(updatePost.getTitle());
+        if (updatePost.getContent() != null) post.setContent(updatePost.getContent());
+        if (updatePost.getCategoryType() != null)
+            post.setCategoryType(CategoryType.valueOf(updatePost.getCategoryType()));
+
+        // Handle image upload if a new image is provided
+        if (updatePost.getImageFile() != null && !updatePost.getImageFile().isEmpty()) {
+            try {
+                String imageUrl = cloudinaryService.uploadRecipeImage(updatePost.getImageFile(), "recipeId", 1);
+                post.setImageUrl(imageUrl);  // Update the image URL
+            } catch (CloudinaryException e) {
+                log.error("Failed to upload image to Cloudinary", e);
+                throw new RuntimeException("Failed to upload image", e);
+            }
+        }
+
+        // Update the timestamp of the post
+        post.setUpdatedOn(LocalDateTime.now());
+
+        // Save the updated post
+        postRepository.save(post);
+    }
 
     // Get a post by ID
     public Post getPostById(UUID id) {
@@ -87,7 +115,14 @@ public class PostService {
         post.setLikes(post.getLikes() + 1);
         postRepository.save(post);
     }
+    // Increment view count for a post
+    public void incrementView(UUID postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
 
+        post.setViews(post.getViews() + 1);
+        postRepository.save(post);
+    }
     // Share a post
     public void sharePost(UUID id) {
         Post post = postRepository.findById(id)

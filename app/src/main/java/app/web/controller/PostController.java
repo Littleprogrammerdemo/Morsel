@@ -6,6 +6,7 @@ import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.CreateNewPost;
+import app.web.dto.UpdatePostRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -56,7 +57,7 @@ public class PostController {
         return modelAndView;
     }
     @PostMapping()
-    public ModelAndView createOrUpdatePost(@Valid CreateNewPost createNewPost,
+    public ModelAndView createPost(@Valid CreateNewPost createNewPost,
                                            BindingResult bindingResult,
                                            @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
@@ -69,11 +70,34 @@ public class PostController {
             return modelAndView;
         }
 
-        // If no errors, create the post
         postService.createPost(user, createNewPost);
 
         // Redirect to the posts page after successful creation
         return new ModelAndView("redirect:/posts");
+    }
+
+    @GetMapping("/{id}/edit")
+    public ModelAndView editPostForm(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        Post post = postService.getPostById(id);
+        ModelAndView modelAndView = new ModelAndView("editPost");
+        modelAndView.addObject("updatePost", new UpdatePostRequest(post.getTitle(), post.getContent(), post.getCategoryType().name(), null));
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @PostMapping("/{id}/update")
+    public ModelAndView updatePost(@PathVariable UUID id, @Valid UpdatePostRequest updatePost, BindingResult bindingResult,
+                                   @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("editPost");
+            modelAndView.addObject("updatePost", updatePost);
+            return modelAndView;
+        }
+
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
+        postService.updatePost(id, updatePost);
+        return new ModelAndView("redirect:/posts/" + id);
     }
 
     @PostMapping("/{id}/like")
@@ -117,5 +141,7 @@ public class PostController {
         postService.deletePost(id, user);
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
+    
+
 
 }
