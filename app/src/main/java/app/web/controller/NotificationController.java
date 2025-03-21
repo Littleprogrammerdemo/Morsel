@@ -1,10 +1,6 @@
 package app.web.controller;
 
-import app.notification.client.dto.Comment;
-import app.notification.client.dto.FriendRequest;
-import app.notification.client.dto.Like;
-import app.notification.client.dto.Notification;
-import app.notification.client.dto.NotificationPreference;
+import app.notification.client.dto.*;
 import app.notification.service.NotificationService;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
@@ -81,19 +77,23 @@ public class NotificationController {
         return "redirect:/notifications";
     }
     @PostMapping("/like")
-    public void likePost(@RequestBody Like likeDTO) {
-        notificationService.handleLikeNotification(likeDTO);
+    public void likePost(@RequestBody LikeRequest likeRequestDTO) {
+        notificationService.handleLikeNotification(likeRequestDTO);
     }
 
     // Comments endpoints
     @PostMapping("/comment")
-    public void postComment(@RequestBody Comment commentDTO) {
-        notificationService.handleCommentNotification(commentDTO);
+    public void postComment(@RequestBody CommentRequest commentRequestDTO) {
+        notificationService.handleCommentNotification(commentRequestDTO);
     }
 
     // Friend request endpoints
     @PostMapping("/friend-request")
     public void sendFriendRequest(@RequestBody FriendRequest friendRequestDTO) {
         notificationService.handleFriendRequestNotification(friendRequestDTO);
+    }
+    @PostMapping("/rating")
+    public void sendRatingNotification(@RequestBody RatingRequest ratingRequest) {
+        notificationService.handleRatingNotification(ratingRequest);
     }
 }

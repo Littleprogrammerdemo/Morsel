@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class Like {
+public class LikeRequest {
     private UUID userId;
     private UUID postId;
 }

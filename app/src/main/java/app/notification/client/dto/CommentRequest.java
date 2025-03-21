@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class Comment {
+public class CommentRequest {
     private UUID userId;
     private UUID postId;
     private String content;

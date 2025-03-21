@@ -33,12 +33,15 @@ public interface NotificationClient {
     ResponseEntity<Void> retryFailedNotifications(@RequestParam(name = "userId") UUID userId);
 
     @PostMapping("/like")
-    ResponseEntity<Void> sendLikeNotification(@RequestBody Like likeDTO);
+    ResponseEntity<Void> sendLikeNotification(@RequestBody LikeRequest likeRequest);
 
     // Sending a comment notification
     @PostMapping("/comment")
-    ResponseEntity<Void> sendCommentNotification(@RequestBody Comment commentDTO);
+    ResponseEntity<Void> sendCommentNotification(@RequestBody CommentRequest commentRequest);
 
     @PostMapping("/friend-request")
-    ResponseEntity<Void> sendFriendRequestNotification(@RequestBody FriendRequest friendRequestDTO);
+    ResponseEntity<Void> sendFriendRequestNotification(@RequestBody FriendRequest friendRequest);
+
+    @PostMapping("/friend-request")
+    ResponseEntity<Void> sendRatingRequestNotification(@RequestBody RatingRequest ratingRequest);
 }

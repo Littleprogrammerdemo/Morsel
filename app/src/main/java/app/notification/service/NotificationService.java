@@ -2,13 +2,7 @@ package app.notification.service;
 
 import app.exception.NotificationFeignCallException;
 import app.notification.client.NotificationClient;
-import app.notification.client.dto.Notification;
-import app.notification.client.dto.NotificationPreference;
-import app.notification.client.dto.NotificationRequest;
-import app.notification.client.dto.UpsertNotificationPreference;
-import app.notification.client.dto.Like;
-import app.notification.client.dto.Comment;
-import app.notification.client.dto.FriendRequest;
+import app.notification.client.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -119,20 +113,20 @@ public class NotificationService {
     }
 
     // Notify User of a New Like
-    public void handleLikeNotification(Like likeDTO) {
+    public void handleLikeNotification(LikeRequest likeRequestDTO) {
         String emailSubject = "New Like on Your Post!";
-        String emailBody = String.format("User %s liked your post with ID: %s.", likeDTO.getUserId(), likeDTO.getPostId());
+        String emailBody = String.format("User %s liked your post with ID: %s.", likeRequestDTO.getUserId(), likeRequestDTO.getPostId());
 
-        sendNotification(likeDTO.getUserId(), emailSubject, emailBody);
+        sendNotification(likeRequestDTO.getUserId(), emailSubject, emailBody);
     }
 
     // Notify User of a New Comment
-    public void handleCommentNotification(Comment commentDTO) {
+    public void handleCommentNotification(CommentRequest commentRequestDTO) {
         String emailSubject = "New Comment on Your Post!";
         String emailBody = String.format("User %s commented on your post with ID: %s. Comment: %s",
-                commentDTO.getUserId(), commentDTO.getPostId(), commentDTO.getContent());
+                commentRequestDTO.getUserId(), commentRequestDTO.getPostId(), commentRequestDTO.getContent());
 
-        sendNotification(commentDTO.getUserId(), emailSubject, emailBody);
+        sendNotification(commentRequestDTO.getUserId(), emailSubject, emailBody);
     }
 
     // Notify User of a New Friend Request
@@ -141,5 +135,13 @@ public class NotificationService {
         String emailBody = String.format("User %s has sent you a friend request.", friendRequestDTO.getSenderId());
 
         sendNotification(friendRequestDTO.getReceiverId(), emailSubject, emailBody);
+    }
+    // Notify User of a New Rating
+    public void handleRatingNotification(RatingRequest ratingRequestDTO) {
+        String emailSubject = "New Rating on Your Post!";
+        String emailBody = String.format("User %s rated your post with ID: %s. Rating: %d.",
+                ratingRequestDTO.getRaterId(), ratingRequestDTO.getPostId(), ratingRequestDTO.getRatingValue());
+
+        sendNotification(ratingRequestDTO.getUserId(), emailSubject, emailBody);
     }
 }
