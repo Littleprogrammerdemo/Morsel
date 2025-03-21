@@ -1,0 +1,425 @@
+/* Global styles and resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Empty state styling */
+.empty-state-container {
+    text-align: center;
+    padding: 80px 40px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin: 100px;
+    max-width: 900px; /* Increased max-width */
+    border: 1px solid #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 400px;
+}
+
+.empty-state-icon {
+    margin-bottom: 30px; /* Increased space */
+}
+
+.empty-state-icon svg {
+    width: 120px;  /* Increased size */
+    height: 120px; /* Increased size */
+    color: #859096;
+    margin-left:-7px;
+    transition: all 0.2s ease;
+}
+
+.empty-state-icon svg:hover {
+    color: #607d8b;
+    transform: scale(1.15);  /* Slightly larger hover effect */
+}
+
+.empty-state-title {
+    font-size: 28px;  /* Increased font size */
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 18px;  /* Increased margin */
+    letter-spacing: 0.8px;  /* Slightly increased letter spacing */
+}
+
+.empty-state-message {
+    color: #2f2e2e;
+    font-size: 20px;  /* Increased font size */
+    line-height: 1.3;
+    margin-bottom: 20px;  /* Increased space */
+    font-family: 'Roboto', sans-serif;
+    max-width: 80%; /* Limiting the width for better readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state-message a {
+    color: #00796b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.empty-state-message a:hover {
+    color: #004d40;
+}
+
+.btn-outline-primary {
+    color: #de238d;
+    background-color: transparent;
+    border: 2px solid #de238d;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    color: #ffffff;
+    background-color: #de238d;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+/* Layout containers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.col, .col-md-6, .col-sm-12 {
+    padding: 0 15px;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        width: 50%;
+    }
+}
+
+/* Navbar Styling */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px; /* Increased padding for more space */
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 18px; /* Increased font size for the navbar */
+}
+
+.logo {
+    font-size: 26px;  /* Increased font size for the logo */
+    font-weight: bold;
+    color: #de238d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #de238d;
+}
+
+/* Sidebar Navigation */
+.nav-bar {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 900;
+    font-size: 18px;  /* Increased font size for sidebar text */
+}
+
+.side-bar-container {
+    padding: 30px 0;  /* Increased padding for more space */
+    height: 100%;
+}
+
+.side_navbar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.app-nav-bar {
+    padding: 0 30px 20px; /* Increased padding for better spacing */
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 30px;
+}
+
+.app-nav-bar-name {
+    font-size: 24px; /* Increased font size */
+    font-weight: bold;
+    color: #de238d;
+}
+
+.app-nav-bar-version {
+    font-size: 14px;  /* Slightly increased version font size */
+    color: #888;
+    margin-top: 5px;
+}
+
+.func-block {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.func-block:not(:last-child) {
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 10px;
+}
+
+.func-block a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;  /* Increased padding for better clickability */
+    color: #555;
+    text-decoration: none;
+    font-size: 18px; /* Increased font size for menu items */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.func-block a:hover {
+    background-color: #f5f5f5;
+    color: #de238d;
+}
+
+.func-block a p {
+    margin: 0;
+    font-weight: 600;  /* Slightly bolder text */
+}
+
+.func-block a svg {
+    width: 22px;  /* Increased icon size */
+    height: 22px;
+}
+
+.logout {
+    margin-top: auto;
+    color: #de238d !important;
+}
+/* Main content area - adjust to accommodate sidebar */
+.container {
+    margin-left: 250px;
+    padding: 30px;
+    width: calc(100% - 250px);
+}
+
+/* Friend cards */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eaeaea;
+    transition: border-color 0.3s;
+}
+
+.card:hover .rounded-circle {
+    border-color: #de238d;
+}
+
+.card-img-top {
+    width: 120px;
+    height: 120px;
+}
+
+.card-text {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+h3 {
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #de238d;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 6px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #3490dc;
+    border-color: #3490dc;
+}
+
+.btn-primary:hover {
+    background-color: #2779bd;
+    border-color: #2779bd;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #e3342f;
+    border-color: #e3342f;
+}
+
+.btn-danger:hover {
+    background-color: #cc1f1a;
+    border-color: #cc1f1a;
+}
+
+/* Empty state styling */
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .card-img-top {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-bar {
+        width: 200px;
+    }
+
+    .container {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    .func-block a p {
+        font-size: 14px;
+    }
+
+    .func-block a {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-bar {
+        width: 70px;
+    }
+
+    .container {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 15px;
+    }
+
+    .func-block a p {
+        display: none;
+    }
+
+    .func-block a {
+        justify-content: center;
+        padding: 15px 0;
+    }
+
+    .app-nav-bar-name {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .app-nav-bar-version {
+        text-align: center;
+    }
+
+    .card-body .row {
+        flex-direction: column;
+    }
+
+    .card-body .col {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+}

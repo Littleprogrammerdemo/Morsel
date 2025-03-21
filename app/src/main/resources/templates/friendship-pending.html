@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Friendship Invitations</title>
+    <link rel="stylesheet" th:href="@{/css/friendship.css}">
+
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <a href="/home" class="logo">Morsel</a>
+    </nav>
+</header>
+<div class="nav-bar"><div class="side-bar-container">
+    <nav>
+        <nav>
+            <div class="nav-bar">
+                <div class="side-bar-container">
+                    <div class="side_navbar">
+                        <!-- App Name -->
+                        <div class="app-nav-bar">
+                            <div class="app-nav-bar-name">Morsel</div>
+                            <div class="app-nav-bar-version">v1.0.0</div>
+                        </div>
+                        <div class="func-block">
+                            <div class="func-block">
+                                <a class="home" href="/home">
+                                    <p>Home</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                                    </svg>
+                                </a>
+                                <!-- My Profile -->
+                                <a href="/users/{id}/profile" class="flex items-center space-x-2">
+                                    <p>My Profile</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+                                    </svg>
+                                </a>
+                                <a class="messages" href="/messages/send">
+                                    <p>Messages</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 16c0 1.1.9 2 2 2h3v3l4-3h7c1.1 0 1.99-.9 1.99-2L22 4c0-1.1-.9-2-2-2z"></path>
+                                    </svg>
+                                </a>
+                                <!-- Notifications -->
+                                <a href="/notifications" class="flex items-center space-x-2">
+                                    <p>Notifications</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 1.99 2zm6-6V9c0-3.31-2.69-6-6-6S6 5.69 6 9v7l-2 2v1h16v-1l-2-2z"></path>
+                                    </svg>
+                                </a>
+                                <a href="/bookmarks">
+                                    <p>Bookmarks</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15 0H5c-1.1 0-1.99.9-1.99 2L3 22l8-4 8 4V2c0-1.1-.9-2-2-2z"></path>
+                                    </svg>
+                                </a>
+                                <a href="/posts">
+                                    <p>My Posts</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 3h16c1.1 0 1.99.9 1.99 2L22 19c0 1.1-.9 2-2 2H4c-1.1 0-1.99-.9-1.99-2L2 5c0-1.1.9-2 2-2zM12 8h4v4h-4z"></path>
+                                    </svg>
+                                </a>
+                                <a href="/users">
+                                    <p>Admin Panel</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <div class="func-block">
+                                <a href="/posts/new">
+                                    <p>Add Recipe</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Logout -->
+                            <div class="func-block">
+                                <a class="logout" href="/logout">
+                                    <p>Logout</p>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l4-4-4-4M20 12H8"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </nav>
+</div>
+</div>
+<div class="container">
+    <h3 class="my-3">Friendship Invitations</h3>
+
+    <div class="row">
+        <div th:each="invitation : ${invitations}" class="col-md-6 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Profile Picture -->
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <img th:src="${invitation.invitingUserProfilePicture}"
+                                 class="card-img-top rounded-circle mx-auto"
+                                 style="width: 150px; height: 150px; object-fit: cover;"
+                                 alt="Inviting User Photo">
+                        </div>
+
+                        <!-- Invitation Details -->
+                        <div class="col">
+                            <h5>
+                                <span th:text="${invitation.invitingFirstName}"></span>
+                                <span th:text="${invitation.invitingLastName}"></span>
+                            </h5>
+                            <p>Username: <span th:text="${invitation.invitingUsername}"></span></p>
+
+                            <!-- Accept Friendship -->
+                            <form th:action="@{/friendships/accept/{friendshipId}(friendshipId=${invitation.id})}" method="post">
+                                <button type="submit" class="btn btn-primary btn-sm mb-1">Accept Invitation</button>
+                            </form>
+
+                            <!-- Decline Friendship -->
+                            <form th:action="@{/friendships/decline/{friendshipId}(friendshipId=${invitation.id})}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm">Decline Invitation</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Invitations Message -->
+    <div th:if="${#lists.isEmpty(invitations)}" class="text-center mt-4">
+        <p class="text-muted">You have no pending friendship invitations.</p>
+        <p class="text-muted">Send invitations to connect with new friends.</p>
+    </div>
+</div>
+</body>
+</html>

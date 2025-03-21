@@ -1,6 +1,6 @@
 package app.user.model;
 
-import app.follow.model.Follow;
+import app.follow.model.FriendshipInvitation;
 import app.post.model.Post;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,11 +55,13 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
-    private Set<Follow> following;
+    @OneToMany(mappedBy = "invitingUser")
+    private List<FriendshipInvitation> sentInvitations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL)
-    private Set<Follow> followers;
+    @OneToMany(mappedBy = "acceptingUser")
+    private List<FriendshipInvitation> receivedInvitations = new ArrayList<>();
+
+    private boolean accepted = false;
 
 
 }
