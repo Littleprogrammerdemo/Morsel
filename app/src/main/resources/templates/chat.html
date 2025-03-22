@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat Room</title>
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:src="@{/static/js/chat.js}" defer></script>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>Live Chat</h2>
+    </div>
+
+    <!-- Chat Box: Displaying all messages -->
+    <div id="messages" class="chat-box">
+        <!-- Thymeleaf Loop to Display Previous Messages -->
+        <div th:each="message : ${messages}"
+             th:classappend="${message.sender == currentUser} ? 'own-message' : 'other-message'"
+             class="message" id="message-[[${message.id}]]">
+            <strong th:text="${message.sender}"></strong>:
+            <span th:text="${message.content}" id="content-[[${message.id}]]"></span>
+            <span class="timestamp" th:text="${#temporals.format(message.timestamp, 'HH:mm')}"></span>
+            <button class="edit-button" onclick="editMessage([[${message.id}]])">Edit</button>
+        </div>
+    </div>
+
+    <!-- Input Section for Sending New Messages -->
+    <div class="chat-input">
+        <input type="text" id="username" placeholder="Enter your name">
+        <input type="text" id="message" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+</body>
+</html>

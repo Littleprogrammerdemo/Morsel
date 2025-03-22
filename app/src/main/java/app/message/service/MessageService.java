@@ -1,10 +1,15 @@
 package app.message.service;
 
-import app.web.dto.MessageRequest;
 import  app.message.model.Message;
 import  app.message.repository.MessageRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class MessageService {
@@ -15,13 +20,27 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    // Send a new message
-    public Message sendMessage(MessageRequest messageRequest) {
-        Message message = new Message(
-                messageRequest.getSender(),
-                messageRequest.getReceiver(),
-                messageRequest.getContent()
-        );
+    // Save a new message
+    @Transactional
+    public Message saveMessage(Message message) {
+        message.setTimestamp(LocalDateTime.now());
         return messageRepository.save(message);
+    }
+
+    // Get all messages (chat history)
+    public List<Message> getChatHistory() {
+        return messageRepository.findAllByOrderByTimestampAsc();
+    }
+
+    // Edit an existing message
+    @Transactional
+    public Optional<Message> editMessage(UUID messageId, String newContent) {
+        Optional<Message> messageOptional = messageRepository.findById(messageId);
+        if (messageOptional.isPresent()) {
+            Message message = messageOptional.get();
+            message.setContent(newContent);
+            messageRepository.save(message);
+        }
+        return messageOptional;
     }
 }

@@ -1,6 +1,5 @@
 package app.message.model;
 
-import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,21 +14,16 @@ import java.util.UUID;
 @Builder
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     private String sender;
-    private String receiver;
-
     private String content;
-    private LocalDateTime timestamp = LocalDateTime.now();
-    @Enumerated(EnumType.STRING)
-    private MessageStatus status;
+    private LocalDateTime timestamp;
 
-    public Message(String sender, String receiver, String content) {
+    public Message(String sender, String content, LocalDateTime timestamp) {
         this.sender = sender;
-        this.receiver = receiver;
         this.content = content;
-        this.timestamp = LocalDateTime.now(); // Automatically set timestamp
+        this.timestamp = timestamp;
     }
+
 }
