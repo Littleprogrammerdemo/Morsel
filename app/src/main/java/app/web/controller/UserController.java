@@ -11,12 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -44,15 +42,7 @@ public class UserController {
 
         return modelAndView;
     }
-    @GetMapping("/{username}")
-    public String viewProfile(@PathVariable String username, Model model) {
-        Optional<User> user = userService.findByUsername(username);
-        if (user.isEmpty()) {
-            return "error"; // Потребителят не съществува
-        }
-        model.addAttribute("user", user.get());
-        return "profile";
-    }
+
     @GetMapping("/{id}/profile")
     public ModelAndView getProfileMenu(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());

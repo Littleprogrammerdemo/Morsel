@@ -1,84 +1,295 @@
-/* General styles */
+/* Main Variables */
+:root {
+    --primary-color: #de238d;
+    --secondary-color: #2b4f60;
+    --accent-color: #f7c59f;
+    --light-color: #efefef;
+    --dark-color: #333333;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --transition: all 0.3s ease;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --radius: 8px;
+    --font-main: 'Poppins', sans-serif;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-main);
     background-color: #f8f9fa;
-    color: #333;
+    color: var(--dark-color);
+    line-height: 1.6;
 }
 
-/* Navbar */
+/* Header Styles */
+header {
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .navbar {
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
 }
 
-/* Container */
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    margin-left: 20px;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation Bar Styles */
+.nav-bar {
+    display: flex;
+    position: relative;
+
+}
+
+.side-bar-container {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    overflow-y: auto;
+}
+
+.side_navbar {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    height: 100%;
+}
+
+/* App Navigation Bar */
+.app-nav-bar {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+
+}
+
+.app-nav-bar-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+
+}
+
+.app-nav-bar-version {
+    font-size: 1rem;
+    color: #888;
+}
+
+/* Functional Blocks */
+.func-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.func-block a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.2rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+.func-block a:hover {
+    background-color: rgba(255, 107, 53, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.func-block a p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.func-block a svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Special Buttons */
+.func-block a.logout {
+    margin-top: auto;
+    color: var(--danger-color);
+}
+
+.func-block a.logout:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Main Content */
 .container {
-    max-width: 1200px;
-    margin: auto;
+    margin-left: 280px;
+    padding: 2rem;
+    max-width: calc(100% - 280px);
 }
 
-/* Header */
-h2 {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
+.container h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
 }
 
-/* Recipe Cards */
+/* Card Styles */
 .card {
-    border-radius: 12px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    border: none;
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    height: 100%;
 }
 
 .card:hover {
-    transform: scale(1.03);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-.card img {
+.card-img-top {
     height: 200px;
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
 }
 
 .card-body {
-    text-align: center;
+    padding: 1.5rem;
 }
 
 .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.75rem;
 }
 
 .card-text {
-    font-size: 0.95rem;
-    color: #666;
+    color: #555;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
 }
 
 /* Buttons */
 .btn {
-    font-size: 0.9rem;
-    padding: 8px 15px;
-    border-radius: 6px;
-    transition: all 0.2s ease-in-out;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+    margin-left: 10px;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border: none;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+
+/* Empty State */
+.alert {
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
 }
 
-.btn-danger {
-    background-color: #dc3545;
-    border: none;
+.alert-info {
+    background-color: rgba(43, 79, 96, 0.1);
+    border: 1px solid var(--secondary-color);
 }
 
-.btn-danger:hover {
-    background-color: #b21f2d;
+.alert-heading {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .side-bar-container {
+        width: 240px;
+    }
+
+    .container {
+        margin-left: 240px;
+        max-width: calc(100% - 240px);
+    }
+
+    .func-block a p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-bar-container {
+        width: 80px;
+        overflow: hidden;
+    }
+
+    .side_navbar .app-nav-bar-version,
+    .side_navbar a p {
+        display: none;
+    }
+
+    .side_navbar a {
+        justify-content: center;
+    }
+
+    .side_navbar .app-nav-bar-name {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        margin-left: 80px;
+        max-width: calc(100% - 80px);
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .side-bar-container {
+        width: 60px;
+    }
+
+    .container {
+        margin-left: 60px;
+        max-width: calc(100% - 60px);
+        padding: 0.75rem;
+    }
+
+    .card-img-top {
+        height: 160px;
+    }
 }

@@ -60,33 +60,6 @@ class UserControllerUnitTest {
     }
 
     @Test
-    void givenExistingUsername_whenViewProfile_thenReturnProfilePage() {
-        // Given
-        User user = new User();
-        user.setUsername("testUser");
-        when(userService.findByUsername("testUser")).thenReturn(Optional.of(user));
-
-        // When
-        String viewName = userController.viewProfile("testUser", model);
-
-        // Then
-        assertEquals("profile", viewName);
-        verify(model, times(1)).addAttribute("user", user);
-    }
-
-    @Test
-    void givenNonExistingUsername_whenViewProfile_thenReturnErrorPage() {
-        // Given
-        when(userService.findByUsername("unknownUser")).thenReturn(Optional.empty());
-
-        // When
-        String viewName = userController.viewProfile("unknownUser", model);
-
-        // Then
-        assertEquals("error", viewName);
-    }
-
-    @Test
     void givenAuthenticatedUser_whenGetProfileMenu_thenReturnProfileMenu() {
         // Given
         UUID userId = UUID.randomUUID();

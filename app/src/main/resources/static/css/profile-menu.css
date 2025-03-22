@@ -140,7 +140,7 @@ body {
 
 /* Profile Menu Specific Styles */
 .profile-menu {
-    max-width: 800px; /* Increased max-width */
+    max-width: 1000px; /* Increased max-width */
     margin: 0 auto;
 }
 
