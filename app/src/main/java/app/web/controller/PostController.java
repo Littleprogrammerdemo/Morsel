@@ -51,7 +51,7 @@ public class PostController {
     @GetMapping("/new")
     public ModelAndView createPostForm(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId()); // Get the user from AuthenticationMetadata
-        ModelAndView modelAndView = new ModelAndView("createRecipe");
+        ModelAndView modelAndView = new ModelAndView("createPost");
         modelAndView.addObject("createRecipe", new CreateNewPost());  // Prepare form object
         modelAndView.addObject("user", user);  // Add user to the model
         return modelAndView;
@@ -64,7 +64,7 @@ public class PostController {
 
         // If there are errors in the binding (e.g., validation errors), return the same form view
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("createRecipe");
+            ModelAndView modelAndView = new ModelAndView("createPost");
             modelAndView.addObject("createRecipe", createNewPost);  // Populate the form with the invalid data
             modelAndView.addObject("user", user);  // Add user to the model
             return modelAndView;
