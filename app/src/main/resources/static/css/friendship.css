@@ -7,7 +7,7 @@
 
 :root {
     --primary: #d92673;
-    --primary-dark: #db2777;
+    --primary-dark: #c42e64;
     --primary-light: #fbcfe8;
     --secondary: #48dbfb;
     --secondary-dark: #0abde3;
@@ -87,6 +87,19 @@ header {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     overflow-y: auto;
 }
+.side_navbar .func-block a {
+    color: var(--primary); /* Apply primary pink to the text */
+}
+
+.side_navbar .func-block a:hover {
+    background-color: rgba(236, 72, 153, 0.1); /* Hover background remains the same */
+    color: var(--primary-dark); /* Hover color for text is a darker pink */
+}
+
+.app-nav-bar-name {
+    color: var(--primary); /* Ensure app name is in primary pink */
+}
+
 
 .side_navbar {
     display: flex;
@@ -300,6 +313,7 @@ header {
     margin-bottom: 1.5rem;
     font-weight: 600; /* Bold text for emphasis */
 }
+
 /* Explicitly target the "Send invitations" text */
 .text-invites .send-invites-text {
     color: #2d2d2d !important;  /* Force black color */
