@@ -1,99 +1,115 @@
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Cute Error Page CSS - Pink/Purple Theme */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Main Container */
-main {
+    background-color: #ffecf8;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+    background-image:
+            radial-gradient(circle at 10% 20%, #f8c8ff 0%, transparent 20%),
+            radial-gradient(circle at 80% 30%, #e2c6ff 0%, transparent 20%),
+            radial-gradient(circle at 30% 70%, #ffd6f3 0%, transparent 20%),
+            radial-gradient(circle at 70% 80%, #d9c6ff 0%, transparent 20%);
+}
+
+main {
+    width: 90%;
+    max-width: 500px;
 }
 
 .home-section {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Error Container */
-.single-section-box {
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-}
-
-.payment-result-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.box {
-    padding: 2.5rem 2rem;
-    text-align: center;
-}
-
-.internal-server-error {
-    background-color: #ff6b6b;
-    color: white;
-}
-
-/* Error Header */
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.icon {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
 }
 
-.payment-header h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+.single-section-box {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(217, 128, 250, 0.2),
+    0 4px 8px rgba(217, 128, 250, 0.1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    animation: bounce 2s ease infinite alternate;
+}
+
+.box {
+    background: linear-gradient(135deg, #e860ff 0%, #b44eff 100%);
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.internal-server-error .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.internal-server-error .icon {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    animation: float 3s ease-in-out infinite;
+}
+
+.internal-server-error .icon svg {
+    transform: scale(1.5);
+}
+
+.internal-server-error h2 {
+    font-size: 28px;
+    color: white;
+    margin: 10px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-weight: 700;
 }
 
-.payment-header p {
-    font-size: 1rem;
-    max-width: 90%;
-    margin: 0 auto;
-    opacity: 0.9;
+.internal-server-error p {
+    color: white;
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.6;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Details Section */
 .details-section {
-    padding: 2rem;
     background-color: white;
-    border-top: 1px solid #eee;
+    padding: 24px;
+    position: relative;
+    z-index: 1;
+}
+
+.details-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(
+            90deg,
+            #e860ff,
+            #e860ff 10px,
+            white 10px,
+            white 20px
+    );
 }
 
 .details-section-container {
     display: flex;
-    margin-bottom: 1rem;
-    align-items: flex-start;
-    gap: 0.5rem;
+    margin-bottom: 16px;
+    align-items: baseline;
 }
 
 .details-section-container:last-child {
@@ -101,64 +117,124 @@ main {
 }
 
 .details-section-container strong {
-    min-width: 140px;
-    color: #555;
+    color: #b44eff;
+    margin-right: 10px;
+    font-size: 16px;
 }
 
 .details-section-container p {
-    color: #666;
-    flex: 1;
+    margin: 0;
+    color: #663399;
+    font-size: 15px;
 }
 
-/* Return Button */
 .profile-actions-button {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    background-color: #4CAF50; /* Green color suitable for a recipe app */
-    color: white;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 18px 20px;
     text-decoration: none;
-    padding: 1rem;
-    border-radius: 0 0 12px 12px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    color: #b44eff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-actions-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 235, 255, 0.4),
+            transparent
+    );
+    transition: all 0.5s ease;
+}
+
+.profile-actions-button:hover::before {
+    left: 100%;
 }
 
 .profile-actions-button:hover {
-    background-color: #388e3c;
+    background-color: #f9f0ff;
 }
 
 .profile-actions-button p {
-    font-size: 1rem;
+    margin: 0 16px 0 0;
 }
 
 .profile-actions-button svg {
-    width: 20px;
-    height: 20px;
+    transition: transform 0.3s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .payment-box {
-        padding: 2rem 1rem;
+.profile-actions-button:hover svg {
+    transform: translateX(-8px) scale(1.1);
+}
+
+/* Cute heart decorations */
+.box::before,
+.box::after {
+    content: "♥";
+    position: absolute;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 20px;
+}
+
+.box::before {
+    top: 15px;
+    left: 15px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.box::after {
+    bottom: 15px;
+    right: 15px;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .internal-server-error h2 {
+        font-size: 22px;
     }
 
-    .details-section {
-        padding: 1.5rem;
+    .internal-server-error p {
+        font-size: 14px;
     }
 
-    .details-section-container {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-
-    .icon {
+    .internal-server-error .icon {
         width: 70px;
         height: 70px;
     }
+}
 
-    .payment-header h2 {
-        font-size: 1.5rem;
-    }
+/* Add shadow to SVG path to improve visibility */
+.internal-server-error .icon svg path {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
