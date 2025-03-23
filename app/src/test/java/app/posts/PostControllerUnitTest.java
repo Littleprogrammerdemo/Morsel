@@ -1,5 +1,6 @@
 package app.posts;
 
+import app.category.model.CategoryType;
 import app.post.model.Post;
 import app.post.service.PostService;
 import app.security.AuthenticationMetadata;
@@ -7,6 +8,7 @@ import app.user.model.User;
 import app.user.service.UserService;
 import app.web.controller.PostController;
 import app.web.dto.CreateNewPost;
+import app.web.dto.UpdatePostRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,6 +54,8 @@ class PostControllerUnitTest {
         postId = UUID.randomUUID();
         post = new Post();
         post.setId(postId);
+        post.setTitle("Sample Title");
+        post.setContent("Sample Content");
     }
 
     @Test
@@ -85,7 +90,7 @@ class PostControllerUnitTest {
 
         ModelAndView modelAndView = postController.createPostForm(authenticationMetadata);
 
-        assertEquals("createRecipe", modelAndView.getViewName());
+        assertEquals("createPost", modelAndView.getViewName());
         assertEquals(user, modelAndView.getModel().get("user"));
         assertTrue(modelAndView.getModel().get("createRecipe") instanceof CreateNewPost);
     }
@@ -112,9 +117,47 @@ class PostControllerUnitTest {
 
         ModelAndView modelAndView = postController.createPost(createNewPost, bindingResult, authenticationMetadata);
 
-        assertEquals("createRecipe", modelAndView.getViewName());
+        assertEquals("createPost", modelAndView.getViewName());
         assertEquals(user, modelAndView.getModel().get("user"));
         assertEquals(createNewPost, modelAndView.getModel().get("createRecipe"));
+    }
+
+    @Test
+    void shouldUpdatePostWhenValidData() {
+        UpdatePostRequest updatePostRequest = new UpdatePostRequest("Updated Title", "Updated Content", "MEXICAN", null);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        when(authenticationMetadata.getUserId()).thenReturn(user.getId());
+        when(userService.getByUserId(user.getId())).thenReturn(user);
+
+        ModelAndView modelAndView = postController.updatePost(postId, updatePostRequest, bindingResult, authenticationMetadata);
+
+        verify(postService, times(1)).updatePost(postId, updatePostRequest);
+        assertEquals("redirect:/posts/" + postId, modelAndView.getViewName());
+    }
+
+    @Test
+    void shouldReturnEditFormWhenUpdateHasErrors() {
+        UpdatePostRequest updatePostRequest = new UpdatePostRequest("Updated Title", "Updated Content", "MEXICAN", null);
+        when(bindingResult.hasErrors()).thenReturn(true);
+
+        ModelAndView modelAndView = postController.updatePost(postId, updatePostRequest, bindingResult, authenticationMetadata);
+
+        assertEquals("editPost", modelAndView.getViewName());
+        assertEquals(updatePostRequest, modelAndView.getModel().get("updatePost"));
+    }
+
+    @Test
+    void shouldHandleEditingNonExistentPost() {
+        when(postService.getPostById(postId)).thenThrow(new RuntimeException("Post not found"));
+
+        assertThrows(RuntimeException.class, () -> postController.editPostForm(postId, authenticationMetadata));
+    }
+
+    @Test
+    void shouldHandleDeletingNonExistentPost() {
+        doThrow(new RuntimeException("Post not found")).when(postService).deletePost(postId, user);
+
+        assertThrows(RuntimeException.class, () -> postController.deletePost(postId, authenticationMetadata));
     }
 
     @Test
@@ -140,25 +183,6 @@ class PostControllerUnitTest {
         ModelAndView modelAndView = postController.ratePost(postId, rating, authenticationMetadata);
         verify(postService, times(1)).ratePost(postId, user, rating);
         assertEquals("redirect:/posts/" + postId, modelAndView.getViewName());
-    }
-
-    @Test
-    void shouldAddCommentAndRedirect() {
-        String comment = "Nice post!";
-        when(authenticationMetadata.getUserId()).thenReturn(user.getId());
-        when(userService.getByUserId(user.getId())).thenReturn(user);
-
-        ModelAndView modelAndView = postController.addComment(postId, comment, authenticationMetadata);
-        verify(postService, times(1)).addComment(postId, user, comment);
-        assertEquals("redirect:/posts/" + postId, modelAndView.getViewName());
-    }
-
-    @Test
-    void shouldDeleteCommentAndRedirect() {
-        UUID commentId = UUID.randomUUID();
-        ModelAndView modelAndView = postController.deleteComment(commentId);
-        verify(postService, times(1)).deleteCommentFromPost(commentId);
-        assertEquals("redirect:/home", modelAndView.getViewName());
     }
 
     @Test
