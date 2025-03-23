@@ -1,4 +1,4 @@
-package app.comment;
+package app.unit_tests.comment;
 
 import app.comment.model.Comment;
 import app.comment.repository.CommentRepository;

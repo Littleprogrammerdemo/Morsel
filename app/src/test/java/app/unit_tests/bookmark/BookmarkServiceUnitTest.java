@@ -1,4 +1,4 @@
-package app.bookmark;
+package app.unit_tests.bookmark;
 
 import app.bookmark.model.Bookmark;
 import app.bookmark.repository.BookmarkRepository;

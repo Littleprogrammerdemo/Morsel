@@ -1,4 +1,4 @@
-package app.user;
+package app.unit_tests.user;
 
 import app.exception.DomainException;
 import app.user.model.User;

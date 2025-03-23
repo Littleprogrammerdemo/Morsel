@@ -1,6 +1,7 @@
 package app.user.service;
 
 import app.exception.DomainException;
+import app.exception.UsernameAlreadyExistException;
 import app.user.model.User;
 import app.security.AuthenticationMetadata;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,7 +45,7 @@ public class UserService implements UserDetailsService {
 
         Optional<User> optionUser = userRepository.findByUsername(registerRequest.getUsername());
         if (optionUser.isPresent()) {
-            throw new DomainException("Username [%s] already exist.".formatted(registerRequest.getUsername()));
+            throw new UsernameAlreadyExistException("Username [%s] already exist.".formatted(registerRequest.getUsername()));
         }
 
         User user = userRepository.save(initializeNewUserAccount(registerRequest));

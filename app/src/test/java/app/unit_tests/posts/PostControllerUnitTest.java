@@ -1,4 +1,4 @@
-package app.posts;
+package app.unit_tests.posts;
 
 import app.category.model.CategoryType;
 import app.post.model.Post;

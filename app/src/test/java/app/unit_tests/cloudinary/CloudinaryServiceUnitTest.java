@@ -1,5 +1,6 @@
-package app.cloudinary;
+package app.unit_tests.cloudinary;
 
+import app.cloudinary.CloudinaryService;
 import app.exception.CloudinaryException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;

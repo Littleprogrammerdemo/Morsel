@@ -1,6 +1,5 @@
 package app.web.controller;
 
-import app.follow.model.FriendshipInvitation;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;

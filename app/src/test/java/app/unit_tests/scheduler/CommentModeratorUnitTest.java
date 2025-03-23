@@ -1,7 +1,8 @@
-package app.scheduler;
+package app.unit_tests.scheduler;
 
 import app.comment.model.Comment;
 import app.comment.repository.CommentRepository;
+import app.scheduler.CommentModerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package app.user;
+package app.unit_tests.user;
 
 import app.post.service.PostService;
 import app.security.AuthenticationMetadata;

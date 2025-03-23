@@ -1,5 +1,6 @@
-package app.scheduler;
+package app.unit_tests.scheduler;
 
+import app.scheduler.InactiveUsersCleaner;
 import app.user.model.User;
 import app.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
