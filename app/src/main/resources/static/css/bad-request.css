@@ -1,0 +1,148 @@
+/* Error Page Specific Styles */
+.bad-request {
+    background-color: #f0ad4e; /* Warning orange color for bad request */
+    color: white;
+}
+
+/* General Error Page Structure */
+.payment-result-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.payment-box {
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.payment-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.payment-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.payment-header p {
+    font-size: 1rem;
+    max-width: 90%;
+    margin: 0 auto;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+/* Details Section */
+.details-section {
+    padding: 1.5rem 2rem;
+    background-color: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.details-section-container {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+}
+
+.details-section-container:last-child {
+    margin-bottom: 0;
+}
+
+.details-section-container strong {
+    min-width: 150px;
+    color: #555;
+    font-weight: 600;
+}
+
+.details-section-container p {
+    color: #666;
+    margin: 0;
+}
+
+/* Return Button */
+.profile-actions-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: #3498db; /* Blue for navigation */
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.profile-actions-button:hover {
+    background-color: #2980b9;
+}
+
+.profile-actions-button p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .payment-box {
+        padding: 2rem 1.25rem;
+    }
+
+    .details-section {
+        padding: 1.25rem;
+    }
+
+    .details-section-container {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .icon {
+        width: 65px;
+        height: 65px;
+    }
+
+    .payment-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .payment-header p {
+        font-size: 0.95rem;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .home-section {
+        padding: 1rem;
+    }
+
+    .icon {
+        width: 55px;
+        height: 55px;
+    }
+
+    .icon svg {
+        width: 30px;
+        height: 30px;
+    }
+}

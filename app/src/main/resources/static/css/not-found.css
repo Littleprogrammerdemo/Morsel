@@ -1,0 +1,392 @@
+/* Cute 404 Page Not Found with Food Theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f8fb;
+    color: #5a3e36;
+    line-height: 1.6;
+    background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4e8f6' fill-opacity='0.4'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.home-section {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Cookie and cooking utensil decorations */
+.home-section::before,
+.home-section::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.home-section::before {
+    top: -45px;
+    left: -20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23c87137' d='M32 4a28 28 0 100 56 28 28 0 000-56z'/%3E%3Cpath fill='%23ad6327' d='M32 10a22 22 0 100 44 22 22 0 000-44z'/%3E%3Cpath fill='%239b5523' d='M32 14a18 18 0 100 36 18 18 0 000-36z'/%3E%3Ccircle cx='24' cy='22' r='2' fill='%23785423'/%3E%3Ccircle cx='22' cy='32' r='2' fill='%23785423'/%3E%3Ccircle cx='32' cy='42' r='2' fill='%23785423'/%3E%3Ccircle cx='42' cy='32' r='2' fill='%23785423'/%3E%3Ccircle cx='40' cy='22' r='2' fill='%23785423'/%3E%3Ccircle cx='32' cy='24' r='2' fill='%23785423'/%3E%3C/svg%3E");
+    transform: rotate(-15deg);
+}
+
+.home-section::after {
+    bottom: -40px;
+    right: -30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M48 20l8-8c1.5-1.5 1.5-4 0-5.5l-.5-.5c-1.5-1.5-4-1.5-5.5 0L42 14l-2-2h-2v2l2 2-14 14-2-2c-1.2-1.2-3.2-1.2-4.4 0L8 39.6V36l-8 8 8 8v-3.6l11.6-11.6c1.2-1.2 1.2-3.2 0-4.4l-2-2 14-14 2 2v2h2l2-2 7 28z' fill='%23c2cde7'/%3E%3Cpath d='M32 37.6l-5.2 5.2-11.6-11.6-3.6 3.6L23.2 46.4l3.6-3.6-5.2-5.2z' fill='%23acb7d0'/%3E%3Cpath d='M8 52L0 44l8-8z' fill='%238d9cb8'/%3E%3C/svg%3E");
+    transform: rotate(10deg);
+}
+
+/* Lost Recipe Decoration */
+.home-section::before {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23e6e9ed' d='M56 3H8v58h48V3z'/%3E%3Cpath fill='%23d3d7da' d='M48 15v38H16V15h32m4-4H12v46h40V11z'/%3E%3Cpath fill='%23969faa' d='M16 15h32v2H16z'/%3E%3Cpath fill='%23969faa' d='M16 21h32v2H16zM16 27h32v2H16zM16 33h32v2H16zM16 39h20v2H16zM16 45h26v2H16z'/%3E%3Cpath fill='%23ff826e' d='M52 3h-4v58h4z'/%3E%3Cpath fill='%23fcd770' d='M43 51c0 2.2-1.8 4-4 4s-4-1.8-4-4 1.8-4 4-4 4 1.8 4 4z'/%3E%3Cpath fill='%23f0d0b4' d='M43 51h-8c-5 0-9 4-9 9h26c0-5-4-9-9-9z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%) rotate(5deg);
+    z-index: -1;
+}
+
+/* Error Container */
+.single-section-box {
+    background-color: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(100, 156, 240, 0.15);
+    overflow: hidden;
+    position: relative;
+    border: 4px solid #e9f4ff;
+}
+
+.payment-result-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Missing Ingredient Decoration */
+.payment-result-container::before {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M54 28c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10 10 4.5 10 10z' fill='%23ed7899'/%3E%3Cpath d='M16 5C9.9 5 5 9.9 5 16c0 7.2 9.9 16.5 11 17.3 1.1-.9 11-10.1 11-17.3 0-6.1-4.9-11-11-11z' fill='%23ff826e'/%3E%3Cpath d='M37 36.4V40c0 3.3 2.7 6 6 6h4c2.2 0 4 1.8 4 4v6H13v-6c0-2.2 1.8-4 4-4h4c3.3 0 6-2.7 6-6v-3.6c3.3-1.5 6-4.2 7.6-7.6 3.4-1.5 6.1-4.3 7.6-7.6 3.4-1.5 6.1-4.3 7.6-7.6H32.2c.5 1 .8 2.1.8 3.3 0 1.2-.3 2.3-.8 3.3.5 1 .8 2.1.8 3.3 0 1.2-.3 2.3-.8 3.3.5 1 .8 2.1.8 3.3 0 1.2-.3 2.3-.8 3.3z' fill='%23fcd770'/%3E%3Cpath d='M25 33.3V40c0 3.3-2.7 6-6 6h-2v4h30v-4h-2c-3.3 0-6-2.7-6-6v-6.7c-1.9.4-3.9.7-6 .7-2.8 0-5.5-.3-8-1z' fill='%23f7b96d'/%3E%3Cpath d='M49.8 8.2c-.7 1.2-1.8 2.2-3 2.9.9 1.7 1.5 3.6 1.5 5.6.1 6.5-5.2 11.8-11.7 11.9-2.8 0-5.4-1-7.5-2.6-2 3.2-5.6 5.4-9.6 5.4C12.9 31.4 7.6 26.1 7.6 19.4c0-2 .5-3.9 1.4-5.6-1.3-.7-2.3-1.7-3-2.9-1.9 2.4-3 5.3-3 8.5 0 7.6 6.2 13.8 13.8 13.8 2.2 0 4.2-.5 6-1.4 1.9 3.3 5.4 5.6 9.5 5.6 6 0 10.9-4.9 10.9-10.9 0-1.3-.2-2.6-.7-3.8 5.4-1.8 9.3-6.9 9.3-13 0-3.2-1.1-6.1-3-8.5z' fill='%23d3d7da'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    right: -15px;
+    top: -15px;
+    transform: rotate(15deg);
+}
+
+.payment-box {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.not-found {
+    background-color: #e9f4ff; /* Soft blue for not found */
+    color: #3572a5;
+    position: relative;
+}
+
+/* Add a magnifying glass */
+.not-found::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='24' cy='24' r='20' fill='%23edeff1'/%3E%3Cpath fill='%23b4bdc4' d='M36.7 36.7c-7 7-18.4 7-25.5 0-7-7-7-18.4 0-25.5 7-7 18.4-7 25.5 0 7.1 7.1 7.1 18.5 0 25.5z'/%3E%3Cpath fill='%23fff' d='M24 4C12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20S35.1 4 24 4zm0 36c-8.8 0-16-7.2-16-16S15.2 8 24 8s16 7.2 16 16-7.2 16-16 16z'/%3E%3Cpath fill='%23969faa' d='M39.2 39.2L39.2 39.2c-1.6 1.6-1.6 4.1 0 5.7l12.6 12.6c1.6 1.6 4.1 1.6 5.7 0l0 0c1.6-1.6 1.6-4.1 0-5.7L44.8 39.2C43.3 37.7 40.8 37.7 39.2 39.2z'/%3E%3Cpath fill='%23805333' d='M60 52.4L44.8 37.1c-1.6-1.6-4.1-1.6-5.7 0l-2.8 2.8 17.6 17.6 2.8-2.8C58.4 53.1 60 52.4 60 52.4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    left: 20px;
+    bottom: 20px;
+    z-index: 1;
+    transform: rotate(-15deg);
+    opacity: 0.8;
+}
+
+/* Error Header */
+.payment-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.icon {
+    background-color: #6ca0e2;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(108, 160, 226, 0.4);
+    position: relative;
+}
+
+/* Custom SVG - Replace the alert icon with a search/missing icon */
+.icon svg {
+    display: none;
+}
+
+.icon::after {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='M21 21l-4.35-4.35'%3E%3C/path%3E%3Cpath d='M8 11h6'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+/* Question mark sprinkles */
+.payment-header::before,
+.payment-header::after {
+    content: "?";
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    color: #6ca0e2;
+    opacity: 0.6;
+}
+
+.payment-header::before {
+    right: 30px;
+    top: 20px;
+    transform: rotate(15deg);
+}
+
+.payment-header::after {
+    left: 35px;
+    top: 50px;
+    transform: rotate(-20deg);
+}
+
+.payment-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: #3572a5;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.payment-header p {
+    font-size: 1rem;
+    max-width: 90%;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* Details Section */
+.details-section {
+    padding: 2rem;
+    background-color: white;
+    border-top: 2px dashed #b5d8ff;
+    position: relative;
+}
+
+/* Footprint decoration - implies something was here but walked away */
+.details-section::before,
+.details-section::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 32px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 32'%3E%3Cpath d='M10 0C4.5 0 0 4.5 0 10c0 4.4 2.9 8.2 7 9.5v12.2l6-3v-9.2c4.1-1.3 7-5 7-9.5C20 4.5 15.5 0 10 0z' fill='%23d3e6f9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+.details-section::before {
+    left: 30%;
+    bottom: 15px;
+    transform: rotate(15deg) scale(0.7);
+}
+
+.details-section::after {
+    left: 45%;
+    bottom: 15px;
+    transform: rotate(-5deg) scale(0.7);
+}
+
+.details-section-container {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.details-section-container:last-child {
+    margin-bottom: 0;
+}
+
+.details-section-container strong {
+    min-width: 140px;
+    color: #6ca0e2;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.details-section-container p {
+    color: #3572a5;
+    flex: 1;
+}
+
+/* Return Button */
+.profile-actions-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: #6ca0e2;
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: 0 0 12px 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-actions-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.profile-actions-button:hover {
+    background-color: #4a89da;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(108, 160, 226, 0.4);
+}
+
+.profile-actions-button:hover::before {
+    left: 100%;
+}
+
+.profile-actions-button p {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.profile-actions-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Animation for the question marks and footprints */
+@keyframes float {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+
+.payment-header::before {
+    animation: float 3s ease-in-out infinite;
+}
+
+.payment-header::after {
+    animation: float 4s ease-in-out infinite;
+}
+
+.details-section::before,
+.details-section::after {
+    animation: float 5s ease-in-out infinite;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    main {
+        padding: 1.5rem;
+    }
+
+    .payment-box {
+        padding: 2rem 1.5rem;
+    }
+
+    .details-section {
+        padding: 1.5rem;
+    }
+
+    .home-section::before,
+    .home-section::after {
+        width: 60px;
+        height: 60px;
+    }
+
+    .icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .payment-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .details-section-container {
+        flex-direction: column;
+    }
+
+    .details-section-container strong {
+        min-width: auto;
+    }
+
+    .not-found::after {
+        width: 40px;
+        height: 40px;
+        left: 10px;
+        bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-section::before {
+        display: none;
+    }
+
+    .home-section::after {
+        width: 40px;
+        height: 40px;
+        right: -10px;
+        bottom: -20px;
+    }
+
+    .payment-result-container::before {
+        width: 40px;
+        height: 40px;
+        right: -10px;
+        top: -10px;
+    }
+
+    .not-found::after {
+        display: none;
+    }
+}

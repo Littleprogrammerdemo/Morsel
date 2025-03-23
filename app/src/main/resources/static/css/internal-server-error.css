@@ -1,0 +1,164 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Main Container */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.home-section {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Error Container */
+.single-section-box {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.payment-result-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.box {
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.internal-server-error {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+/* Error Header */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.payment-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.payment-header p {
+    font-size: 1rem;
+    max-width: 90%;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* Details Section */
+.details-section {
+    padding: 2rem;
+    background-color: white;
+    border-top: 1px solid #eee;
+}
+
+.details-section-container {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.details-section-container:last-child {
+    margin-bottom: 0;
+}
+
+.details-section-container strong {
+    min-width: 140px;
+    color: #555;
+}
+
+.details-section-container p {
+    color: #666;
+    flex: 1;
+}
+
+/* Return Button */
+.profile-actions-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: #4CAF50; /* Green color suitable for a recipe app */
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: 0 0 12px 12px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.profile-actions-button:hover {
+    background-color: #388e3c;
+}
+
+.profile-actions-button p {
+    font-size: 1rem;
+}
+
+.profile-actions-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .payment-box {
+        padding: 2rem 1rem;
+    }
+
+    .details-section {
+        padding: 1.5rem;
+    }
+
+    .details-section-container {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .payment-header h2 {
+        font-size: 1.5rem;
+    }
+}
