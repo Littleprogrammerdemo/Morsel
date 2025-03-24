@@ -19,4 +19,12 @@ public class Message {
     private String sender;
     private String content;
     private LocalDateTime timestamp;
+
+    // Custom constructor (for tests)
+    public Message(UUID id, String content, LocalDateTime timestamp) {
+        this.id = id;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
 }
+

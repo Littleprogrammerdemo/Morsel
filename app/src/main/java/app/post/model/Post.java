@@ -51,4 +51,5 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CategoryType categoryType;
+
 }
