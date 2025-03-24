@@ -52,4 +52,10 @@ public class Post {
     @Column(nullable = false)
     private CategoryType categoryType;
 
+    // For tests
+    public Post(UUID id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
 }

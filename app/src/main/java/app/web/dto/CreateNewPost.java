@@ -22,4 +22,10 @@
         private String categoryType;
 
         private MultipartFile imageFile;
+//For tests
+        public CreateNewPost(String title, String content, String category) {
+            this.title = title;
+            this.content = content;
+            this.categoryType = category;
+        }
     }
