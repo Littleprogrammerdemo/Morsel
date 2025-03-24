@@ -1,5 +1,6 @@
 package app.web.controller;
 
+import app.comment.model.Comment;
 import app.post.model.Post;
 import app.post.service.PostService;
 import app.security.AuthenticationMetadata;
@@ -36,15 +37,25 @@ public class PostController {
         List<Post> posts = postService.getAllPosts();
         ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("post", posts);
+        modelAndView.addObject("posts", posts);
         return modelAndView;
     }
 
     @GetMapping("/{id}")
     public ModelAndView viewPost(@PathVariable UUID id) {
+        Post post = postService.getPostById(id);
+        List<Comment> comments = postService.getCommentsForPost(id); // Added comments
+
+        if (post == null) {
+            throw new RuntimeException("Post not found with id: " + id);
+        }
+        if (comments == null) {
+            comments = List.of(); // Empty list if no comments exist
+        }
+
         ModelAndView modelAndView = new ModelAndView("posts");
-        modelAndView.addObject("post", postService.getPostById(id));
-        modelAndView.addObject("comments", postService.getCommentsForPost(id));  // Add comments
+        modelAndView.addObject("post", post);
+        modelAndView.addObject("comments", comments);
         return modelAndView;
     }
 
@@ -95,11 +106,11 @@ public class PostController {
             modelAndView.addObject("updatePost", updatePost);
             return modelAndView;
         }
-
         User user = userService.getByUserId(authenticationMetadata.getUserId());
         postService.updatePost(id, updatePost);
         return new ModelAndView("redirect:/posts/" + id);
     }
+
 
     @PostMapping("/{id}/like")
     public ModelAndView likePost(@PathVariable UUID id) {
