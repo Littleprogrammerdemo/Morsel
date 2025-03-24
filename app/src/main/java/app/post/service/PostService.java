@@ -16,6 +16,7 @@ import app.web.dto.UpdatePostRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PostService {
         this.userService = userService;
         this.commentService = commentService;
     }
-
+    @Transactional
     // Create a post with image upload
     public void createPost(User user, CreateNewPost createNewPost) {
 
@@ -148,7 +149,7 @@ public class PostService {
     public List<Comment> getCommentsForPost(UUID postId) {
         return commentService.getCommentsForPost(postId);
     }
-
+    @Transactional
     // Add a comment to a post
     public void addComment(UUID id, User user, String content) {
         Post post = getPostById(id);

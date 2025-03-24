@@ -5,7 +5,7 @@ import app.follow.repository.FriendshipInvitationRepository;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class FriendshipInvitationService {
         return userRepository.findById(authUser.getUserId())
                 .orElseThrow(() -> new IllegalStateException("Authenticated user not found"));
     }
-
+    @Transactional
     public FriendshipInvitation createFriendshipInvitation(UUID acceptingUserId) {
         // Get the current authenticated user
         User invitingUser = getAuthenticatedUser(); // Get the currently authenticated user
