@@ -95,43 +95,43 @@
     </nav>
 </div></div>
 <div class="container mx-auto p-4">
-
-    <form th:action="@{/posts/new}" th:method="POST" th:object="${createRecipe}">
+    <form th:action="@{/posts}" th:method="POST" th:object="${createNewPost}" enctype="multipart/form-data">
         <h1 class="text-3xl font-bold mb-4">Create a New Post</h1>
+
         <div class="form-group">
-            <div class= "label-holder justify-content-center text-gray-600 font-semibold mb-2">
+            <div class="label-holder justify-content-center text-gray-600 font-semibold mb-2">
                 <label for="title" class="h3 mb-2">Title</label>
             </div>
             <input type="text" placeholder="Title" id="title" name="title" th:field="*{title}">
-            <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-warning"style="font-size: 15px">Error Text Here</small>
+            <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-warning" style="font-size: 15px">Error Text Here</small>
         </div>
 
         <div class="form-group">
-            <div class= "label-holder justify-content-center text-gray-600 font-semibold mb-2">
+            <div class="label-holder justify-content-center text-gray-600 font-semibold mb-2">
                 <label for="content" class="h3 mb-2">Content</label>
             </div>
-            <textarea th:field="*{content}" type="text" id="content" name="content" placeholder="Enter post content" class="border p-2 w-full rounded" ></textarea>
-            <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-warning"style="font-size: 15px">Error Text Here</small>
+            <textarea th:field="*{content}" type="text" id="content" name="content" placeholder="Enter post content" class="border p-2 w-full rounded"></textarea>
+            <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-warning" style="font-size: 15px">Error Text Here</small>
         </div>
-        <form th:action="@{/api/categories}" method="post" class="mb-4">
-            <div class="form-group">
-                <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
-                <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
-                    <option th:each="categoryType : ${T(app.category.model.CategoryType).values()}" th:value="${categoryType}" th:text="${categoryType}"></option>
-                    <p th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-warning"></p>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="image" class="block text-gray-600 font-semibold mb-2">Upload Image</label>
-                <input type="file" id="image" name="image" accept="image/*" th:field="*{imageFile}" class="block w-full text-gray-600 border p-2 rounded">
-            </div>
-        </form>
 
+        <div class="form-group">
+            <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
+            <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
+                <option th:each="categoryType : ${T(app.category.model.CategoryType).values()}" th:value="${categoryType}" th:text="${categoryType}"></option>
+            </select>
+            <p th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-warning"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="block text-gray-600 font-semibold mb-2">Upload Image</label>
+            <input type="file" id="image" name="imageFile" accept="image/*" th:field="*{imageFile}" class="block w-full text-gray-600 border p-2 rounded">
+        </div>
 
         <div class="button-holder d-flex justify-content-center">
             <button type="submit" class="btn btn-info  mb-3">Create post</button>
         </div>
     </form>
 </div>
+
 </body>
 </html>
