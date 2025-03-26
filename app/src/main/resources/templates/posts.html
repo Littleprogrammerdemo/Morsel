@@ -120,8 +120,7 @@
             <p><strong>Shares:</strong> <span th:text="${post.shares}"></span></p>
 
             <!-- Display Post Image -->
-            <img th:src="${post.imageUrl}" alt="Post Image" style="max-width: 100%; height: auto;"/>
-
+            <img th:if="${post.imageUrl != null}" th:src="${post.imageUrl}" alt="Post Image" style="max-width: 100%; height: auto;"/>
             <!-- Edit and Delete Buttons -->
             <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
             <form th:action="@{/posts/{id}(id=${post.id})}" method="post" style="display:inline;">

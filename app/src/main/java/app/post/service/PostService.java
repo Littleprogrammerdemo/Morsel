@@ -84,7 +84,7 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
-
+    @Transactional
     // Like a post
     public void likePost(UUID id) {
         Post post = postRepository.findById(id)
@@ -92,6 +92,7 @@ public class PostService {
         post.setLikes(post.getLikes() + 1);
         postRepository.save(post);
     }
+    @Transactional
     // Increment view count for a post
     public void incrementView(UUID postId) {
         Post post = postRepository.findById(postId)
@@ -100,6 +101,7 @@ public class PostService {
         post.setViews(post.getViews() + 1);
         postRepository.save(post);
     }
+    @Transactional
     // Share a post
     public void sharePost(UUID id) {
         Post post = postRepository.findById(id)
@@ -107,7 +109,7 @@ public class PostService {
         post.setShares(post.getShares() + 1);
         postRepository.save(post);
     }
-
+    @Transactional
     // Method to rate a post
     public void ratePost(UUID id, User user, int rating) {
         Post post = postRepository.findById(id)
@@ -120,6 +122,7 @@ public class PostService {
         post.setRating(rating);
         postRepository.save(post);
     }
+
 
     // Get comments for a post
     public List<Comment> getCommentsForPost(UUID postId) {

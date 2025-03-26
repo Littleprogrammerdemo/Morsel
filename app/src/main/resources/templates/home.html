@@ -102,6 +102,42 @@
     </nav>
 </div></div>
 <main>
+    <!-- Check if the posts list is not empty -->
+    <div th:if="${!#lists.isEmpty(posts)}">
+        <div th:each="post : ${posts}" class="post">
+            <h3 th:text="${post.title}"></h3>
+            <p th:text="${post.content}"></p>
+            <p>Posted by: <span th:text="${post.user.username}"></span></p>
+
+            <!-- Display the image if it's available -->
+            <div>
+                <img th:if="${post.imageUrl != null}" th:src="@{${post.imageUrl}}" alt="Post Image" class="post-image"/>
+            </div>
+
+            <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post">
+                <button type="submit">Like (<span th:text="${post.likes}"></span>)</button>
+            </form>
+
+            <form th:action="@{/posts/{id}/share(id=${post.id})}" method="post">
+                <button type="submit">Share</button>
+            </form>
+
+            <form th:action="@{/posts/{id}/rate(id=${post.id})}" method="post">
+                <input type="number" name="rating" min="1" max="5" required>
+                <button type="submit">Rate</button>
+            </form>
+
+            <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post">
+                <input type="text" name="content" placeholder="Write a comment..." required>
+                <button type="submit">Comment</button>
+            </form>
+
+            <div th:each="comment : ${post.comments}">
+                <p><strong th:text="${comment.user.username}"></strong>: <span th:text="${comment.content}"></span></p>
+            </div>
+        </div>
+    </div>
+
     <!-- Check if the posts list is empty -->
     <div th:if="${#lists.isEmpty(posts)}">
         <section class="welcome-card">
@@ -113,50 +149,6 @@
             <p><strong>Do you have a dish you’re passionate about?</strong> Share it with our community and help us grow this delicious collection! Add your recipe today, and inspire fellow food lovers to try something new.</p>
         </section>
     </div>
-
-    <!-- Check if the posts list is not empty -->
-    <div th:if="${!#lists.isEmpty(posts)}">
-        <div th:each="post : ${posts}">
-            <div class="post">
-                <h3 th:text="${post.title}"></h3>
-                <p th:text="${post.content}"></p>
-                <p><strong>Category:</strong> <span th:text="${post.categoryType}"></span></p>
-                <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
-                <p><strong>Shares:</strong> <span th:text="${post.shares}"></span></p>
-
-                <!-- Edit and Delete Buttons for Post Owner -->
-                <div th:if="${user != null and post.owner.id == user.id}">
-                    <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
-                    <form th:action="@{/posts/{id}(id=${post.id})}" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="delete"/>
-                        <button type="submit">Delete Post</button>
-                    </form>
-                </div>
-
-                <!-- Like, Share, and Rate Buttons for Everyone -->
-                <div>
-                    <!-- Like Post -->
-                    <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" style="display:inline;">
-                        <button type="submit">Like</button>
-                    </form>
-
-                    <!-- Share Post -->
-                    <form th:action="@{/posts/{id}/share(id=${post.id})}" method="post" style="display:inline;">
-                        <button type="submit">Share</button>
-                    </form>
-
-                    <!-- Rate Post -->
-                    <form th:action="@{/posts/{id}/rate(id=${post.id})}" method="post" style="display:inline;">
-                        <label for="rating">Rate this post:</label>
-                        <input type="number" id="rating" name="rating" min="1" max="5" step="1" required />
-                        <button type="submit">Rate</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </main>
 
 </body></html>

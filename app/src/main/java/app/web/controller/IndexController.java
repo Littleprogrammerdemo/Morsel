@@ -1,5 +1,7 @@
 package app.web.controller;
 
+import app.post.model.Post;
+import app.post.service.PostService;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;
@@ -15,14 +17,18 @@ import org.springframework.web.servlet.ModelAndView;
 import app.security.AuthenticationMetadata;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
+import java.util.List;
+
 @Controller
 public class IndexController {
 
     private final UserService userService;
+    private final PostService postService;
 
     @Autowired
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GetMapping("/")
@@ -65,13 +71,14 @@ public class IndexController {
 
     @GetMapping("/home")
     public ModelAndView getHomePage(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-
         User user = userService.getByUserId(authenticationMetadata.getUserId());
+        List<Post> posts = postService.getAllPosts(); // Fetch all posts
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("user", user);
+        modelAndView.addObject("posts", posts); // Add posts to the model
 
         return modelAndView;
     }
+
 }

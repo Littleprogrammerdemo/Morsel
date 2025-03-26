@@ -1,11 +1,13 @@
 package app.post.model;
 
 import app.category.model.CategoryType;
+import app.comment.model.Comment;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -46,6 +48,8 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.ACTIVE;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

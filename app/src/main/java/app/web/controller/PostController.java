@@ -33,13 +33,14 @@ public class PostController {
 
     @GetMapping
     public ModelAndView getAllPosts(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        User user = userService.getByUserId(authenticationMetadata.getUserId());
-        List<Post> posts = postService.getAllPosts();
+        User user = userService.getByUserId(authenticationMetadata.getUserId());  // Get the current user
+        List<Post> posts = postService.getPostsByUser(user);  // Get posts by this user
         ModelAndView modelAndView = new ModelAndView("posts");
         modelAndView.addObject("user", user);
         modelAndView.addObject("posts", posts);
         return modelAndView;
     }
+
 
     @GetMapping("/{id}")
     public ModelAndView viewPost(@PathVariable UUID id) {
@@ -92,6 +93,11 @@ public class PostController {
     public ModelAndView editPostForm(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
         Post post = postService.getPostById(id);
+        // Check if the current user is the owner of the post
+        if (!post.getUser().equals(user)) {
+            throw new RuntimeException("You are not authorized to edit this post.");
+        }
+
         ModelAndView modelAndView = new ModelAndView("editPost");
         modelAndView.addObject("updatePost", new UpdatePostRequest(post.getTitle(), post.getContent(), post.getCategoryType().name(), null));
         modelAndView.addObject("user", user);
@@ -107,6 +113,13 @@ public class PostController {
             return modelAndView;
         }
         User user = userService.getByUserId(authenticationMetadata.getUserId());
+        Post post = postService.getPostById(id);
+
+        // Check if the current user is the owner of the post
+        if (!post.getUser().equals(user)) {
+            throw new RuntimeException("You are not authorized to edit this post.");
+        }
+
         postService.updatePost(id, updatePost);
         return new ModelAndView("redirect:/posts/" + id);
     }
@@ -150,7 +163,11 @@ public class PostController {
     @DeleteMapping("/{id}")
     public ModelAndView deletePost(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
-        postService.deletePost(id, user);
+        Post post = postService.getPostById(id);
+        // Check if the current user is the owner of the post
+        if (!post.getUser().equals(user)) {
+            throw new RuntimeException("You are not authorized to delete this post.");
+        }
         return new ModelAndView("redirect:/home");  // Redirect to home after deletion
     }
     
