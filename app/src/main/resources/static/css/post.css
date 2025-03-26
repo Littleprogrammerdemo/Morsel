@@ -1,205 +1,140 @@
-/* Base Styles */
+:root {
+    --soft-pink: #FFB6C1;
+    --light-pink: #FFF0F5;
+    --pastel-purple: #E6E6FA;
+    --blush-pink: #FFC0CB;
+    --soft-lavender: #F0E6FF;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9fafb; /* Light gray background for a modern look */
-    color: #333; /* Dark gray text for good readability */
+    font-family: 'Nunito', 'Comic Sans MS', cursive;
+    background-color: var(--light-pink);
+    color: #333;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
 }
 
-/* Container */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
+.navbar {
+    background-color: var(--soft-pink);
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(255, 182, 193, 0.3);
+}
+
+.logo {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'Pacifico', cursive;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.side_navbar {
+    background-color: var(--pastel-purple);
+    border-radius: 15px;
     padding: 20px;
+    box-shadow: 0 4px 6px rgba(230, 230, 250, 0.5);
 }
 
-/* Headers */
-h1, h2, h3 {
-    color: #1f2937; /* Darker gray for headings */
-    font-weight: 700;
+.app-nav-bar-name {
+    color: var(--soft-pink);
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-h1 {
-    font-size: 2rem;
+.app-nav-bar-version {
+    color: #888;
+    font-size: 0.8rem;
+    font-style: italic;
 }
 
-h2 {
-    font-size: 1.5rem;
-}
-
-h3 {
-    font-size: 1.2rem;
-}
-
-/* Forms */
-form {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-input[type="text"], textarea, input[type="file"] {
-    width: 100%;
-    border: 1px solid #d1d5db;
-    padding: 10px;
-    border-radius: 6px;
-    margin-top: 5px;
-    font-size: 1rem;
-    background: #f9fafb;
-    transition: border-color 0.3s ease-in-out;
-}
-
-input[type="text"]:focus, textarea:focus, input[type="file"]:focus {
-    border-color: #2563eb; /* Blue border on focus */
-    outline: none;
-}
-
-textarea {
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 100px;
-}
-
-/* Buttons */
-button {
-    display: inline-block;
-    background: #2563eb; /* Primary blue */
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease-in-out;
-}
-
-button:hover {
-    background: #1e3a8a; /* Darker blue for hover */
-}
-
-/* Comment Buttons */
-button.delete {
-    background: #dc2626; /* Red for delete actions */
-    margin-left: 10px;
-}
-
-button.delete:hover {
-    background: #b91c1c; /* Darker red for hover */
-}
-
-/* Post Card */
-.post-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb; /* Light border */
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.post-card h2 {
-    margin: 0 0 10px;
-    color: #1f2937; /* Heading color */
-}
-
-.post-card p {
-    margin: 10px 0;
-    color: #4b5563; /* Muted text color */
-}
-
-.post-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-/* Likes and Ratings */
-.like-section, .rating-section {
+.func-block a {
     display: flex;
     align-items: center;
-    margin-top: 10px;
-}
-
-.like-section span, .rating-section span {
-    margin-left: 10px;
-    color: #4b5563; /* Muted text */
-}
-
-.rating-section button {
-    font-size: 1.2rem;
-    padding: 5px 10px;
-    background: none;
-    border: none;
-    color: #d1d5db; /* Light gray stars */
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
-}
-
-.rating-section button.active {
-    color: #fbbf24; /* Gold star for active rating */
-}
-
-.rating-section button:hover {
-    color: #f59e0b; /* Orange star on hover */
-}
-
-/* Comments */
-.comments-section {
-    margin-top: 20px;
-}
-
-.comments-section h3 {
-    margin-bottom: 10px;
-}
-
-.comment {
-    background: #f3f4f6;
-    border-radius: 6px;
+    color: #555;
+    text-decoration: none;
     padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    gap: 10px;
 }
 
-.comment p {
-    margin: 0;
-    color: #4b5563;
+.func-block a:hover {
+    background-color: var(--blush-pink);
+    color: white;
+    transform: scale(1.05);
 }
 
-.comment small {
-    display: block;
-    margin-top: 5px;
-    color: #9ca3af; /* Muted text */
+.func-block svg {
+    stroke: var(--soft-pink);
+    transition: stroke 0.3s ease;
 }
 
-.comment button {
-    font-size: 0.9rem;
+.func-block a:hover svg {
+    stroke: white;
+}
+
+.post {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 6px rgba(255, 182, 193, 0.2);
+    border: 2px solid var(--soft-lavender);
+}
+
+.post h3 {
+    color: var(--soft-pink);
+    font-size: 1.5rem;
+    border-bottom: 2px dotted var(--blush-pink);
+    padding-bottom: 10px;
+}
+
+.post a, .post button {
+    background-color: var(--soft-pink);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.post a:hover, .post button:hover {
+    background-color: #FF7F9F;
 }
 
 /* Responsive Design */
-@media (max-width: 640px) {
-    body {
+@media (max-width: 768px) {
+    .side_navbar {
         padding: 10px;
     }
 
-    .post-card {
-        padding: 15px;
-    }
-
-    button {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .like-section, .rating-section {
+    .func-block a {
         flex-direction: column;
-        align-items: flex-start;
+        text-align: center;
     }
+}
 
-    .rating-section button {
-        margin: 5px 0;
-    }
+/* Cute Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-pink);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--soft-pink);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #FF7F9F;
 }

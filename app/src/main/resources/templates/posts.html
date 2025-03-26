@@ -10,10 +10,6 @@
 <header>
 <nav class="navbar">
     <a href="/home" class="logo">Morsel</a>
-    <div class="search-bar">
-        <input type="text" placeholder="Search..." />
-        <button>Search</button>
-    </div>
 </nav>
 </header>
 <div class="nav-bar"><div class="side-bar-container">
@@ -101,67 +97,29 @@
 
     </nav>
 </div></div>
-<div class="container mx-auto p-4">
-    <!-- Post Details -->
-    <div class="mb-4 border-b pb-4">
-        <h1 class="text-3xl font-bold" th:text="${post.title}">Post Title</h1>
-        <p class="mt-2 text-gray-700" th:text="${post.content}">Post content goes here.</p>
-        <!-- Check if an image exists and only render it if available -->
-        <div th:if="${post.image}" class="mt-4">
-            <img th:src="@{${post.image}}" alt="Post Image" class="max-w-full rounded"/>
-        </div>
-    </div>
 
-    <!-- Like, Share, Rating Section -->
-    <div class="mt-4 flex justify-between items-center">
-        <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" class="flex items-center">
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Like</button>
-            <span class="ml-2 text-gray-600" th:text="'Likes: ' + ${post.likes}">Likes: 0</span>
-        </form>
-        <form th:action="@{/posts/{id}/share(id=${post.id})}" method="post">
-            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Share</button>
-            <span th:text="'Shares: ' + ${post.shares}">Shares: 0</span>
-        </form>
-        <div class="flex items-center">
-            <span class="mr-2 text-gray-600">Rate:</span>
-            <form th:action="@{/posts/{id}/rate(id=${post.id})}" method="post" class="flex">
-                <!-- Rating buttons -->
-                <button type="submit" name="rating" value="1" class="text-yellow-500 mx-1">★</button>
-                <button type="submit" name="rating" value="2" class="text-yellow-500 mx-1">★</button>
-                <button type="submit" name="rating" value="3" class="text-yellow-500 mx-1">★</button>
-                <button type="submit" name="rating" value="4" class="text-yellow-500 mx-1">★</button>
-                <button type="submit" name="rating" value="5" class="text-yellow-500 mx-1">★</button>
+<div th:if="${posts != null}">
+    <div th:each="post : ${posts}">
+        <div class="post">
+            <h3 th:text="${post.title}"></h3>
+            <p th:text="${post.content}"></p>
+            <p><strong>Category:</strong> <span th:text="${post.categoryType}"></span></p>
+            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
+            <p><strong>Shares:</strong> <span th:text="${post.shares}"></span></p>
+
+            <!-- Edit and Delete Buttons -->
+            <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
+            <form th:action="@{/posts/{id}(id=${post.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit">Delete Post</button>
             </form>
         </div>
     </div>
+</div>
 
-    <!-- Comments Section -->
-    <div class="mt-8">
-        <h2 class="text-lg font-bold">Comments</h2>
-        <div th:if="${comments != null}">
-            <div th:each="comment : ${comments}" class="bg-gray-100 p-4 rounded mb-4">
-                <p th:text="${comment.text}" class="text-gray-800">Comment text...</p>
-                <small th:text="${#dates.format(comment.timestamp, 'dd MMM yyyy HH:mm')}">Date and time</small>
-                <!-- Delete comment form -->
-                <form th:action="@{/posts/{id}/comment/{commentId}/delete(id=${post.id}, commentId=${comment.id})}" method="post" class="mt-2">
-                    <button type="submit" class="text-red-500 text-sm">Delete</button>
-                </form>
-            </div>
-        </div>
-
-        <div th:if="${comments == null or comments.isEmpty()}">
-            <p>No comments yet. Be the first to comment!</p>
-        </div>
-    </div>
-
-    <!-- Add Comment Form -->
-    <div class="mt-8">
-        <h2 class="text-lg font-bold">Add a Comment</h2>
-        <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post" class="mt-4">
-            <textarea name="content" class="w-full p-2 border border-gray-300 rounded" placeholder="Write your comment..."></textarea>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
-        </form>
-    </div>
+<!-- No Posts Message -->
+<div th:if="${posts == null or posts.isEmpty()}">
+    <p>You have not created any posts yet.</p>
 </div>
 
 <th:block th:insert="fragments/footer :: footer"></th:block>
