@@ -1,7 +1,6 @@
 package app.post.service;
 
 import app.category.model.CategoryType;
-import app.cloudinary.CloudinaryService;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
 import app.exception.CloudinaryException;
@@ -27,15 +26,13 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final CloudinaryService cloudinaryService;
     private final CommentService commentService;
     private final UserService userService;
 
     @Autowired
-    public PostService(PostRepository postRepository, CommentService commentService,CloudinaryService cloudinaryService,
+    public PostService(PostRepository postRepository, CommentService commentService,
                         UserService userService) {
         this.postRepository = postRepository;
-        this.cloudinaryService = cloudinaryService;
         this.userService = userService;
         this.commentService = commentService;
     }
@@ -43,24 +40,13 @@ public class PostService {
     // Create a post with image upload
     public void createPost(User user, CreateNewPost createNewPost) {
 
-        // Upload image to Cloudinary if file is provided
-        String imageUrl = null;
-        if (createNewPost.getImageFile() != null && !createNewPost.getImageFile().isEmpty()) {
-            try {
-                imageUrl = cloudinaryService.uploadRecipeImage(createNewPost.getImageFile(), "recipeId", 1);
-            } catch (CloudinaryException e) {
-                log.error("Failed to upload image to Cloudinary", e);
-                throw new RuntimeException("Failed to upload image", e);
-            }
-        }
-
         // Build post object
         Post post = Post.builder()
                 .user(user)
                 .title(createNewPost.getTitle())
                 .content(createNewPost.getContent())
                 .categoryType(CategoryType.valueOf(createNewPost.getCategoryType()))
-                .imageUrl(imageUrl) // Store Cloudinary URL
+                .imageUrl(createNewPost.getImageUrl())
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
                 .likes(0)
@@ -79,17 +65,7 @@ public class PostService {
         if (updatePost.getContent() != null) post.setContent(updatePost.getContent());
         if (updatePost.getCategoryType() != null)
             post.setCategoryType(CategoryType.valueOf(updatePost.getCategoryType()));
-
-        // Handle image upload if a new image is provided
-        if (updatePost.getImageFile() != null && !updatePost.getImageFile().isEmpty()) {
-            try {
-                String imageUrl = cloudinaryService.uploadRecipeImage(updatePost.getImageFile(), "recipeId", 1);
-                post.setImageUrl(imageUrl);  // Update the image URL
-            } catch (CloudinaryException e) {
-                log.error("Failed to upload image to Cloudinary", e);
-                throw new RuntimeException("Failed to upload image", e);
-            }
-        }
+        if (updatePost.getImageFile() != null) post.setImageUrl(post.getImageUrl());
 
         // Update the timestamp of the post
         post.setUpdatedOn(LocalDateTime.now());

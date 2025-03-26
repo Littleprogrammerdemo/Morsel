@@ -1,7 +1,6 @@
 package app.unit_tests.posts;
 
 import app.category.model.CategoryType;
-import app.cloudinary.CloudinaryService;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
 import app.exception.CloudinaryException;
@@ -36,8 +35,6 @@ class PostServiceUnitTest {
     @Mock
     private PostRepository postRepository;
 
-    @Mock
-    private CloudinaryService cloudinaryService;
 
     @Mock
     private CommentService commentService;

@@ -13,7 +13,7 @@ public class UpdatePostRequest {
     private String title;
     private String content;
     private String categoryType;
-    private MultipartFile imageFile;
+    private String imageFile;
 
     // Constructor fo tests
     public UpdatePostRequest(String title, String content, String category) {

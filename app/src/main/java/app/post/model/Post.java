@@ -33,8 +33,7 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime createdOn;
 
-    // Store the Cloudinary image URL
-    private String imageUrl;  // Use URL to store image location
+    private String imageUrl;
 
     @Column(nullable = false)
     private LocalDateTime updatedOn;
