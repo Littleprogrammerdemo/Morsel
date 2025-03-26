@@ -113,24 +113,47 @@
     </div>
 
     <!-- Check if the posts list is not empty -->
-    <div th:if="${!#lists.isEmpty(posts)}">
-        <section class="recipe-feed">
-            <h1>Recipes</h1>
-            <div class="recipes-grid" th:each="posts : ${posts}">
-                <div class="recipe-card">
-                    <img th:src="${posts.imageUrl}" alt="Recipe image" class="recipe-image"/>
-                    <div class="recipe-details">
-                        <h2 th:text="${posts.title}">Recipe Title</h2>
-                        <p>By <span th:text="${posts.owner}">Author Name</span></p>
-                        <p class="rating">Rating:
-                            <span th:text="${posts.rating}">4.5</span>
-                            <span>stars</span>
-                        </p>
-                    </div>
+    <div th:if="${posts != null}">
+        <div th:each="post : ${posts}">
+            <div class="post">
+                <h3 th:text="${post.title}"></h3>
+                <p th:text="${post.content}"></p>
+                <p><strong>Category:</strong> <span th:text="${post.categoryType}"></span></p>
+                <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
+                <p><strong>Shares:</strong> <span th:text="${post.shares}"></span></p>
+
+                <!-- Edit and Delete Buttons for Post Owner -->
+                <div th:if="${user != null and post.owner.id == user.id}">
+                    <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
+                    <form th:action="@{/posts/{id}(id=${post.id})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit">Delete Post</button>
+                    </form>
+                </div>
+
+                <!-- Like, Share, and Rate Buttons for Everyone -->
+                <div>
+                    <!-- Like Post -->
+                    <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" style="display:inline;">
+                        <button type="submit">Like</button>
+                    </form>
+
+                    <!-- Share Post -->
+                    <form th:action="@{/posts/{id}/share(id=${post.id})}" method="post" style="display:inline;">
+                        <button type="submit">Share</button>
+                    </form>
+
+                    <!-- Rate Post -->
+                    <form th:action="@{/posts/{id}/rate(id=${post.id})}" method="post" style="display:inline;">
+                        <label for="rating">Rate this post:</label>
+                        <input type="number" id="rating" name="rating" min="1" max="5" step="1" required />
+                        <button type="submit">Rate</button>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
+
 
 </main>
 
