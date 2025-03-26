@@ -121,20 +121,20 @@ public class PostController {
         }
 
         postService.updatePost(id, updatePost);
-        return new ModelAndView("redirect:/posts/" + id);
+        return new ModelAndView("redirect:/home");
     }
 
 
     @PostMapping("/{id}/like")
     public ModelAndView likePost(@PathVariable UUID id) {
         postService.likePost(id);
-        return new ModelAndView("redirect:/posts/" + id);
+        return new ModelAndView("redirect:/home");
     }
 
     @PostMapping("/{id}/share")
     public ModelAndView sharePost(@PathVariable UUID id) {
         postService.sharePost(id);
-        return new ModelAndView("redirect:/posts/" + id);
+        return new ModelAndView("redirect:/home");
     }
     @PostMapping("/{id}/rate")
     public ModelAndView ratePost(@PathVariable UUID id, @RequestParam int rating,
@@ -143,7 +143,7 @@ public class PostController {
 
         postService.ratePost(id, user, rating);
 
-        return new ModelAndView("redirect:/posts/" + id);
+        return new ModelAndView("redirect:/home");
     }
 
     @PostMapping("/{id}/comment")
@@ -151,7 +151,7 @@ public class PostController {
                                    @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());
         postService.addComment(id, user, content);
-        return new ModelAndView("redirect:/posts/" + id);  // Redirect to the post page after the comment is added
+        return new ModelAndView("redirect:/home");  // Redirect to the post page after the comment is added
     }
 
     @DeleteMapping("/{commentId}")

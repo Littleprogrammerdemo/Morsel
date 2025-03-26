@@ -32,34 +32,6 @@ body {
     text-decoration: none;
 }
 
-.search-bar {
-    display: flex;
-    gap: 0.5rem;
-    width: 40%;
-}
-
-.search-bar input {
-    flex-grow: 1;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.search-bar button {
-    padding: 0.5rem 1rem;
-    background-color: #d92673;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.search-bar button:hover {
-    background-color: #d92673;
-}
-
 /* Sidebar Styles */
 .side-bar-container {
     position: fixed;
@@ -128,186 +100,199 @@ main {
     padding: 2rem;
 }
 
-.recipe-feed h1 {
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    color: #333;
+.post {
+    background-color: #FFC0CB;  /* Pink background for each post */
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(255, 192, 203, 0.3);
+    transition: transform 0.3s ease;
 }
 
-.recipes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+.post:hover {
+    transform: scale(1.02);
 }
 
-.recipe-card {
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-}
-
-.recipe-card:hover {
-    transform: translateY(-5px);
-}
-
-.recipe-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.recipe-details {
-    padding: 1rem;
-}
-
-.recipe-details h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: #333;
-}
-
-.recipe-details p {
-    color: #666;
-    margin-bottom: 0.5rem;
-}
-
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}/* Centering and Styling the Welcome Card */
-.welcome-card {
-    max-width: 800px; /* Increased width of the card */
-    background: #fff;
-    padding: 3rem;
-    border-radius: 16px; /* More rounded corners */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    margin: 2rem auto;
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-/* Styling the Welcome Image */
-.welcome-image {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.welcome-image img {
-    max-width: 55%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-/* Typography */
-.welcome-card h1 {
-    font-size: 2.2rem; /* Larger font size for the title */
-    color: #000000;
-    margin-bottom: 1rem;
+.post h3 {
+    color: #FF1493;  /* Deep pink for titles */
     font-weight: bold;
-    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(255, 20, 147, 0.2);
 }
 
-.welcome-card p {
-    font-size: 1.2rem; /* Increased text size */
-    color: #000000;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    font-weight: 400;
+.post-image {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 3px solid #FF69B4;
+    margin: 10px 0;
 }
 
-/* Bold Text Styling */
-.welcome-card p strong {
-    color: #c42e64; /* More vibrant color */
-    font-size: 1.3rem;
-    font-weight: 600; /* Make it stand out more */
-}
-
-/* Highlighted Text Styling */
-.welcome-card p:nth-child(2) {
-    font-size: 1.3rem;
-    color: #34495e; /* Slightly darker text for emphasis */
+/* Button Styling */
+button {
+    background-color: #FF69B4;  /* Hot Pink */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #FF1493;  /* Deeper pink on hover */
+}
+
+/* Form Inputs */
+input[type="text"],
+input[type="number"] {
+    border: 2px solid #FF69B4;
+    border-radius: 15px;
+    padding: 8px;
+    margin-right: 10px;
+    width: calc(100% - 100px);
+}
+
+/* Comments Section */
+.comments {
+    background-color: #FFB6C1;  /* Light Pink */
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.comments p {
+    margin: 5px 0;
+    font-size: 0.9em;
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 600px) {
+    .post {
+        padding: 10px;
+    }
+}
+    /* Centering and Styling the Welcome Card */
     .welcome-card {
-        padding: 2.5rem;
+        max-width: 800px; /* Increased width of the card */
+        background: #fff;
+        padding: 3rem;
+        border-radius: 16px; /* More rounded corners */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        margin: 2rem auto;
+        animation: fadeIn 0.8s ease-in-out;
     }
 
+    /* Styling the Welcome Image */
+    .welcome-image {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .welcome-image img {
+        max-width: 55%;
+        height: auto;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    /* Typography */
     .welcome-card h1 {
-        font-size: 2rem;
+        font-size: 2.2rem; /* Larger font size for the title */
+        color: #000000;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        letter-spacing: 1px;
     }
 
     .welcome-card p {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .welcome-card {
-        padding: 2rem;
+        font-size: 1.2rem; /* Increased text size */
+        color: #000000;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        font-weight: 400;
     }
 
-    .welcome-card h1 {
-        font-size: 1.8rem;
+    /* Bold Text Styling */
+    .welcome-card p strong {
+        color: #c42e64; /* More vibrant color */
+        font-size: 1.3rem;
+        font-weight: 600; /* Make it stand out more */
     }
 
-    .welcome-card p {
-        font-size: 1rem;
-    }
-}
-
-/* Subtle Fade-in Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .side-bar-container {
-        width: 200px;
+    /* Highlighted Text Styling */
+    .welcome-card p:nth-child(2) {
+        font-size: 1.3rem;
+        color: #34495e; /* Slightly darker text for emphasis */
+        font-weight: bold;
     }
 
-    main {
-        margin-left: 200px;
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .welcome-card {
+            padding: 2.5rem;
+        }
+
+        .welcome-card h1 {
+            font-size: 2rem;
+        }
+
+        .welcome-card p {
+            font-size: 1.1rem;
+        }
     }
 
-    .search-bar {
-        width: 60%;
-    }
-}
+    @media (max-width: 768px) {
+        .welcome-card {
+            padding: 2rem;
+        }
 
-@media (max-width: 576px) {
-    .side-bar-container {
-        transform: translateX(-100%);
-        transition: transform 0.3s;
-    }
+        .welcome-card h1 {
+            font-size: 1.8rem;
+        }
 
-    main {
-        margin-left: 0;
-    }
-
-    .search-bar {
-        width: 100%;
+        .welcome-card p {
+            font-size: 1rem;
+        }
     }
 
-    .navbar {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+    /* Subtle Fade-in Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-}
+
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .side-bar-container {
+            width: 200px;
+        }
+
+        main {
+            margin-left: 200px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .side-bar-container {
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        main {
+            margin-left: 0;
+        }
+        .navbar {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+        }
+    }

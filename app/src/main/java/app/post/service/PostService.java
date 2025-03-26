@@ -31,7 +31,7 @@ public class PostService {
 
     @Autowired
     public PostService(PostRepository postRepository, CommentService commentService,
-                        UserService userService) {
+                       UserService userService) {
         this.postRepository = postRepository;
         this.userService = userService;
         this.commentService = commentService;
@@ -167,4 +167,3 @@ public class PostService {
 
 
 }
-
