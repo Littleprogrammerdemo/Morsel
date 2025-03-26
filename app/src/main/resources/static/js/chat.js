@@ -6,13 +6,14 @@
         let socket = new SockJS('/chat');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
+            console.log('Connected: ' + frame);  // Log successful connection
             stompClient.subscribe('/topic/messages', function (message) {
-                showMessage(JSON.parse(message.body));
+                showMessage(JSON.parse(message.body));  // Display the received message
             });
             loadChatHistory();
         });
     }
+
 
     // Send message
     function sendMessage() {
@@ -27,10 +28,12 @@
         let content = document.getElementById("message").value.trim();
         if (content) {
             let chatMessage = { sender: username, content: content };
-            stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));
-            document.getElementById("message").value = "";
+            console.log("Sending message:", chatMessage);  // Log the message being sent
+            stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));  // Send the message to the server
+            document.getElementById("message").value = "";  // Clear the input field
         }
     }
+
 
     // Show received messages
     function showMessage(message) {

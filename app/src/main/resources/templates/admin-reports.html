@@ -124,7 +124,6 @@
                     <td th:text="${curentUser.username}"></td>
                     <td th:text="${#strings.isEmpty(curentUser.email) ? 'no email' : curentUser.email}"></td>
                     <td th:text="${#strings.capitalize(#strings.toLowerCase(curentUser.role.name()))}"></td>
-                    <td th:text="${#strings.capitalize(#strings.toLowerCase(curentUser.country.name()))}"></td>
                     <td>
                         <p th:if="${curentUser.active}" class="status active">Active</p>
                         <p th:unless="${curentUser.active}" class="status terminated">Inactive</p>

@@ -67,12 +67,14 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15 0H5c-1.1 0-1.99.9-1.99 2L3 22l8-4 8 4V2c0-1.1-.9-2-2-2z"></path>
                                 </svg>
                             </a>
+                            <div class="func-block admin-func-block" th:if="${user.role.name() == 'ADMIN'}">
                             <a href="/users">
                                 <p>Admin Panel</p>
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"></path>
                                 </svg>
                             </a>
+                            </div>
                         </div>
 
                         <div class="func-block">
@@ -113,7 +115,7 @@
     </div>
 
     <!-- Check if the posts list is not empty -->
-    <div th:if="${posts != null}">
+    <div th:if="${!#lists.isEmpty(posts)}">
         <div th:each="post : ${posts}">
             <div class="post">
                 <h3 th:text="${post.title}"></h3>
