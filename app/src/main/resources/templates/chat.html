@@ -1,39 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Chat Room</title>
+    <title>Community Chat</title>
     <link rel="stylesheet" th:href="@{/css/chat.css}">
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script th:src="@{/static/js/chat.js}" defer></script>
+    <script th:src="@{/js/chat.js}" defer></script>
 </head>
 <body>
-
 <div class="chat-container">
     <div class="chat-header">
-        <h2>Live Chat</h2>
+        <h2>Welcome to Our Community Chat</h2>
+        <p>Connect, Share, and Engage with Fellow Community Members!</p>
+    </div>
+
+    <div class="chat-welcome">
+        <div class="welcome-message">
+            <h3>Hey there, Community Member! 👋</h3>
+            <p>This is a space where ideas flow, friendships grow, and conversations spark. Whether you're here to discuss interests, seek advice, or simply make new connections, you're in the right place!</p>
+            <div class="community-guidelines">
+                <h4>Quick Community Tips:</h4>
+                <ul>
+                    <li>Be respectful and kind to all members</li>
+                    <li>Share meaningful and positive conversations</li>
+                    <li>Have fun and be yourself!</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Chat Box: Displaying all messages -->
     <div id="messages" class="chat-box">
+        <!-- System Welcome Message -->
+        <div class="system-message">
+            <p>🌟 Welcome to the community chat! Start by introducing yourself.</p>
+        </div>
+
         <!-- Thymeleaf Loop to Display Previous Messages -->
         <div th:each="message : ${messages}"
              th:classappend="${message.sender == currentUser} ? 'own-message' : 'other-message'"
              class="message" id="message-[[${message.id}]]">
-            <strong th:text="${message.sender}"></strong>:
-            <span th:text="${message.content}" id="content-[[${message.id}]]"></span>
-            <span class="timestamp" th:text="${#temporals.format(message.timestamp, 'HH:mm')}"></span>
-            <button class="edit-button" onclick="editMessage([[${message.id}]])">Edit</button>
+            <div class="message-header">
+                <strong th:text="${message.sender}"></strong>
+                <span class="timestamp" th:text="${#temporals.format(message.timestamp, 'HH:mm')}"></span>
+            </div>
+            <div class="message-content" th:text="${message.content}" id="content-[[${message.id}]]"></div>
         </div>
     </div>
 
     <!-- Input Section for Sending New Messages -->
     <div class="chat-input">
-        <input type="text" id="username" placeholder="Enter your name">
-        <input type="text" id="message" placeholder="Type a message">
-        <button onclick="sendMessage()">Send</button>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Your Name" required>
+            <input type="text" id="message" placeholder="Type your message here..." required>
+            <button onclick="sendMessage()" class="send-btn">
+                Send Message
+                <i class="send-icon">➤</i>
+            </button>
+        </div>
+        <div class="input-hints">
+            <small> Keep it friendly!</small>
+        </div>
     </div>
 </div>
-
 </body>
 </html>

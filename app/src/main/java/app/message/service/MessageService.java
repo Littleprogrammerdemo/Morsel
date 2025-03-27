@@ -32,15 +32,4 @@ public class MessageService {
         return messageRepository.findAllByOrderByTimestampAsc();
     }
 
-    // Edit an existing message
-    @Transactional
-    public Optional<Message> editMessage(UUID messageId, String newContent) {
-        Optional<Message> messageOptional = messageRepository.findById(messageId);
-        if (messageOptional.isPresent()) {
-            Message message = messageOptional.get();
-            message.setContent(newContent);
-            messageRepository.save(message);
-        }
-        return messageOptional;
-    }
 }

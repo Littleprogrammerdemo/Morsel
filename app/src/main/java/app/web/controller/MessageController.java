@@ -52,10 +52,4 @@ public class MessageController {
         return messageService.getChatHistory(); // Fetches history from the service
     }
 
-    // WebSocket mapping for editing a message
-    @MessageMapping("/editMessage")
-    public void editMessage(Message updatedMessage) {
-        Optional<Message> messageOptional = messageService.editMessage(updatedMessage.getId(), updatedMessage.getContent());
-        messageOptional.ifPresent(message -> messagingTemplate.convertAndSend("/topic/messages", message)); // Send updated message to all subscribers
-    }
 }
