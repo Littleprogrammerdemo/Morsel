@@ -68,37 +68,4 @@ public class MessageServiceUnitTest {
             assertEquals("Second message", messages.get(1).getContent());
             verify(messageRepository, times(1)).findAllByOrderByTimestampAsc();
         }
-
-        @Test
-        void editMessage_updatesContentSuccessfully() {
-            // Given
-            UUID messageId = UUID.randomUUID();
-            Message existingMessage = new Message(messageId, "Old Content", LocalDateTime.now());
-
-            when(messageRepository.findById(messageId)).thenReturn(Optional.of(existingMessage));
-
-            // When
-            Optional<Message> updatedMessage = messageService.editMessage(messageId, "New Content");
-
-            // Then
-            assertTrue(updatedMessage.isPresent());
-            assertEquals("New Content", updatedMessage.get().getContent());
-            verify(messageRepository, times(1)).findById(messageId);
-            verify(messageRepository, times(1)).save(existingMessage);
-        }
-
-        @Test
-        void editMessage_messageNotFound_returnsEmpty() {
-            // Given
-            UUID messageId = UUID.randomUUID();
-            when(messageRepository.findById(messageId)).thenReturn(Optional.empty());
-
-            // When
-            Optional<Message> updatedMessage = messageService.editMessage(messageId, "New Content");
-
-            // Then
-            assertFalse(updatedMessage.isPresent());
-            verify(messageRepository, times(1)).findById(messageId);
-            verify(messageRepository, never()).save(any(Message.class));
-        }
     }

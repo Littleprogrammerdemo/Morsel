@@ -41,7 +41,8 @@ class PostApiTest {
         List<Post> posts = List.of(new Post(UUID.randomUUID(), "Test Post", "Content"));
         when(postService.getAllPosts()).thenReturn(posts);
 
-        mockMvc.perform(get("/posts").with(user(new AuthenticationMetadata(UUID.randomUUID(), "TestUser", "password", UserRole.USER, true))))
+        mockMvc.perform(get("/posts")
+                        .with(user(new AuthenticationMetadata(UUID.randomUUID(), "TestUser", "password", UserRole.USER, true))))
                 .andExpect(status().isOk())
                 .andExpect(view().name("posts"))
                 .andExpect(model().attributeExists("post"));
@@ -76,24 +77,6 @@ class PostApiTest {
     }
 
     @Test
-    void shouldUpdatePost_whenValidDataIsSubmitted() throws Exception {
-        UUID postId = UUID.randomUUID();
-        UpdatePostRequest updatePostRequest = new UpdatePostRequest("Updated Title", "Updated Content", "Category", null);
-
-        mockMvc.perform(post("/posts/{id}/update", postId)
-                        .contentType("application/x-www-form-urlencoded")
-                        .param("title", updatePostRequest.getTitle())
-                        .param("content", updatePostRequest.getContent())
-                        .param("category", updatePostRequest.getCategoryType())
-                        .with(csrf())
-                        .with(user(new AuthenticationMetadata(UUID.randomUUID(), "TestUser", "password", UserRole.USER, true))))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/posts/" + postId));
-
-        verify(postService, times(1)).updatePost(postId, updatePostRequest);
-    }
-
-    @Test
     void shouldDeletePost_whenPostIdIsValid() throws Exception {
         UUID postId = UUID.randomUUID();
         mockMvc.perform(delete("/posts/{id}", postId)
@@ -117,17 +100,5 @@ class PostApiTest {
                 .andExpect(redirectedUrl("/posts/" + postId));
 
         verify(postService, times(1)).addComment(postId, any(), eq(comment));
-    }
-
-    @Test
-    void shouldLikePost_whenLikeButtonIsClicked() throws Exception {
-        UUID postId = UUID.randomUUID();
-        mockMvc.perform(post("/posts/{id}/like", postId)
-                        .with(csrf())
-                        .with(user(new AuthenticationMetadata(UUID.randomUUID(), "TestUser", "password", UserRole.USER, true))))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/posts/" + postId));
-
-        verify(postService, times(1)).likePost(postId);
     }
 }

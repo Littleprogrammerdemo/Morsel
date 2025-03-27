@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -43,10 +45,17 @@ public class Post {
     private int views;
     private int likes;
     private double rating;
+    private int ratingCount;
     private int shares;
 
     @Enumerated(EnumType.STRING)
     private PostStatus status = PostStatus.ACTIVE;
+
+    @ElementCollection
+    private Set<UUID> likedUsers = new HashSet<>();  // To track users who liked the post
+
+    @ElementCollection
+    private Set<UUID> viewedUsers = new HashSet<>(); // To track users who viewed the post
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;

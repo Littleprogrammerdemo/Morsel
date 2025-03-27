@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <link rel="stylesheet" th:href="@{/css/editPost.css}">
+</head>
+<body>
+<div class="container mx-auto p-4">
+    <!-- Form for updating a post -->
+    <form th:action="@{/posts/{id}/update(id=${updatePost.id})}" th:method="POST" th:object="${updatePost}">
+        <h1 class="text-3xl font-bold mb-4">Edit Post</h1>
+
+        <!-- Title Field -->
+        <div class="form-group mb-4">
+            <label for="title" class="text-gray-600 font-semibold mb-2 block">Title</label>
+            <input type="text" id="title" name="title" th:field="*{title}" class="border p-2 w-full rounded" placeholder="Title" />
+            <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-600 text-sm mt-1">Error Text Here</small>
+        </div>
+
+        <!-- Content Field -->
+        <div class="form-group mb-4">
+            <label for="content" class="text-gray-600 font-semibold mb-2 block">Content</label>
+            <textarea th:field="*{content}" id="content" name="content" class="border p-2 w-full rounded" rows="5" placeholder="Enter post content"></textarea>
+            <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-red-600 text-sm mt-1">Error Text Here</small>
+        </div>
+
+        <!-- Category Field -->
+        <div class="form-group mb-4">
+            <label for="categoryType" class="block text-gray-600 font-semibold mb-2">Category</label>
+            <select id="categoryType" name="categoryType" th:field="*{categoryType}" class="block w-full text-gray-600 border p-2 rounded">
+                <option th:each="categoryType : ${T(app.category.model.CategoryType).values()}"
+                        th:value="${categoryType}" th:text="${categoryType}"></option>
+            </select>
+            <small th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-red-600 text-sm mt-1">Error Text Here</small>
+        </div>
+
+        <!-- Image URL Field -->
+        <div class="form-group mb-4">
+            <label for="imageFile" class="block text-gray-600 font-semibold mb-2">Image URL</label>
+            <input type="text" id="imageFile" name="imageFile" th:field="*{imageFile}" class="border p-2 w-full rounded" placeholder="imageFile" />
+            <small th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}" class="text-red-600 text-sm mt-1">Error Text Here</small>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button-holder flex justify-center">
+            <button type="submit" class="btn btn-info mb-3 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Update Post</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

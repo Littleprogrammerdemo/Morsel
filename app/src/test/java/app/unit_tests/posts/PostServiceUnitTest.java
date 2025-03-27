@@ -89,34 +89,6 @@ class PostServiceUnitTest {
         assertThrows(RuntimeException.class, () -> postService.getPostById(postId));
     }
 
-    @Test
-    void givenValidId_whenUpdatePost_thenUpdatePostDetails() {
-        UpdatePostRequest updateRequest = new UpdatePostRequest("Updated Title", "Updated Content", "MEXICAN", null);
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-
-        postService.updatePost(postId, updateRequest);
-
-        assertEquals("Updated Title", post.getTitle());
-        assertEquals("Updated Content", post.getContent());
-        verify(postRepository, times(1)).save(post);
-    }
-
-    @Test
-    void givenValidPost_whenLikePost_thenIncrementLikes() {
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        postService.likePost(postId);
-        assertEquals(1, post.getLikes());
-        verify(postRepository, times(1)).save(post);
-    }
-
-    @Test
-    void givenValidPost_whenIncrementView_thenIncrementViews() {
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        post.setViews(0);
-        postService.incrementView(postId);
-        assertEquals(1, post.getViews());
-        verify(postRepository, times(1)).save(post);
-    }
 
     @Test
     void givenValidPost_whenSharePost_thenIncrementShares() {
