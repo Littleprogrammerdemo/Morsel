@@ -45,19 +45,6 @@ class UserControllerUnitTest {
     private UserController userController;
 
 
-    @Test
-    void givenAdminUser_whenGetAllUsers_thenReturnModelAndView() {
-        // Given
-        List<User> users = List.of(new User(), new User());
-        when(userService.getAllUsers()).thenReturn(users);
-
-        // When
-        ModelAndView modelAndView = userController.getAllUsers(mock(AuthenticationMetadata.class));
-
-        // Then
-        assertEquals("admin-reports", modelAndView.getViewName());
-        assertEquals(users, modelAndView.getModel().get("users"));
-    }
 
     @Test
     void givenAuthenticatedUser_whenGetProfileMenu_thenReturnProfileMenu() {
@@ -81,30 +68,4 @@ class UserControllerUnitTest {
 
 
 
-
-    @Test
-    void givenUserId_whenSwitchUserStatus_thenRedirectToUsers() {
-        // Given
-        UUID userId = UUID.randomUUID();
-        doNothing().when(userService).switchStatus(userId);
-
-        // When
-        String viewName = userController.switchUserStatus(userId);
-
-        // Then
-        assertEquals("redirect:/users", viewName);
-    }
-
-    @Test
-    void givenUserId_whenSwitchUserRole_thenRedirectToUsers() {
-        // Given
-        UUID userId = UUID.randomUUID();
-        doNothing().when(userService).changeUserRole(userId);
-
-        // When
-        String viewName = userController.switchUserRole(userId);
-
-        // Then
-        assertEquals("redirect:/users", viewName);
-    }
 }

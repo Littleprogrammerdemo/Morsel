@@ -16,12 +16,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/users/**"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/admin-panel/**"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/css/**", "/js/**", "/image/**").permitAll() // Allow static files
                         .requestMatchers("/", "/register").permitAll()
-                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/admin-panel/**").hasAuthority("ROLE_ADMIN")
 
                         .anyRequest().authenticated()
                 )

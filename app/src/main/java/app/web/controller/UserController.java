@@ -23,27 +23,12 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-    private final PostService postService;
 
     @Autowired
-    public UserController(UserService userService,PostService postService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.postService = postService;
     }
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ModelAndView getAllUsers(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        User user = userService.getByUserId(authenticationMetadata.getUserId());
-        List<User> users = userService.getAllUsers();
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin-reports");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("users", users);
-
-        return modelAndView;
-    }
 
     @GetMapping("/{id}/profile")
     public ModelAndView getProfileMenu(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
@@ -58,7 +43,6 @@ public class UserController {
     }
 
     @PutMapping("/{id}/profile")
-    @PreAuthorize("#id == authentication.principal.userId or hasAuthority('ROLE_ADMIN')")
     public ModelAndView updateUserProfile(@PathVariable UUID id,
                                           @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
                                           @Valid UserEditRequest userEditRequest,
@@ -86,7 +70,7 @@ public class UserController {
 
         userService.switchStatus(id);
 
-        return "redirect:/users";
+        return "redirect:/admin-panel";
     }
 
     @PutMapping("/{id}/role")
@@ -95,6 +79,6 @@ public class UserController {
 
         userService.changeUserRole(id);
 
-        return "redirect:/users";
+        return "redirect:/admin-panel";
     }
 }
