@@ -8,7 +8,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -38,7 +37,6 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-    private String bio;
     private LocalDateTime lastLogin;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
