@@ -22,7 +22,7 @@ public class TrendingPostsUpdater {
     // For testing - fixedRate = 10000
     @Scheduled(cron = "0 */30 * * * ?")  // Runs every 30 minutes
     public void updateTrendingPosts() {
-        List<Post> trendingPosts = postRepository.findTop10ByOrderByLikesDescViewsDesc();
+        List<Post> trendingPosts = postRepository.findTop10ByOrderByLikesDesc();
 
         if (trendingPosts.isEmpty()) {
             log.info("No trending posts found.");

@@ -15,5 +15,5 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     List<Post> findByLikesAndCreatedOnBefore(int likes, LocalDateTime createdOn);
     List<Post> findByUser(User user);
 
-    List<Post> findTop10ByOrderByLikesDescViewsDesc();
+    List<Post> findTop10ByOrderByLikesDesc();
 }

@@ -52,7 +52,6 @@ public class PostController {
             throw new RuntimeException("Post not found with id: " + id);
         }
 
-        postService.incrementView(id, user);
 
         ModelAndView modelAndView = new ModelAndView("postDetails");
         modelAndView.addObject("post", post);

@@ -48,7 +48,6 @@ public class PostService {
                 .ratingCount(0)
                 .status(PostStatus.ACTIVE)
                 .likedUsers(new HashSet<>())
-                .viewedUsers(new HashSet<>())
                 .build();
 
         postRepository.save(post);
@@ -87,16 +86,6 @@ public class PostService {
         }
     }
 
-    @Transactional
-    public void incrementView(UUID postId, User user) {
-        Post post = getPostById(postId);
-
-        if (!post.getViewedUsers().contains(user.getId())) {
-            post.setViews(post.getViews() + 1);
-            post.getViewedUsers().add(user.getId());
-            postRepository.save(post);
-        }
-    }
 
     @Transactional
     public void sharePost(UUID id) {

@@ -43,7 +43,6 @@ public class Post {
     private LocalDateTime updatedOn;
     // To track if the post is bookmarked
     private boolean bookmarked;
-    private int views;
     private int likes;
     private double rating;
     private int ratingCount;
@@ -54,9 +53,6 @@ public class Post {
 
     @ElementCollection
     private Set<UUID> likedUsers = new HashSet<>();  // To track users who liked the post
-
-    @ElementCollection
-    private Set<UUID> viewedUsers = new HashSet<>(); // To track users who viewed the post
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
