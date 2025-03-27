@@ -28,18 +28,18 @@ public class BookmarkController {
 
     @GetMapping()
     public ModelAndView getBookmarkNotifications(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-
         User user = userService.getByUserId(authenticationMetadata.getUserId());
 
         List<Post> userBookmarks = bookmarkService.getBookmarksForUser(user.getId());
 
-        // Create the ModelAndView object
+
         ModelAndView modelAndView = new ModelAndView("bookmarks");
         modelAndView.addObject("user", user);
         modelAndView.addObject("bookmarks", userBookmarks);
 
         return modelAndView;
     }
+
 
     @PostMapping("/add/{postId}")
     public ModelAndView addBookmark(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata, @PathVariable UUID postId) {
@@ -49,7 +49,7 @@ public class BookmarkController {
         bookmarkService.addBookmark(user.getId(), postId);
 
         ModelAndView modelAndView = new ModelAndView("bookmarks");
-        modelAndView.addObject("message", "Recipe bookmarked!");
+        modelAndView.addObject("message", "Post bookmarked!");
 
         List<Post> userBookmarks = bookmarkService.getBookmarksForUser(user.getId());
         modelAndView.addObject("bookmarks", userBookmarks);
