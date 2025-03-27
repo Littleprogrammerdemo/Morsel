@@ -31,13 +31,14 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ModelAndView getAllUsers(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-
+        User user = userService.getByUserId(authenticationMetadata.getUserId());
         List<User> users = userService.getAllUsers();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin-reports");
+        modelAndView.addObject("user", user);
         modelAndView.addObject("users", users);
 
         return modelAndView;
@@ -72,7 +73,7 @@ public class UserController {
         return new ModelAndView("redirect:/home");
     }
     @PutMapping("/{id}/status")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String switchUserStatus(@PathVariable UUID id) {
 
         userService.switchStatus(id);
@@ -81,7 +82,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/role")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String switchUserRole(@PathVariable UUID id) {
 
         userService.changeUserRole(id);

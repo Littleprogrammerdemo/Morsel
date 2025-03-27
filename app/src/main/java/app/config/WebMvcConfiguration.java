@@ -20,8 +20,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/css/**", "/js/**", "/image/**").permitAll() // Allow static files
                         .requestMatchers("/", "/register").permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN") // Админ панел само за админи
-                        .requestMatchers("/users/**").authenticated() // Само логнати потребители виждат профили
+                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -34,6 +33,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 );
+
 
         return http.build();
     }

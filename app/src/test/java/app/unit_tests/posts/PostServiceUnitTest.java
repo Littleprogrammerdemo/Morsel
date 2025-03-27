@@ -3,7 +3,6 @@ package app.unit_tests.posts;
 import app.category.model.CategoryType;
 import app.comment.model.Comment;
 import app.comment.service.CommentService;
-import app.exception.CloudinaryException;
 import app.post.model.Post;
 import app.post.model.PostStatus;
 import app.post.repository.PostRepository;
