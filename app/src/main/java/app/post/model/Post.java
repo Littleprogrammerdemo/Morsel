@@ -41,7 +41,8 @@ public class Post {
 
     @Column(nullable = false)
     private LocalDateTime updatedOn;
-
+    // To track if the post is bookmarked
+    private boolean bookmarked;
     private int views;
     private int likes;
     private double rating;

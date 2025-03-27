@@ -102,25 +102,6 @@
     </nav>
 </div>
 </div>
-<div class="container mt-4">
-    <h2>📌 My Bookmarked Recipes</h2>
-    <div class="row">
-        <div th:each="posts : ${bookmarkedPosts}" class="col-md-4">
-            <div class="card mb-4">
-                <img th:src="@{${posts.imageUrl}}" class="card-img-top" alt="Recipe Image">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${posts.title}"></h5>
-                    <p class="card-text" th:text="${posts.content}"></p>
-                    <a th:href="@{/posts/{id}(id=${posts.id})}" class="btn btn-primary">View Recipe</a>
-                    <form th:action="@{/api/bookmarks/remove/{id}(id=${posts.id})}" method="post">
-                        <input type="hidden" name="userId" th:value="${#authentication.principal.id}" />
-                        <button class="btn btn-danger">❌ Remove Bookmark</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Check if there are no bookmarked posts -->
 <div th:if="${#lists.isEmpty(bookmarkedPosts)}">
     <div class="col-12 text-center">
@@ -128,7 +109,7 @@
             <h4 class="alert-heading">No Bookmarked Recipes</h4>
             <p>It looks like you haven't bookmarked any recipes yet. Start saving your favourite recipes now!</p>
             <hr>
-            <p class="mb-0">Click on the heart 📌 icon next to your favourite recipe to bookmark it.</p>
+            <p class="mb-0">Click on the "BOOKMARK" button next to your favourite recipe to bookmark it.</p>
         </div>
     </div>
 </div>
