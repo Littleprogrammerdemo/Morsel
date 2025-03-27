@@ -110,19 +110,21 @@
                     <div class="row">
                         <!-- Profile Picture -->
                         <div class="col d-flex justify-content-center align-items-center">
-                            <img th:src="${invitation.invitingUserProfilePicture}"
+                            <!-- Display the profile picture of the inviting user or a default image if null -->
+                            <img th:src="${invitation.invitingUserResponse.profilePicture != null ? invitation.invitingUserResponse.profilePicture : '/images/default-profile-pic.jpg'}"
                                  class="card-img-top rounded-circle mx-auto"
-                                 style="width: 150px; height: 150px; object-fit: cover;"
-                                 alt="Inviting User Photo">
+                                 alt="Profile Picture"
+                                 style="width: 150px; height: 150px; object-fit: cover;"/>
+
                         </div>
 
                         <!-- Invitation Details -->
                         <div class="col">
                             <h5>
-                                <span th:text="${invitation.invitingFirstName}"></span>
-                                <span th:text="${invitation.invitingLastName}"></span>
+                                <span th:text="${invitation.invitingUserResponse.firstName}"></span>
+                                <span th:text="${invitation.invitingUserResponse.lastName}"></span>
                             </h5>
-                            <p>Username: <span th:text="${invitation.invitingUsername}"></span></p>
+                            <p>Username: <span th:text="${invitation.invitingUserResponse.username}"></span></p>
 
                             <!-- Accept Friendship -->
                             <form th:action="@{/friendships/accept/{friendshipId}(friendshipId=${invitation.id})}" method="post">
@@ -148,5 +150,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

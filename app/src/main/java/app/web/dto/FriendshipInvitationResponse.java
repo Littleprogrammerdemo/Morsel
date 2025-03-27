@@ -18,5 +18,6 @@
         private UUID acceptingUserId;
         private String acceptingUsername;
         private boolean accepted;
+        private UserResponse invitingUserResponse;
 
     }

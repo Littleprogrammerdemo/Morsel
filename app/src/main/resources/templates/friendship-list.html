@@ -61,9 +61,9 @@
             <li th:each="friend : ${friendDetails}">
                 <div>
                     <!-- Profile Picture -->
-                    <img th:src="${friend.profilePicture != null ? friend.profilePicture : '/images/default-profile.png'}" alt="Profile Picture"/>
+                    <img th:src="${friend.profilePicture != null ? friend.profilePicture : '/images/default-profile.png'}"
+                         alt="Profile Picture" width="50" height="50"/>
 
-                    alt="Profile Picture" width="50" height="50"/>
                     <!-- Name and Username -->
                     <span th:text="${friend.firstName} + ' ' + ${friend.lastName}"></span>
                     <span th:text="${friend.username}"></span>

@@ -31,15 +31,41 @@ public class FriendshipInvitationController {
     // Show pending friendship invitations
     @GetMapping("/pending")
     public String showPendingInvitations(@AuthenticationPrincipal AuthenticationMetadata authUser, Model model) {
+        // Retrieve pending invitations
         List<FriendshipInvitationResponse> invitations = friendshipInvitationService
                 .findPendingInvitations()
                 .stream()
                 .map(DtoMapper::mapToFriendship)
                 .collect(Collectors.toList());
-        User user = userService.getByUserId(authUser.getUserId());
-        model.addAttribute("user", user);
-        model.addAttribute("invitations", invitations);
-        return "friendship-pending"; // Thymeleaf template
+
+        // Add user details for each invitation (fetch inviting user details)
+        List<FriendshipInvitationResponse> invitationsWithDetails = invitations.stream()
+                .map(invitation -> {
+                    // Fetch the inviting user using the user ID
+                    User invitingUser = userService.getByUserId(invitation.getInvitingUserId());
+
+                    // Map inviting user details into the invitation
+                    UserResponse userResponse = new UserResponse(
+                            invitingUser.getId(),
+                            invitingUser.getUsername(),
+                            invitingUser.getFirstName(),
+                            invitingUser.getLastName(),
+                            invitingUser.getProfilePicture()
+                    );
+
+                    // Set the inviting user details on the invitation
+                    invitation.setInvitingUserResponse(userResponse);
+
+                    return invitation;
+                })
+                .collect(Collectors.toList());
+
+        // Add invitations with complete user details to the model
+        model.addAttribute("invitations", invitationsWithDetails);
+        model.addAttribute("user", userService.getByUserId(authUser.getUserId()));
+
+        // Return the Thymeleaf template
+        return "friendship-pending";
     }
 
     @GetMapping("/friends")
@@ -53,6 +79,7 @@ public class FriendshipInvitationController {
 
         // Get details for each friend
         List<UserResponse> friendDetails = friends.stream().map(friend -> {
+            // Get the user by ID for the friend
             User friendUser = userService.getByUserId(friend.getAcceptingUserId().equals(authUser.getUserId())
                     ? friend.getInvitingUserId()
                     : friend.getAcceptingUserId());
@@ -72,7 +99,6 @@ public class FriendshipInvitationController {
         return "friendship-list";
     }
 
-
     @GetMapping("/invite")
     public String showInviteForm(@AuthenticationPrincipal AuthenticationMetadata authUser, Model model) {
         // Get all users except the currently authenticated one
@@ -82,6 +108,7 @@ public class FriendshipInvitationController {
                         user.getLastName(), user.getProfilePicture()))
                 .collect(Collectors.toList());
 
+        // Add the users to the model for display
         model.addAttribute("users", users);
         return "friendship-invite"; // Thymeleaf template
     }
@@ -90,7 +117,10 @@ public class FriendshipInvitationController {
     @PostMapping("/invite")
     public String sendFriendshipInvitation(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                            @RequestParam("acceptingUserId") UUID acceptingUserId) {
-        friendshipInvitationService.createFriendshipInvitation(acceptingUserId);
+        // Ensure that a valid acceptingUserId is provided
+        if (acceptingUserId != null) {
+            friendshipInvitationService.createFriendshipInvitation(acceptingUserId);
+        }
         return "redirect:/friendships/pending";
     }
 
@@ -98,6 +128,7 @@ public class FriendshipInvitationController {
     @PostMapping("/accept/{friendshipId}")
     public String acceptFriendship(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                    @PathVariable UUID friendshipId) {
+        // Ensure friendship exists before accepting
         friendshipInvitationService.acceptFriendshipInvitation(friendshipId);
         return "redirect:/friendships/friends";
     }
@@ -106,6 +137,7 @@ public class FriendshipInvitationController {
     @PostMapping("/decline/{friendshipId}")
     public String declineFriendship(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                     @PathVariable UUID friendshipId) {
+        // Ensure friendship exists before declining
         friendshipInvitationService.declineFriendshipInvitation(friendshipId);
         return "redirect:/friendships/pending";
     }
@@ -114,6 +146,7 @@ public class FriendshipInvitationController {
     @PostMapping("/remove/{friendshipId}")
     public String removeFriend(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                @PathVariable UUID friendshipId) {
+        // Ensure friendship exists before removing
         friendshipInvitationService.removeFriendship(friendshipId);
         return "redirect:/friendships/friends";
     }
