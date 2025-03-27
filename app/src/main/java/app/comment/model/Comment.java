@@ -33,7 +33,6 @@ public class Comment {
 
     @Column(nullable = false)
     private String content;
-    private String text;
 
     private boolean flagged;
 

@@ -109,7 +109,6 @@
             <p th:text="${post.content}"></p>
             <p>Posted by: <span th:text="${post.user.username}"></span></p>
 
-            <!-- Display the image if it's available -->
             <div>
                 <img th:if="${post.imageUrl != null}" th:src="@{${post.imageUrl}}" alt="Post Image" class="post-image"/>
             </div>
@@ -133,10 +132,11 @@
             </form>
 
             <div th:each="comment : ${post.comments}">
-                <p><strong th:text="${comment.user.username}"></strong>: <span th:text="${comment.content}"></span></p>
+                <p><strong th:text="${comment.owner.username}"></strong>: <span th:text="${comment.content}"></span></p>
             </div>
         </div>
     </div>
+
 
     <!-- Check if the posts list is empty -->
     <div th:if="${#lists.isEmpty(posts)}">

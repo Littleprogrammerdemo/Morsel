@@ -127,8 +127,14 @@ public class PostService {
     @Transactional
     public void addComment(UUID id, User user, String content) {
         Post post = getPostById(id);
+
+        if (post == null) {
+            throw new RuntimeException("Post not found with id: " + id);
+        }
+
         commentService.addComment(post, user, content);
     }
+
 
     public void deleteCommentFromPost(UUID commentId) {
         commentService.deleteComment(commentId);

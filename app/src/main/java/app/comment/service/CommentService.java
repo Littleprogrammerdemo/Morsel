@@ -32,6 +32,7 @@ public class CommentService {
                 .owner(user)  // Associate the comment with the user
                 .content(content)
                 .createdOn(LocalDateTime.now())
+                .updatedOn(LocalDateTime.now())
                 .build();
 
         // Save the comment in the repository
