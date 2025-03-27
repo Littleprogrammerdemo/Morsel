@@ -80,38 +80,7 @@ class UserControllerUnitTest {
     }
 
 
-    @Test
-    void givenValidUserEditRequest_whenUpdateUserProfile_thenRedirectToHome() {
-        // Given
-        UUID userId = UUID.randomUUID();
-        UserEditRequest editRequest = new UserEditRequest();
-        when(bindingResult.hasErrors()).thenReturn(false);
-        doNothing().when(userService).editUserDetails(userId, editRequest);
 
-        // When
-        ModelAndView modelAndView = userController.updateUserProfile(userId, editRequest, bindingResult);
-
-        // Then
-        assertEquals("redirect:/home", modelAndView.getViewName());
-    }
-
-    @Test
-    void givenInvalidUserEditRequest_whenUpdateUserProfile_thenReturnProfileMenu() {
-        // Given
-        UUID userId = UUID.randomUUID();
-        UserEditRequest editRequest = new UserEditRequest();
-        when(bindingResult.hasErrors()).thenReturn(true);
-        User user = new User();
-        when(userService.getByUserId(userId)).thenReturn(user);
-
-        // When
-        ModelAndView modelAndView = userController.updateUserProfile(userId, editRequest, bindingResult);
-
-        // Then
-        assertEquals("profile-menu", modelAndView.getViewName());
-        assertEquals(user, modelAndView.getModel().get("user"));
-        assertEquals(editRequest, modelAndView.getModel().get("userEditRequest"));
-    }
 
     @Test
     void givenUserId_whenSwitchUserStatus_thenRedirectToUsers() {

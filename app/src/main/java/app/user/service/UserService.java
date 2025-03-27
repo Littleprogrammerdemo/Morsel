@@ -67,6 +67,7 @@ public class UserService implements UserDetailsService {
                 .updatedOn(LocalDateTime.now())
                 .build();
     }
+    @Transactional
     public void editUserDetails(UUID userId, UserEditRequest userEditRequest) {
 
         User user = getByUserId(userId);

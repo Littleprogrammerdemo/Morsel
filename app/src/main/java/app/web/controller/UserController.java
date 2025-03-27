@@ -8,6 +8,7 @@ import app.web.dto.UserEditRequest;
 import app.web.dto.mapper.DtoMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -57,12 +58,19 @@ public class UserController {
     }
 
     @PutMapping("/{id}/profile")
-    public ModelAndView updateUserProfile(@PathVariable UUID id, @Valid UserEditRequest userEditRequest, BindingResult bindingResult) {
+    @PreAuthorize("#id == authentication.principal.userId or hasAuthority('ROLE_ADMIN')")
+    public ModelAndView updateUserProfile(@PathVariable UUID id,
+                                          @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
+                                          @Valid UserEditRequest userEditRequest,
+                                          BindingResult bindingResult) {
+        // Ensure users can only edit their own profile
+        if (!id.equals(authenticationMetadata.getUserId())) {
+            throw new AccessDeniedException("You can only edit your own profile.");
+        }
 
         if (bindingResult.hasErrors()) {
             User user = userService.getByUserId(id);
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("profile-menu");
+            ModelAndView modelAndView = new ModelAndView("profile-menu");
             modelAndView.addObject("user", user);
             modelAndView.addObject("userEditRequest", userEditRequest);
             return modelAndView;
