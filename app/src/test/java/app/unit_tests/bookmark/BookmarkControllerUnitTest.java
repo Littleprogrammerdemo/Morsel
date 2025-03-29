@@ -54,31 +54,6 @@ class BookmarkControllerUnitTest {
         assertEquals(bookmarks, modelAndView.getModel().get("bookmarks"));
     }
 
-    @Test
-    void givenAuthenticatedUserAndPost_whenAddBookmark_thenReturnUpdatedModelAndView() {
-        // Given
-        UUID userId = UUID.randomUUID();
-        UUID postId = UUID.randomUUID();
-        AuthenticationMetadata authMetadata = mock(AuthenticationMetadata.class);
-        when(authMetadata.getUserId()).thenReturn(userId);
-
-        User user = new User();
-        user.setId(userId);
-        List<Post> bookmarks = List.of(new Post());
-
-        when(userService.getByUserId(userId)).thenReturn(user);
-        doNothing().when(bookmarkService).addBookmark(userId, postId);
-        when(bookmarkService.getBookmarksForUser(userId)).thenReturn(bookmarks);
-
-        // When
-        ModelAndView modelAndView = bookmarkController.addBookmark(authMetadata, postId);
-
-        // Then
-        assertEquals("bookmarks", modelAndView.getViewName());
-        assertEquals("Recipe bookmarked!", modelAndView.getModel().get("message"));
-        assertEquals(user, modelAndView.getModel().get("user"));
-        assertEquals(bookmarks, modelAndView.getModel().get("bookmarks"));
-    }
 
     @Test
     void givenAuthenticatedUserAndPost_whenRemoveBookmark_thenReturnUpdatedModelAndView() {

@@ -15,9 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.security.access.AccessDeniedException;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +27,9 @@ class UserControllerUnitTest {
 
     @Mock
     private UserService userService;
+
     @Mock
     private AuthenticationMetadata authMetadata;
-
 
     @Mock
     private PostService postService;
@@ -45,27 +44,56 @@ class UserControllerUnitTest {
     private UserController userController;
 
 
-
     @Test
-    void givenAuthenticatedUser_whenGetProfileMenu_thenReturnProfileMenu() {
+    void givenUserNotOwnProfile_whenUpdateUserProfile_thenAccessDenied() {
         // Given
         UUID userId = UUID.randomUUID();
-        when(authMetadata.getUserId()).thenReturn(userId); // Mock method properly
+        UUID authenticatedUserId = UUID.randomUUID();
+        when(authMetadata.getUserId()).thenReturn(authenticatedUserId);
+
+        // When & Then
+        AccessDeniedException exception = assertThrows(AccessDeniedException.class, () -> {
+            userController.updateUserProfile(userId, authMetadata, new UserEditRequest(), bindingResult);
+        });
+        assertEquals("You can only edit your own profile.", exception.getMessage());
+    }
+
+    @Test
+    void givenValidationErrors_whenUpdateUserProfile_thenReturnProfileMenu() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        when(authMetadata.getUserId()).thenReturn(userId);
+        when(bindingResult.hasErrors()).thenReturn(true);
 
         User user = new User();
         user.setId(userId);
         when(userService.getByUserId(userId)).thenReturn(user);
-        when(DtoMapper.mapUserToUserEditRequest(user)).thenReturn(new UserEditRequest());
 
+        UserEditRequest userEditRequest = new UserEditRequest();
         // When
-        ModelAndView modelAndView = userController.getProfileMenu(authMetadata);
+        ModelAndView modelAndView = userController.updateUserProfile(userId, authMetadata, userEditRequest, bindingResult);
 
         // Then
         assertEquals("profile-menu", modelAndView.getViewName());
         assertEquals(user, modelAndView.getModel().get("user"));
-        assertNotNull(modelAndView.getModel().get("userEditRequest"));
+        assertEquals(userEditRequest, modelAndView.getModel().get("userEditRequest"));
     }
 
+    @Test
+    void givenValidProfile_whenUpdateUserProfile_thenRedirectToHome() {
+        // Given
+        UUID userId = UUID.randomUUID();
+        when(authMetadata.getUserId()).thenReturn(userId);
+        when(bindingResult.hasErrors()).thenReturn(false);
+
+        UserEditRequest userEditRequest = new UserEditRequest();
+        // When
+        ModelAndView modelAndView = userController.updateUserProfile(userId, authMetadata, userEditRequest, bindingResult);
+
+        // Then
+        assertEquals("redirect:/home", modelAndView.getViewName());
+        verify(userService).editUserDetails(eq(userId), eq(userEditRequest)); // Ensure service method is called
+    }
 
 
 }

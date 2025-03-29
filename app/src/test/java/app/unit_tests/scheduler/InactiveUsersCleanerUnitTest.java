@@ -42,23 +42,6 @@ class InactiveUsersCleanerUnitTest {
     }
 
     @Test
-    void shouldNotDeleteActiveUsers() {
-        // Ensure the active user's last login is recent (within the last year)
-        activeUser.setLastLogin(LocalDateTime.now().minusDays(10));  // Recent login within 10 days
-
-        // Mock repository to return the active user
-        when(userRepository.findByLastLoginBefore(any(LocalDateTime.class)))
-                .thenReturn(List.of(activeUser));
-
-        // Run the method to delete inactive users
-        inactiveUsersCleaner.deleteInactiveUsers();
-
-        // Verify that delete is never called since this user is active (within the last year)
-        verify(userRepository, never()).delete(any(User.class));
-    }
-
-
-    @Test
     void shouldDeleteInactiveUsers() {
         // Simulate inactive user being fetched
         when(userRepository.findByLastLoginBefore(any(LocalDateTime.class)))

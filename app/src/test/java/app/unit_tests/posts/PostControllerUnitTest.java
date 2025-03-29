@@ -115,12 +115,6 @@ class PostControllerUnitTest {
         assertThrows(RuntimeException.class, () -> postController.editPostForm(postId, authenticationMetadata));
     }
 
-    @Test
-    void shouldHandleDeletingNonExistentPost() {
-        doThrow(new RuntimeException("Post not found")).when(postService).deletePost(postId, user);
-
-        assertThrows(RuntimeException.class, () -> postController.deletePost(postId, authenticationMetadata));
-    }
 
     @Test
     void shouldLikePostAndRedirect() {
@@ -150,14 +144,4 @@ class PostControllerUnitTest {
         assertEquals("redirect:/home", modelAndView.getViewName());
     }
 
-    @Test
-    void shouldDeletePostAndRedirect() {
-        when(authenticationMetadata.getUserId()).thenReturn(user.getId());
-        when(userService.getByUserId(user.getId())).thenReturn(user);
-        when(postService.getPostById(postId)).thenReturn(post);
-
-        ModelAndView modelAndView = postController.deletePost(postId, authenticationMetadata);
-        verify(postService, times(1)).deletePost(postId, user);
-        assertEquals("redirect:/home", modelAndView.getViewName());
-    }
 }

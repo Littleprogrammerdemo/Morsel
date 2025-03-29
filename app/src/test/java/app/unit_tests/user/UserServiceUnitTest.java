@@ -1,6 +1,7 @@
 package app.unit_tests.user;
 
 import app.exception.DomainException;
+import app.exception.UsernameAlreadyExistException;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.property.UserProperties;
@@ -45,7 +46,7 @@ class UserServiceUnitTest {
         when(userRepository.findByUsername(registerRequest.getUsername())).thenReturn(Optional.of(new User()));
 
         // When & Then
-        assertThrows(DomainException.class, () -> userService.register(registerRequest));
+        assertThrows(UsernameAlreadyExistException.class, () -> userService.register(registerRequest));
         verify(userRepository, never()).save(any());
     }
 

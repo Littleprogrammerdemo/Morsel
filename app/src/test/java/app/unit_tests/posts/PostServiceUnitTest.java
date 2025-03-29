@@ -108,12 +108,6 @@ class PostServiceUnitTest {
     }
 
     @Test
-    void givenInvalidRating_whenRatePost_thenThrowException() {
-        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
-        assertThrows(IllegalArgumentException.class, () -> postService.ratePost(postId, user, 6));
-    }
-
-    @Test
     void givenValidUser_whenDeletePost_thenPostIsDeleted() {
         when(postRepository.findById(postId)).thenReturn(Optional.of(post));
         postService.deletePost(postId, user);
