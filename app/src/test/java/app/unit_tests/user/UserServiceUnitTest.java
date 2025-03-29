@@ -2,6 +2,7 @@ package app.unit_tests.user;
 
 import app.exception.DomainException;
 import app.exception.UsernameAlreadyExistException;
+import app.notification.service.NotificationService;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.property.UserProperties;
@@ -35,6 +36,8 @@ class UserServiceUnitTest {
 
     @Mock
     private UserProperties userProperties;
+    @Mock
+    private NotificationService notificationService;
 
     @InjectMocks
     private UserService userService;
@@ -190,31 +193,35 @@ class UserServiceUnitTest {
         // When & Then
         assertThrows(DomainException.class, () -> userService.loadUserByUsername(username));
     }
+        @Test
+        void givenUser_whenEditUserDetails_thenUpdateUserDetails() {
+            // Given
+            UUID userId = UUID.randomUUID();
+            UserEditRequest editRequest = new UserEditRequest();
+            editRequest.setFirstName("John");
+            editRequest.setLastName("Doe");
+            editRequest.setEmail("john@example.com");
+            editRequest.setProfilePicture("http://image.com");
 
-    @Test
-    void givenUser_whenEditUserDetails_thenUpdateUserDetails() {
-        // Given
-        UUID userId = UUID.randomUUID();
-        UserEditRequest editRequest = new UserEditRequest();
-        editRequest.setFirstName("John");
-        editRequest.setLastName("Doe");
-        editRequest.setEmail("john@example.com");
-        editRequest.setProfilePicture("http://image.com");
+            User user = new User();
+            user.setId(userId);
+            when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        User user = new User();
-        user.setId(userId);
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+            // Mock the notificationService method call
+            doNothing().when(notificationService).saveNotificationPreference(any(UUID.class), any(Boolean.class), any(String.class));
 
-        // When
-        userService.editUserDetails(userId, editRequest);
+            // When
+            userService.editUserDetails(userId, editRequest);
 
-        // Then
-        assertEquals("John", user.getFirstName());
-        assertEquals("Doe", user.getLastName());
-        assertEquals("john@example.com", user.getEmail());
-        assertEquals("http://image.com", user.getProfilePicture());
-        verify(userRepository, times(1)).save(user);
-    }
+            // Then
+            assertEquals("John", user.getFirstName());
+            assertEquals("Doe", user.getLastName());
+            assertEquals("john@example.com", user.getEmail());
+            assertEquals("http://image.com", user.getProfilePicture());
+            verify(userRepository, times(1)).save(user);
+            verify(notificationService, times(1)).saveNotificationPreference(any(UUID.class), any(Boolean.class), any(String.class));
+        }
+
 
     @Test
     void givenInvalidUser_whenEditUserDetails_thenThrowException() {

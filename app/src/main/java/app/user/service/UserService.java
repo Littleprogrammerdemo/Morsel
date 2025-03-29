@@ -99,9 +99,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new DomainException("User with id [%s] does not exist.".formatted(id)));
 
     }
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
     public void switchStatus(UUID userId) {
 
         User user = getByUserId(userId);
