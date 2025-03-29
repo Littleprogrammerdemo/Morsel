@@ -42,6 +42,7 @@ public interface NotificationClient {
     @PostMapping("/friend-request")
     ResponseEntity<Void> sendFriendRequestNotification(@RequestBody FriendRequest friendRequest);
 
-    @PostMapping("/friend-request")
+    @PostMapping("/rating")
     ResponseEntity<Void> sendRatingRequestNotification(@RequestBody RatingRequest ratingRequest);
+
 }

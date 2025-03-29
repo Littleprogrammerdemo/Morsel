@@ -2,6 +2,7 @@ package app.user.service;
 
 import app.exception.DomainException;
 import app.exception.UsernameAlreadyExistException;
+import app.notification.service.NotificationService;
 import app.user.model.User;
 import app.security.AuthenticationMetadata;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,13 +32,16 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserProperties userProperties;
+
+    private final NotificationService notificationService;
     @Autowired
     public UserService(PasswordEncoder passwordEncoder,
-                       UserRepository userRepository, UserProperties userProperties) {
+                       UserRepository userRepository, UserProperties userProperties, NotificationService notificationService) {
 
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userProperties = userProperties;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -49,7 +53,7 @@ public class UserService implements UserDetailsService {
         }
 
         User user = userRepository.save(initializeNewUserAccount(registerRequest));
-
+        notificationService.saveNotificationPreference(user.getId(), false, null);
         log.info("Successfully created new user for username [%s] with id [%s].".formatted(user.getUsername(), user.getId()));
 
         return user;
@@ -77,7 +81,11 @@ public class UserService implements UserDetailsService {
         user.setEmail(userEditRequest.getEmail());
         user.setProfilePicture(userEditRequest.getProfilePicture());
 
-
+        if (!userEditRequest.getEmail().isBlank()) {
+            notificationService.saveNotificationPreference(userId, true, userEditRequest.getEmail());
+        } else {
+            notificationService.saveNotificationPreference(userId, false, null);
+        }
         userRepository.save(user);
     }
 
