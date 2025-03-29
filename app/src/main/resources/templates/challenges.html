@@ -6,8 +6,110 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
+<header>
+    <nav class="navbar">
+        <a class="logo">Morsel</a>
+    </nav>
+</header>
+<div class="nav-bar"><div class="side-bar-container">
+    <nav>
+        <nav>
+            <div class="nav-bar">
+                <div class="side-bar-container">
+                    <div class="side_navbar">
+                        <!-- App Name -->
+                        <div class="app-nav-bar">
+                            <div class="app-nav-bar-name">Morsel</div>
+                            <div class="app-nav-bar-version">v1.0.0</div>
+                        </div>
+                        <div class="func-block">
+                            <a class="home" href="/home">
+                                <p>Home</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                                </svg>
+                            </a>
+                            <!-- My Profile -->
+                            <a href="/users/{id}/profile" class="flex items-center space-x-2">
+                                <p>My Profile</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+                                </svg>
+                            </a>
+                            <a class="messages" href="/messages/chat">
+                                <p>Messages</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 16c0 1.1.9 2 2 2h3v3l4-3h7c1.1 0 1.99-.9 1.99-2L22 4c0-1.1-.9-2-2-2z"></path>
+                                </svg>
+                            </a>
+                            <!-- Notifications -->
+                            <a href="/notifications" class="flex items-center space-x-2">
+                                <p>Notifications</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 1.99 2zm6-6V9c0-3.31-2.69-6-6-6S6 5.69 6 9v7l-2 2v1h16v-1l-2-2z"></path>
+                                </svg>
+                            </a>
+                            <!-- Followers/Following -->
+                            <a href="/friendships/pending" class="flex items-center space-x-2">
+                                <p>Pending Friendship Invitations</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 21v-4a4 4 0 1 1 8 0v4m4 0v-4a4 4 0 1 1 8 0v4M9 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
+                                </svg>
+                            </a>
+                            <a href="/friendships/invite" class="flex items-center space-x-2">
+                                <p>Invite Friends</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"  d="M12 14c3.3 0 6 2.7 6 6H6c0-3.3 2.7-6 6-6zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19 8v4m-2-2h4"></path>
+                                </svg>
+                            </a>
 
-<div class="container mt-4">
+                            <a href="/friendships/friends" class="flex items-center space-x-2">
+                                <p>Friends</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 12a3 3 0 1 0-6 0 3 3 0 0 0 6 0zM22 12a3 3 0 1 0-6 0 3 3 0 0 0 6 0zM2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"></path>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+                                </svg>
+                            </a>
+                            <a href="/posts">
+                                <p>My Posts</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 3h16c1.1 0 1.99.9 1.99 2L22 19c0 1.1-.9 2-2 2H4c-1.1 0-1.99-.9-1.99-2L2 5c0-1.1.9-2 2-2zM12 8h4v4h-4z"></path>
+                                </svg>
+                            </a>
+                            <a href="/bookmarks">
+                                <p>Bookmarks</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M15 0H5c-1.1 0-1.99.9-1.99 2L3 22l8-4 8 4V2c0-1.1-.9-2-2-2z"></path>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="func-block">
+                            <a href="/posts/new">
+                                <p>Add Post</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <!-- Logout -->
+                        <div class="func-block">
+                            <a class="logout" href="/logout">
+                                <p>Logout</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l4-4-4-4M20 12H8"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </nav>
+</div></div>
+
+<div class="main-content container mt-4">
     <h2 class="text-center">Recipe Challenges</h2>
 
     <!-- Create New Challenge Form -->
@@ -35,8 +137,8 @@
     </div>
 
     <!-- List of Challenges -->
-    <div class="row">
-        <div th:each="challenge : ${challenges}" class="col-md-4">
+    <div class="challenge-list row">
+        <div th:each="challenge : ${challenges}" class="challenge-item col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${challenge.title}"></h5>

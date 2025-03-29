@@ -44,7 +44,7 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 280px;
+    width: 290px;
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     border-top: 70px solid #d63384;
@@ -82,9 +82,9 @@ body {
 
 /* Sidebar Icons */
 .func-block svg {
-    width: 32px;
-    height: 32px;
-    margin-left: 0.8rem; /* Space between text & icon */
+    width: 30px;
+    height: 30px;
+    margin-left: 0.10rem; /* Space between text & icon */
 }
 
 /* Main Content */

@@ -55,7 +55,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 2rem 3.5rem; /* Increased padding for bigger navbar */
-    height: 100px; /* Increased height for bigger navbar */
+    height: 80px; /* Increased height for bigger navbar */
 }
 
 .logo {
@@ -75,7 +75,7 @@ header {
 /* Sidebar */
 .nav-bar {
     position: fixed;
-    top: 100px; /* Match the updated navbar height */
+    top: 70px; /* Match the updated navbar height */
     bottom: 0;
     left: 0;
     width: 280px;

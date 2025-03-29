@@ -21,7 +21,7 @@ body {
     align-items: center;
     position: fixed;
     width: 100%;
-    top: 0;
+    top: 1px;
     z-index: 1000;
 }
 
@@ -37,11 +37,12 @@ body {
     position: fixed;
     left: 0;
     top: 70px;
-    width: 250px;
+    width: 270px;
     height: calc(100vh - 70px);
     background-color: white;
     box-shadow: 2px 0 4px rgba(0,0,0,0.1);
     padding: 2rem 1rem;
+    overflow-y: auto;
 }
 
 .side_navbar {

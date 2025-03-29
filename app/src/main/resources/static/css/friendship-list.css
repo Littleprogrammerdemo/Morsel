@@ -78,8 +78,9 @@ header {
 }
 
 .side_navbar {
-    padding: 2rem;
+    padding: 3rem;
     background-color: var(--sidebar-bg); /* Pink background */
+    width: 250px;
 }
 
 .app-nav-bar {

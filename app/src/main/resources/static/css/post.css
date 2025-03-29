@@ -19,7 +19,7 @@ body {
 
 /* Navbar and Sidebar */
 .nav-bar {
-    width: 300px; /* Wider sidebar */
+    width: 350px; /* Wider sidebar */
     height: 100vh;
     position: fixed;
     left: 0;
