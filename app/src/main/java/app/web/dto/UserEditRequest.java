@@ -24,4 +24,6 @@ public class    UserEditRequest {
 
     @URL(message = "Requires correct web link format")
     private String profilePicture;
+
+
 }

@@ -22,10 +22,8 @@
         private String categoryType;
 
         private String imageUrl;
-        //For tests
-        public CreateNewPost(String title, String content, String category) {
+        public CreateNewPost(String title, String content) {
             this.title = title;
             this.content = content;
-            this.categoryType = category;
         }
     }

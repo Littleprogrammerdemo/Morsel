@@ -61,5 +61,4 @@ public class User {
 
     private boolean accepted = false;
 
-
 }
