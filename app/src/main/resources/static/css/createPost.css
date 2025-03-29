@@ -22,9 +22,15 @@ body {
 /* Header styling */
 header {
     background-color: var(--primary-pink);
-    padding: 1rem 1rem;
+    padding: 1rem 2rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .navbar {
@@ -35,7 +41,6 @@ header {
     font-size: 1.8rem;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-left: 5px;
 }
 
 /* Logo with shadow */
@@ -77,6 +82,9 @@ form {
     padding: 2rem;
     margin-bottom: 2rem;
     position: relative;
+    margin-top: 75px; /* Adjusted to position form 5px under the navbar */
+    max-height: 80vh; /* Limit height of the form */
+    overflow-y: visible; /* Enable scrolling if the content overflows */
 }
 
 /* Form groups */
@@ -188,8 +196,13 @@ input[type="file"]::-webkit-file-upload-button {
 .nav-bar {
     width: 250px;
     position: fixed;
-    height: 100%;
+    height: calc(100% - 70px); /* Adjust height to be below the navbar */
     z-index: 100;
+    top: 70px; /* Start below the navbar */
+    left: 0;
+    background-color: var(--primary-pink);
+    overflow-y: auto; /* Add vertical scroll */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .side-bar-container {
@@ -197,8 +210,6 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .side_navbar {
-    background-color: var(--primary-pink);
-    height: 100vh;
     padding: 1.5rem 1rem;
     width: 250px;
     border-right: 2px solid var(--primary-pink-dark); /* Border separating sidebar from content */
@@ -215,7 +226,7 @@ input[type="file"]::-webkit-file-upload-button {
 .func-block a {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Align text and icon at opposite ends */
     gap: 0.5rem;
     padding: 0.75rem 1rem;
     border-radius: 8px;
@@ -232,6 +243,7 @@ input[type="file"]::-webkit-file-upload-button {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+/* Sidebar link hover effect */
 .func-block a:hover {
     background-color: rgba(255, 255, 255, 0.2); /* Subtle white overlay on hover */
 }

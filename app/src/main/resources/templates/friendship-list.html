@@ -7,7 +7,7 @@
 <body>
 <header>
     <nav class="navbar">
-        <a href="/home" class="logo">Morsel</a>
+        <a class="logo">Morsel</a>
     </nav>
 </header>
 <div class="nav-bar">
@@ -57,28 +57,27 @@
 
     <!-- Display friends if available -->
     <div th:unless="${#lists.isEmpty(friendDetails)}">
-        <ul>
-            <li th:each="friend : ${friendDetails}">
-                <div>
+        <div class="row">
+            <div class="col-md-6" th:each="friend : ${friendDetails}">
+                <div class="card">
                     <!-- Profile Picture -->
-                    <img th:src="${friend.profilePicture != null ? friend.profilePicture : '/images/default-profile.png'}"
-                         alt="Profile Picture" width="50" height="50"/>
-
-                    <!-- Name and Username -->
-                    <span th:text="${friend.firstName} + ' ' + ${friend.lastName}"></span>
-                    <span th:text="${friend.username}"></span>
-
+                    <img th:src="${friend.profilePicture != null ? friend.profilePicture : 'https://i.pinimg.com/736x/fc/04/e2/fc04e2f512d243e8f605b32b64bdc1b3.jpg'}"
+                         alt="Profile Picture" class="rounded-circle card-img-top"/>
+                    <div class="friend-info">
+                        <!-- Name and Username -->
+                        <span th:text="${friend.firstName} + ' ' + ${friend.lastName}"></span>
+                        <span th:text="${friend.username}"></span>
+                    </div>
                     <!-- Remove Friend button only for admins -->
                     <div th:if="${authUserRole == 'ADMIN'}">
                         <form th:action="@{/friendships/remove/{friendshipId}(friendshipId=${friend.id})}" method="post">
-                            <button type="submit">Remove Friend</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Remove Friend</button>
                         </form>
                     </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>
-
 </body>
 </html>

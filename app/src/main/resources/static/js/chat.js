@@ -10,7 +10,6 @@
             stompClient.subscribe('/topic/messages', function (message) {
                 showMessage(JSON.parse(message.body));  // Display the received message
             });
-            loadChatHistory();
         });
     }
 
@@ -43,12 +42,6 @@
         document.getElementById("messages").appendChild(messageDiv);
     }
 
-    // Load chat history
-    function loadChatHistory() {
-        fetch('/chat/history')
-            .then(response => response.json())
-            .then(messages => messages.forEach(showMessage));
-    }
 
     // Connect when page loads
     window.onload = connect;

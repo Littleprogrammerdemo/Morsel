@@ -9,10 +9,11 @@
     --primary: #d92673;
     --primary-dark: #c42e64;
     --primary-light: #fbcfe8;
-    --secondary: #48dbfb;
-    --secondary-dark: #0abde3;
-    --text-dark: #ffffff;
-    --text-light: #636e72;
+    --secondary: #ffb6c1;
+    --secondary-dark: #ff6f91;
+    --secondary-light: #ffdde1; /* Added this line */
+    --text-dark: #000000;
+    --text-light: #000000;
     --background: #f9f9f9;
     --white: #ffffff;
     --border: #dfe6e9;
@@ -53,12 +54,12 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2.5rem;
-    height: 80px;
+    padding: 2rem 3.5rem; /* Increased padding for bigger navbar */
+    height: 100px; /* Increased height for bigger navbar */
 }
 
 .logo {
-    font-size: 2.2rem;
+    font-size: 2.5rem; /* Increased font size */
     font-weight: 700;
     color: var(--primary);
     text-decoration: none;
@@ -74,7 +75,7 @@ header {
 /* Sidebar */
 .nav-bar {
     position: fixed;
-    top: 80px; /* Match the navbar height */
+    top: 100px; /* Match the updated navbar height */
     bottom: 0;
     left: 0;
     width: 280px;
@@ -83,23 +84,23 @@ header {
 
 .side-bar-container {
     height: 100%;
-    background-color: var(--white);
+    background-color: var(--white); /* Ensure sidebar is not pink */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     overflow-y: auto;
 }
+
 .side_navbar .func-block a {
-    color: var(--primary); /* Apply primary pink to the text */
+    color: var(--text-dark); /* Sidebar text is black */
 }
 
 .side_navbar .func-block a:hover {
-    background-color: rgba(236, 72, 153, 0.1); /* Hover background remains the same */
+    background-color: var(--secondary-light); /* Hover background is light pink */
     color: var(--primary-dark); /* Hover color for text is a darker pink */
 }
 
 .app-nav-bar-name {
     color: var(--primary); /* Ensure app name is in primary pink */
 }
-
 
 .side_navbar {
     display: flex;
@@ -138,7 +139,7 @@ header {
     justify-content: space-between;
     padding: 1rem 1.25rem; /* Increased padding for bigger text */
     margin: 0.25rem 0;
-    color: var(--text-dark);
+    color: var(--text-dark); /* Text color is black */
     text-decoration: none;
     border-radius: 8px;
     transition: var(--transition);
@@ -146,7 +147,7 @@ header {
 }
 
 .func-block a:hover {
-    background-color: rgba(236, 72, 153, 0.1); /* Changed to pink */
+    background-color: var(--secondary-light); /* Hover background is light pink */
     color: var(--primary);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow on hover */
 }
@@ -320,7 +321,6 @@ header {
     font-size: 1.4rem;  /* Adjust the size as needed */
     font-weight: 600;  /* Optional: makes it bold for emphasis */
 }
-
 
 .text-center .text-muted:last-child {
     color: var(--primary); /* Primary color for the "Send invitations" text */

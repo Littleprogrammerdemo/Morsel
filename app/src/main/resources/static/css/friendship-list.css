@@ -1,95 +1,132 @@
-/* Global styles and resets */
+/* Main Variables */
+:root {
+    --primary-pink: #e83e8c;
+    --primary-pink-light: #f8d7e6;
+    --primary-pink-dark: #d81b7a;
+    --primary: #e84393;
+    --primary-light: #fd79a8;
+    --primary-dark: #c2185b;
+    --secondary: #ffedf5;
+    --text-dark: #333333;
+    --text-light: #ffffff;
+    --background: #f9f9f9;
+    --form-bg: #ffffff;
+    --form-border: #f0f0f0;
+    --input-border: #e0e0e0;
+    --sidebar-bg: #e83e8c; /* Pink background for sidebar */
+    --shadow: 0 4px 6px rgba(232, 67, 147, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Global styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-/* Empty state styling */
-.empty-state-container {
-    text-align: center;
-    padding: 80px 40px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    margin: 100px;
-    max-width: 900px; /* Increased max-width */
-    border: 1px solid #f1f1f1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-left: 400px;
-}
-
-.empty-state-icon {
-    margin-bottom: 30px; /* Increased space */
-}
-
-.empty-state-icon svg {
-    width: 120px;  /* Increased size */
-    height: 120px; /* Increased size */
-    color: #859096;
-    margin-left:-7px;
-    transition: all 0.2s ease;
-}
-
-.empty-state-icon svg:hover {
-    color: #607d8b;
-    transform: scale(1.15);  /* Slightly larger hover effect */
-}
-
-.empty-state-title {
-    font-size: 28px;  /* Increased font size */
-    font-weight: 700;
-    color: #333333;
-    margin-bottom: 18px;  /* Increased margin */
-    letter-spacing: 0.8px;  /* Slightly increased letter spacing */
-}
-
-.empty-state-message {
-    color: #2f2e2e;
-    font-size: 20px;  /* Increased font size */
-    line-height: 1.3;
-    margin-bottom: 20px;  /* Increased space */
-    font-family: 'Roboto', sans-serif;
-    max-width: 80%; /* Limiting the width for better readability */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.empty-state-message a {
-    color: #00796b;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.empty-state-message a:hover {
-    color: #004d40;
-}
-
-.btn-outline-primary {
-    color: #de238d;
-    background-color: transparent;
-    border: 2px solid #de238d;
-    padding: 10px 20px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.btn-outline-primary:hover {
-    color: #ffffff;
-    background-color: #de238d;
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    background-color: #f9f9f9;
+    background-color: var(--background);
+    color: var(--text-dark);
     line-height: 1.6;
 }
 
-/* Layout containers */
+/* Header styling */
+header {
+    background-color: var(--primary-pink);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Logo with shadow */
+.logo {
+    color: var(--text-light);
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar styling */
+.nav-bar {
+    width: 250px;
+    position: fixed;
+    height: 100%;
+    z-index: 100;
+    top: 70px; /* Start below the navbar */
+    left: 0;
+    background-color: var(--sidebar-bg); /* Pink background */
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.side_navbar {
+    padding: 2rem;
+    background-color: var(--sidebar-bg); /* Pink background */
+}
+
+.app-nav-bar {
+    margin-bottom: 2rem;
+}
+
+.app-nav-bar-name {
+    font-size: 2rem;
+    color: var(--text-light); /* White text */
+}
+
+.app-nav-bar-version {
+    font-size: 1rem;
+    color: var(--text-light); /* White text */
+    margin-top: 0.5rem;
+}
+
+/* Sidebar navigation links */
+.func-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.func-block a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    color: var(--text-light); /* White text */
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.func-block a:hover {
+    background-color: var(--primary-pink-light);
+}
+
+.func-block svg {
+    fill: var(--text-light); /* White icons */
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Container styling */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -107,125 +144,6 @@ body {
     width: 100%;
 }
 
-@media (min-width: 768px) {
-    .col-md-6 {
-        width: 50%;
-    }
-}
-
-/* Navbar Styling */
-header {
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 10px; /* Increased padding for more space */
-    max-width: 1200px;
-    margin: 0 auto;
-    font-size: 18px; /* Increased font size for the navbar */
-}
-
-.logo {
-    font-size: 26px;  /* Increased font size for the logo */
-    font-weight: bold;
-    color: #de238d;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.logo:hover {
-    color: #de238d;
-}
-
-/* Sidebar Navigation */
-.nav-bar {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    background-color: #ffffff;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 900;
-    font-size: 18px;  /* Increased font size for sidebar text */
-}
-
-.side-bar-container {
-    padding: 30px 0;  /* Increased padding for more space */
-    height: 100%;
-}
-
-.side_navbar {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.app-nav-bar {
-    padding: 0 30px 20px; /* Increased padding for better spacing */
-    border-bottom: 1px solid #eaeaea;
-    margin-bottom: 30px;
-}
-
-.app-nav-bar-name {
-    font-size: 24px; /* Increased font size */
-    font-weight: bold;
-    color: #de238d;
-}
-
-.app-nav-bar-version {
-    font-size: 14px;  /* Slightly increased version font size */
-    color: #888;
-    margin-top: 5px;
-}
-
-.func-block {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-}
-
-.func-block:not(:last-child) {
-    border-bottom: 1px solid #eaeaea;
-    margin-bottom: 10px;
-}
-
-.func-block a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 25px;  /* Increased padding for better clickability */
-    color: #555;
-    text-decoration: none;
-    font-size: 18px; /* Increased font size for menu items */
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.func-block a:hover {
-    background-color: #f5f5f5;
-    color: #de238d;
-}
-
-.func-block a p {
-    margin: 0;
-    font-weight: 600;  /* Slightly bolder text */
-}
-
-.func-block a svg {
-    width: 22px;  /* Increased icon size */
-    height: 22px;
-}
-
-.logout {
-    margin-top: auto;
-    color: #de238d !important;
-}
-/* Main content area - adjust to accommodate sidebar */
 .container {
     margin-left: 250px;
     padding: 30px;
@@ -240,6 +158,9 @@ header {
     transition: transform 0.3s, box-shadow 0.3s;
     overflow: hidden;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
 }
 
 .card:hover {
@@ -277,11 +198,17 @@ header {
 .card-img-top {
     width: 120px;
     height: 120px;
+    margin-right: 20px;
 }
 
 .card-text {
     margin-bottom: 15px;
     color: #555;
+}
+
+.friend-info {
+    display: flex;
+    flex-direction: column;
 }
 
 h3 {
@@ -357,69 +284,85 @@ h5 {
     color: #6c757d;
 }
 
+/* Empty state */
+.empty-state-container {
+    text-align: center;
+    padding: 80px 40px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin: 100px;
+    max-width: 900px; /* Increased max-width */
+    border: 1px solid #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 400px;
+}
+
+.empty-state-icon {
+    margin-bottom: 30px; /* Increased space */
+}
+
+.empty-state-icon svg {
+    width: 120px; /* Increased size */
+    height: 120px; /* Increased size */
+    color: #859096;
+    margin-left: -7px;
+    transition: all 0.2s ease;
+}
+
+.empty-state-icon svg:hover {
+    color: #607d8b;
+    transform: scale(1.15); /* Slightly larger hover effect */
+}
+
+.empty-state-title {
+    font-size: 28px; /* Increased font size */
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 18px; /* Increased margin */
+    letter-spacing: 0.8px; /* Slightly increased letter spacing */
+}
+
+.empty-state-message {
+    color: #2f2e2e;
+    font-size: 20px; /* Increased font size */
+    line-height: 1.3;
+    margin-bottom: 20px; /* Increased space */
+    font-family: 'Roboto', sans-serif;
+    max-width: 80%; /* Limiting the width for better readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state-message a {
+    color: #00796b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.empty-state-message a:hover {
+    color: #004d40;
+}
+
 /* Responsive adjustments */
 @media (max-width: 992px) {
-    .card-img-top {
-        width: 100px;
-        height: 100px;
-    }
-}
-
-@media (max-width: 768px) {
-    .nav-bar {
-        width: 200px;
-    }
-
     .container {
-        margin-left: 200px;
-        width: calc(100% - 200px);
+        margin-left: 0;
+        padding: 2rem;
     }
 
-    .func-block a p {
-        font-size: 14px;
-    }
-
-    .func-block a {
-        padding: 10px 15px;
-    }
-}
-
-@media (max-width: 576px) {
     .nav-bar {
-        width: 70px;
-    }
-
-    .container {
-        margin-left: 70px;
-        width: calc(100% - 70px);
-        padding: 15px;
-    }
-
-    .func-block a p {
-        display: none;
-    }
-
-    .func-block a {
-        justify-content: center;
-        padding: 15px 0;
-    }
-
-    .app-nav-bar-name {
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .app-nav-bar-version {
-        text-align: center;
-    }
-
-    .card-body .row {
-        flex-direction: column;
-    }
-
-    .card-body .col {
         width: 100%;
-        text-align: center;
-        margin-bottom: 15px;
+        position: relative;
+        height: auto;
+    }
+
+    .side_navbar {
+        width: 100%;
+        padding: 1rem;
     }
 }

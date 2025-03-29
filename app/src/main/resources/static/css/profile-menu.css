@@ -13,24 +13,23 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #ff4d94;
-    background-image: linear-gradient(to right, #ff4d94, #ff1a66);
-    padding: 16px 30px;
+    background-color:#de238d;
+    padding: 10px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
-    height: 70px;
+    height: 80px;
 }
 
 .logo {
     color: #ffffff;
-    font-size: 28px;
+    font-size: 32px; /* Increased font size */
     font-weight: bold;
     text-decoration: none;
     letter-spacing: 1px;
@@ -38,22 +37,17 @@ body {
 
 /* Side Navbar */
 .side-bar-container {
-    width: 250px;
-    background-color: #ff4d94;
-    background-image: linear-gradient(to bottom, #ff4d94, #ff1a66);
+    width: 300px; /* Increased width for bigger sidebar */
+    background-color: #de238d;  /* Better pink */
     position: fixed;
     height: 100vh;
-    padding-top: 70px;
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+    padding-top: 90px; /* Match the navbar height */
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
     top: 0;
     left: 0;
     overflow-y: auto;
     z-index: 990;
     transition: all 0.3s ease;
-}
-
-.side-bar-container::-webkit-scrollbar {
-    width: 6px;
 }
 
 .side-bar-container::-webkit-scrollbar-thumb {
@@ -64,32 +58,32 @@ body {
 .side_navbar {
     display: flex;
     flex-direction: column;
-    padding: 5px 15px 20px;
+    padding: 10px 20px 30px; /* Increased padding */
 }
 
 .app-nav-bar {
     text-align: center;
     margin-bottom: 30px;
-    padding: 15px 10px;
+    padding: 20px 10px; /* Increased padding */
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .app-nav-bar-name {
-    font-size: 22px;
+    font-size: 24px; /* Increased font size */
     font-weight: bold;
     color: #ffffff;
     letter-spacing: 0.5px;
 }
 
 .app-nav-bar-version {
-    font-size: 12px;
+    font-size: 14px; /* Increased font size */
     color: rgba(255, 255, 255, 0.8);
     margin-top: 5px;
 }
 
 .func-block {
-    margin-bottom: 25px;
-    padding: 0 5px;
+    margin-bottom: 30px; /* Increased margin */
+    padding: 0 10px; /* Increased padding */
 }
 
 .func-block a {
@@ -98,10 +92,10 @@ body {
     justify-content: space-between;
     color: #fff;
     text-decoration: none;
-    padding: 12px 15px;
-    margin: 6px 0;
+    padding: 15px 20px; /* Increased padding */
+    margin: 8px 0; /* Increased margin */
     transition: all 0.3s;
-    font-size: 18px; /* Increased font size */
+    font-size: 20px; /* Increased font size */
     border-radius: 10px;
     font-weight: 500;
 }
@@ -112,19 +106,19 @@ body {
 }
 
 .func-block a svg {
-    width: 24px; /* Bigger icon size */
-    height: 24px; /* Bigger icon size */
-    color: white;
+    width: 26px; /* Bigger icon size */
+    height: 26px; /* Bigger icon size */
+    color: #ffffff;
 }
 
 .func-block a.logout:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 26, 102, 0.1);  /* Light pink background on hover */
 }
 
 /* Main Content Area */
 .home-section {
-    margin-left: 250px;
-    padding: 90px 30px 30px;
+    margin-left: 300px; /* Match sidebar width */
+    padding: 100px 40px 30px; /* Increased padding */
     transition: all 0.3s;
 }
 
@@ -254,22 +248,22 @@ body {
 
 /* Footer */
 .footer {
-    margin-left: 250px;
-    padding: 1.8rem;
-    background-color: white;
+    margin-left: 300px; /* Match sidebar width */
+    padding: 1.4rem;
+    background-color: #d92673;
     text-align: center;
-    color: #777;
+    color: #ffffff;
     border-top: 1px solid #ffcce0;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 992px) {
     .side-bar-container {
-        width: 220px;
+        width: 250px;
     }
 
     .home-section, .footer {
-        margin-left: 220px;
+        margin-left: 250px;
     }
 }
 
