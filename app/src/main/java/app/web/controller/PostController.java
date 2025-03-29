@@ -42,24 +42,6 @@ public class PostController {
         return modelAndView;
     }
 
-    @GetMapping("/{id}")
-    public ModelAndView viewPost(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        User user = userService.getByUserId(authenticationMetadata.getUserId());
-        Post post = postService.getPostById(id);
-        List<Comment> comments = postService.getCommentsForPost(id);
-
-        if (post == null) {
-            throw new RuntimeException("Post not found with id: " + id);
-        }
-
-
-        ModelAndView modelAndView = new ModelAndView("postDetails");
-        modelAndView.addObject("post", post);
-        modelAndView.addObject("comments", comments);
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
     @GetMapping("/new")
     public ModelAndView createPostForm(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getByUserId(authenticationMetadata.getUserId());

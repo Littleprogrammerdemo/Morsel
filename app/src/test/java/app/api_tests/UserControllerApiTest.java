@@ -1,7 +1,6 @@
 package app.api_tests;
 
 import app.security.AuthenticationMetadata;
-import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.service.UserService;
 import app.web.controller.UserController;
