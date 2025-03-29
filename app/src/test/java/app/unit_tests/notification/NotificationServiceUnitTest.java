@@ -3,7 +3,6 @@ package app.unit_tests.notification;
 import app.notification.client.NotificationClient;
 import app.notification.client.dto.*;
 import app.notification.service.NotificationService;
-import app.exception.NotificationFeignCallException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

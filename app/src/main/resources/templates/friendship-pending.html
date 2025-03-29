@@ -132,7 +132,7 @@
                         <!-- Profile Picture -->
                         <div class="col d-flex justify-content-center align-items-center">
                             <!-- Display the profile picture of the inviting user or a default image if null -->
-                            <img th:src="${invitation.invitingUserResponse.profilePicture != null ? invitation.invitingUserResponse.profilePicture : '/images/default-profile-pic.jpg'}"
+                            <img th:src="${invitation.invitingUserResponse.profilePicture != null ? invitation.invitingUserResponse.profilePicture : 'https://i.pinimg.com/736x/fc/04/e2/fc04e2f512d243e8f605b32b64bdc1b3.jpg'}"
                                  class="card-img-top rounded-circle mx-auto"
                                  alt="Profile Picture"
                                  style="width: 150px; height: 150px; object-fit: cover;"/>

@@ -2,13 +2,10 @@ package app.follow.service;
 
 import app.follow.model.FriendshipInvitation;
 import app.follow.repository.FriendshipInvitationRepository;
-import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.repository.UserRepository;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,27 +16,23 @@ public class FriendshipInvitationService {
     private final FriendshipInvitationRepository friendshipInvitationRepository;
     private final UserRepository userRepository; // Fetch User entities
 
-    @Autowired
     public FriendshipInvitationService(FriendshipInvitationRepository friendshipInvitationRepository, UserRepository userRepository) {
         this.friendshipInvitationRepository = friendshipInvitationRepository;
         this.userRepository = userRepository;
     }
 
-    // Get the currently authenticated user
-    private User getAuthenticatedUser() {
-        AuthenticationMetadata authUser = (AuthenticationMetadata) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findById(authUser.getUserId())
-                .orElseThrow(() -> new IllegalStateException("Authenticated user not found"));
-    }
-    @Transactional
-    public FriendshipInvitation createFriendshipInvitation(UUID acceptingUserId) {
-        // Get the current authenticated user
-        User invitingUser = getAuthenticatedUser(); // Get the currently authenticated user
-
-        // Ensure the authenticated user is not null
-        if (invitingUser == null) {
-            throw new IllegalStateException("No authenticated user found.");
+    // Remove authentication logic, passing the authenticated user directly
+    private User getAuthenticatedUser(User authenticatedUser) {
+        if (authenticatedUser == null) {
+            throw new IllegalStateException("Authenticated user is not provided.");
         }
+        return authenticatedUser;
+    }
+
+    @Transactional
+    public FriendshipInvitation createFriendshipInvitation(User authenticatedUser, UUID acceptingUserId) {
+        // Ensure the authenticated user is provided
+        User invitingUser = getAuthenticatedUser(authenticatedUser);
 
         // Get the accepting user by ID
         User acceptingUser = userRepository.findById(acceptingUserId)
@@ -65,26 +58,24 @@ public class FriendshipInvitationService {
         return friendshipInvitationRepository.save(invitation);
     }
 
-
     // Get all pending invitations for the logged-in user
-    public List<FriendshipInvitation> findPendingInvitations() {
-        User acceptingUser = getAuthenticatedUser();
+    public List<FriendshipInvitation> findPendingInvitations(User authenticatedUser) {
+        User acceptingUser = getAuthenticatedUser(authenticatedUser);
         return friendshipInvitationRepository.findByAcceptingUserAndAcceptedFalse(acceptingUser);
     }
 
     // Get all accepted friendships for the logged-in user
-    public List<FriendshipInvitation> findAcceptedFriends() {
-        User user = getAuthenticatedUser();
+    public List<FriendshipInvitation> findAcceptedFriends(User authenticatedUser) {
+        User user = getAuthenticatedUser(authenticatedUser);
         return friendshipInvitationRepository.findByInvitingUserOrAcceptingUserAndAcceptedTrue(user, user);
     }
 
     // Accept a friendship invitation
     @Transactional
-    public void acceptFriendshipInvitation(UUID friendshipId) {
+    public void acceptFriendshipInvitation(User authenticatedUser, UUID friendshipId) {
         FriendshipInvitation invitation = friendshipInvitationRepository.findById(friendshipId)
                 .orElseThrow(() -> new IllegalStateException("Friendship invitation not found"));
 
-        User authenticatedUser = getAuthenticatedUser();
         if (!invitation.getAcceptingUser().equals(authenticatedUser)) {
             throw new IllegalStateException("You are not authorized to accept this friendship request.");
         }
@@ -98,11 +89,10 @@ public class FriendshipInvitationService {
     }
 
     // Decline a friendship invitation
-    public void declineFriendshipInvitation(UUID friendshipId) {
+    public void declineFriendshipInvitation(User authenticatedUser, UUID friendshipId) {
         FriendshipInvitation invitation = friendshipInvitationRepository.findById(friendshipId)
                 .orElseThrow(() -> new IllegalStateException("Friendship invitation not found"));
 
-        User authenticatedUser = getAuthenticatedUser();
         if (!invitation.getAcceptingUser().equals(authenticatedUser)) {
             throw new IllegalStateException("You are not authorized to decline this friendship request.");
         }
@@ -112,11 +102,10 @@ public class FriendshipInvitationService {
 
     // Remove a friendship
     @Transactional
-    public void removeFriendship(UUID friendshipId) {
+    public void removeFriendship(User authenticatedUser, UUID friendshipId) {
         FriendshipInvitation invitation = friendshipInvitationRepository.findById(friendshipId)
                 .orElseThrow(() -> new IllegalStateException("Friendship not found"));
 
-        User authenticatedUser = getAuthenticatedUser();
         if (!invitation.getInvitingUser().equals(authenticatedUser) &&
                 !invitation.getAcceptingUser().equals(authenticatedUser)) {
             throw new IllegalStateException("You are not authorized to remove this friendship.");

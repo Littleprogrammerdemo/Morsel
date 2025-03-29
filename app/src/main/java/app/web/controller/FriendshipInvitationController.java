@@ -31,96 +31,86 @@ public class FriendshipInvitationController {
     // Show pending friendship invitations
     @GetMapping("/pending")
     public String showPendingInvitations(@AuthenticationPrincipal AuthenticationMetadata authUser, Model model) {
-        // Retrieve pending invitations
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
         List<FriendshipInvitationResponse> invitations = friendshipInvitationService
-                .findPendingInvitations()
+                .findPendingInvitations(authenticatedUser)
                 .stream()
                 .map(DtoMapper::mapToFriendship)
                 .collect(Collectors.toList());
 
-        // Add user details for each invitation (fetch inviting user details)
         List<FriendshipInvitationResponse> invitationsWithDetails = invitations.stream()
                 .map(invitation -> {
-                    // Fetch the inviting user using the user ID
                     User invitingUser = userService.getByUserId(invitation.getInvitingUserId());
-
-                    // Map inviting user details into the invitation
-                    UserResponse userResponse = new UserResponse(
-                            invitingUser.getId(),
-                            invitingUser.getUsername(),
-                            invitingUser.getFirstName(),
-                            invitingUser.getLastName(),
+                    invitation.setInvitingUserResponse(new UserResponse(
+                            invitingUser.getId(), invitingUser.getUsername(),
+                            invitingUser.getFirstName(), invitingUser.getLastName(),
                             invitingUser.getProfilePicture()
-                    );
-
-                    // Set the inviting user details on the invitation
-                    invitation.setInvitingUserResponse(userResponse);
-
+                    ));
                     return invitation;
                 })
                 .collect(Collectors.toList());
 
-        // Add invitations with complete user details to the model
         model.addAttribute("invitations", invitationsWithDetails);
-        model.addAttribute("user", userService.getByUserId(authUser.getUserId()));
+        model.addAttribute("user", authenticatedUser);
 
-        // Return the Thymeleaf template
         return "friendship-pending";
     }
 
+    // Show list of accepted friends
     @GetMapping("/friends")
     public String showFriends(@AuthenticationPrincipal AuthenticationMetadata authUser, Model model) {
-        // Get the list of accepted friends
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
         List<FriendshipInvitationResponse> friends = friendshipInvitationService
-                .findAcceptedFriends()
+                .findAcceptedFriends(authenticatedUser)
                 .stream()
                 .map(DtoMapper::mapToFriendship)
                 .collect(Collectors.toList());
 
-        // Get details for each friend
         List<UserResponse> friendDetails = friends.stream().map(friend -> {
-            // Get the user by ID for the friend
-            User friendUser = userService.getByUserId(friend.getAcceptingUserId().equals(authUser.getUserId())
-                    ? friend.getInvitingUserId()
-                    : friend.getAcceptingUserId());
-
-            return new UserResponse(friendUser.getId(), friendUser.getUsername(), friendUser.getFirstName(),
-                    friendUser.getLastName(), friendUser.getProfilePicture());
+            User friendUser = userService.getByUserId(
+                    friend.getAcceptingUserId().equals(authUser.getUserId())
+                            ? friend.getInvitingUserId()
+                            : friend.getAcceptingUserId()
+            );
+            return new UserResponse(friendUser.getId(), friendUser.getUsername(),
+                    friendUser.getFirstName(), friendUser.getLastName(),
+                    friendUser.getProfilePicture());
         }).collect(Collectors.toList());
 
-        // Get the current authenticated user
-        User user = userService.getByUserId(authUser.getUserId());
-
-        // Add attributes to the model
         model.addAttribute("friendDetails", friendDetails);
-        model.addAttribute("user", user); // Pass the complete user object
+        model.addAttribute("user", authenticatedUser);
 
-        // Return the Thymeleaf template for displaying the friendship list
         return "friendship-list";
     }
 
+    // Show invite form
     @GetMapping("/invite")
     public String showInviteForm(@AuthenticationPrincipal AuthenticationMetadata authUser, Model model) {
-        // Get all users except the currently authenticated one
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
         List<UserResponse> users = userService.getAllUsers().stream()
-                .filter(user -> !user.getId().equals(authUser.getUserId())) // Exclude self
-                .map(user -> new UserResponse(user.getId(), user.getUsername(), user.getFirstName(),
-                        user.getLastName(), user.getProfilePicture()))
+                .filter(user -> !user.getId().equals(authenticatedUser.getId()))
+                .map(user -> new UserResponse(user.getId(), user.getUsername(),
+                        user.getFirstName(), user.getLastName(),
+                        user.getProfilePicture()))
                 .collect(Collectors.toList());
 
-        // Add the users to the model for display
         model.addAttribute("users", users);
-        return "friendship-invite"; // Thymeleaf template
+        return "friendship-invite";
     }
 
     // Send a friendship invitation
     @PostMapping("/invite")
     public String sendFriendshipInvitation(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                            @RequestParam("acceptingUserId") UUID acceptingUserId) {
-        // Ensure that a valid acceptingUserId is provided
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
         if (acceptingUserId != null) {
-            friendshipInvitationService.createFriendshipInvitation(acceptingUserId);
+            friendshipInvitationService.createFriendshipInvitation(authenticatedUser, acceptingUserId);
         }
+
         return "redirect:/friendships/pending";
     }
 
@@ -128,8 +118,10 @@ public class FriendshipInvitationController {
     @PostMapping("/accept/{friendshipId}")
     public String acceptFriendship(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                    @PathVariable UUID friendshipId) {
-        // Ensure friendship exists before accepting
-        friendshipInvitationService.acceptFriendshipInvitation(friendshipId);
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
+        friendshipInvitationService.acceptFriendshipInvitation(authenticatedUser, friendshipId);
+
         return "redirect:/friendships/friends";
     }
 
@@ -137,8 +129,10 @@ public class FriendshipInvitationController {
     @PostMapping("/decline/{friendshipId}")
     public String declineFriendship(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                     @PathVariable UUID friendshipId) {
-        // Ensure friendship exists before declining
-        friendshipInvitationService.declineFriendshipInvitation(friendshipId);
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
+        friendshipInvitationService.declineFriendshipInvitation(authenticatedUser, friendshipId);
+
         return "redirect:/friendships/pending";
     }
 
@@ -146,8 +140,10 @@ public class FriendshipInvitationController {
     @PostMapping("/remove/{friendshipId}")
     public String removeFriend(@AuthenticationPrincipal AuthenticationMetadata authUser,
                                @PathVariable UUID friendshipId) {
-        // Ensure friendship exists before removing
-        friendshipInvitationService.removeFriendship(friendshipId);
+        User authenticatedUser = userService.getByUserId(authUser.getUserId());
+
+        friendshipInvitationService.removeFriendship(authenticatedUser, friendshipId);
+
         return "redirect:/friendships/friends";
     }
 }
