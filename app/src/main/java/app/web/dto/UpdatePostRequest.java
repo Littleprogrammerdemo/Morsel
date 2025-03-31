@@ -1,7 +1,6 @@
 package app.web.dto;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -17,11 +16,6 @@ public class UpdatePostRequest {
     private String categoryType;
     private String imageFile;
 
-    // Constructor fo tests
-    public UpdatePostRequest(String title, String content, String category) {
-        this.title = title;
-        this.content = content;
-        this.categoryType = category;
-    }
+
 
 }

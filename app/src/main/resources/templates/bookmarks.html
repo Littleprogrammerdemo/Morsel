@@ -140,12 +140,9 @@
                     <!-- Recipe Description -->
                     <p class="card-text" th:text="${post.content}"></p>
 
-                    <!-- View Recipe Button -->
-                    <a th:href="@{/posts/{id}(id=${post.id})}" class="btn btn-primary">View Recipe</a>
-
                     <!-- Remove Bookmark Button -->
                     <form th:action="@{/bookmarks/remove/{postId}(postId=${post.id})}" method="post">
-                        <button class="btn btn-danger mt-2">❌ Remove Bookmark</button>
+                        <button class="btn btn-danger mt-2">Remove Bookmark</button>
                     </form>
                 </div>
             </div>

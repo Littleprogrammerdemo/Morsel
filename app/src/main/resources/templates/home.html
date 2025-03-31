@@ -163,9 +163,6 @@
             <form th:action="@{/bookmarks/add/{postId}(postId=${post.id})}" method="post" th:if="${!post.bookmarked}">
                 <button type="submit">Bookmark</button>
             </form>
-            <form th:action="@{/bookmarks/remove/{postId}(postId=${post.id})}" method="post" th:if="${post.bookmarked}">
-                <button type="submit">Remove Bookmark</button>
-            </form>
         </div>
     </div>
 
