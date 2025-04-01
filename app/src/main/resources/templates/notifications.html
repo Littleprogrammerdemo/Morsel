@@ -26,12 +26,12 @@
                             <div class="app-nav-bar-version">v1.0.0</div>
                         </div>
                         <div class="func-block">
-                                <a class="home" href="/home">
-                                    <p>Home</p>
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
-                                    </svg>
-                                </a>
+                            <a class="home" href="/home">
+                                <p>Home</p>
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                                </svg>
+                            </a>
                             <!-- My Profile -->
                             <a href="/users/{id}/profile" class="flex items-center space-x-2">
                                 <p>My Profile</p>
@@ -164,7 +164,7 @@
 
         <p>Change State:</p>
         <div class="allowed-notification-actions">
-            <form th:action="@{'/notifications/user-preference?enabled=false'}" th:method="PUT" th:if="${notificationPreference.notificationEnabled}">
+            <form th:action="@{'/notifications/user-preference?notificationEnabled=false'}" th:method="PUT" th:if="${notificationPreference.notificationEnabled}">
                 <button class="profile-actions-button disable-notifications">
                     <p>Disable Notifications</p>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,7 +173,7 @@
                     </svg>
                 </button>
             </form>
-            <form th:action="@{'/notifications/user-preference?enabled=true'}" th:method="PUT" th:unless="${notificationPreference.notificationEnabled}">
+            <form th:action="@{'/notifications/user-preference?notificationEnabled=true'}" th:method="PUT" th:unless="${notificationPreference.notificationEnabled}">
                 <button class="profile-actions-button enable-notifications">
                     <p>Enable Notifications</p>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -186,6 +186,7 @@
 
         <p>General Actions:</p>
         <div class="allowed-notification-actions">
+            <form th:action="@{/notifications}" th:method="DELETE">
             <button class="profile-actions-button">
                 <p>Clear History</p>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,6 +194,8 @@
                           fill="currentColor"/>
                 </svg>
             </button>
+            </form>
+            <form th:action="@{/notifications}" th:method="PUT">
             <button class="profile-actions-button">
                 <p>Retry Failed</p>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -200,8 +203,8 @@
                           fill="currentColor"/>
                 </svg>
             </button>
+            </form>
         </div>
-
         <p class="small-informative-text-bottom">Any action that you take will affect the notification mechanism for your account!</p>
     </div>
 
@@ -229,29 +232,26 @@
             </tr>
             </tbody>
         </table>
-        <div>
-        // Ako nqmame notificationi - default
-        <table class="styled-table" th:if="${#lists.isEmpty(notificationHistory)}">
-            <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="small-informative-text-bottom">Every record in this table is equal to 1 notification of a certain type.</p>
+            <table class="styled-table" th:if="${#lists.isEmpty(notificationHistory)}">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="small-informative-text-bottom">Every record in this table is equal to 1 notification of a certain type.</p>
+        </div>
     </div>
-    </div>
-</div>
 </body>
 </html>
