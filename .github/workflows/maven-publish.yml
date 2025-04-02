@@ -22,7 +22,18 @@ jobs:
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
-
+spring:
+  datasource:
+    url: jdbc:mysql:mysql://localhost:3306/recipes_app?createDatabaseIfNotExist=true
+    username: root
+    password: siuti098&^%$#@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQLDialect
       - name: Build with Maven
         run: mvn -B package --file app/pom.xml
 
