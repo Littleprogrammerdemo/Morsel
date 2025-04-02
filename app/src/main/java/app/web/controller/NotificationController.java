@@ -35,7 +35,7 @@ public class NotificationController {
 
         NotificationPreference notificationPreference = notificationService.getNotificationPreference(user.getId());
         List<Notification> notificationHistory = notificationService.getNotificationHistory(user.getId());
-        long succeededNotificationsNumber = notificationHistory.stream().filter(notification -> notification.getStatus().equals("SUCCEEDED")).count();
+        long succeededNotificationsNumber = notificationHistory.stream().filter(notification -> notification.getStatus().equals("RECEIVED")).count();
         long failedNotificationsNumber = notificationHistory.stream().filter(notification -> notification.getStatus().equals("FAILED")).count();
         notificationHistory = notificationHistory.stream().limit(5).toList();
 

@@ -75,7 +75,6 @@ public class UserService implements UserDetailsService {
     public void editUserDetails(UUID userId, UserEditRequest userEditRequest) {
 
         User user = getByUserId(userId);
-
         user.setFirstName(userEditRequest.getFirstName());
         user.setLastName(userEditRequest.getLastName());
         user.setEmail(userEditRequest.getEmail());
