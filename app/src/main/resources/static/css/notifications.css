@@ -38,8 +38,28 @@ body {
 .side_navbar {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+}
+/* Add scrolling to sidebar */
+.side_navbar {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* This already exists */
+    max-height: calc(100vh - 40px); /* Adjust height to fit within the viewport */
 }
 
+/* Add scrolling to notification boxes */
+.notification-preferences-box,
+.notification-history-box {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    min-width: 300px;
+    overflow-y: auto; /* Add this line */
+    max-height: 900px; /* Set a fixed height to make the box scrollable */
+}
 .app-nav-bar {
     padding: 0 20px 15px 20px;
     border-bottom: 1px solid #f8e1ea;
@@ -74,11 +94,13 @@ body {
     font-weight: 500;
     border-radius: 0;
     transition: all 0.2s ease;
+    overflow-y: auto;
 }
 
 .side_navbar a:hover {
     background-color: #fff0f6;
     color: #e83e8c;
+
 }
 
 .side_navbar a svg {
