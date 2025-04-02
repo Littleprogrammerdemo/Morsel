@@ -32,6 +32,8 @@ jobs:
 
     - name: Build with Maven
       run: mvn clean install
+      working-directory: ./app/pom.xml
 
     - name: Run tests
       run: mvn test
+      working-directory: .app/tests/java/app
