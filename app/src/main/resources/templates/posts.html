@@ -152,7 +152,8 @@
 </div>
 
 <!-- No Posts Message -->
-<div th:if="${posts == null or posts.isEmpty()}">
+<div class = "no-posts-message"
+     th:if="${posts == null or posts.isEmpty()}">
     <p>You have not created any posts yet.</p>
 </div>
 

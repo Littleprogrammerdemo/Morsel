@@ -101,6 +101,19 @@ body {
     justify-content: center;
     padding: 20px;
 }
+.no-posts-message {
+    font-size: 18px;
+    color: #b300b3; /* Soft purple color for a stylish look */
+    background-color: #f9e6ff; /* Light pinkish-purple background for emphasis */
+    padding: 15px;
+    border: 1px solid #e0b3ff;
+    border-radius: 8px;
+    text-align: center;
+    width: fit-content;
+    margin: 20px auto;
+    font-weight: bold;
+}
+
 
 .post {
     background: white;

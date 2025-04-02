@@ -255,6 +255,19 @@ h5 {
     background-color: #3490dc;
     border-color: #3490dc;
 }
+/* Style for the no friends message */
+.no-friends-message {
+    font-size: 18px;
+    color: #ff4d4d; /* Soft red color to indicate alert */
+    background-color: #fff3f3; /* Light red background for emphasis */
+    padding: 15px;
+    border: 1px solid #ffcccc;
+    border-radius: 8px;
+    text-align: center;
+    width: fit-content;
+    margin: 20px auto;
+    font-weight: bold;
+}
 
 .btn-primary:hover {
     background-color: #2779bd;

@@ -121,7 +121,8 @@
     </div>
 
     <!-- Check if the user has any friends -->
-    <div th:if="${#lists.isEmpty(friendDetails)}">
+    <div class = "no-friends-message "
+         th:if="${#lists.isEmpty(friendDetails)}">
         <p>You have no friends yet.</p>
     </div>
 
