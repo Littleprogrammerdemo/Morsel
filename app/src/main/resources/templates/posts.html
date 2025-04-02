@@ -143,12 +143,9 @@
 
             <!-- Display Post Image -->
             <img th:if="${post.imageUrl != null}" th:src="${post.imageUrl}" alt="Post Image" style="max-width: 100%; height: auto;"/>
-            <!-- Edit and Delete Buttons -->
+            <!-- Edit Button -->
             <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
-            <form th:action="@{/posts/{id}(id=${post.id})}" method="post" style="display:inline;">
-                <input type="hidden" name="_method" value="delete"/>
-                <button type="submit">Delete Post</button>
-            </form>
+
         </div>
     </div>
     </div>

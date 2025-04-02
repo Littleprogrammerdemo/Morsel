@@ -48,4 +48,10 @@ public class CommentService {
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
         commentRepository.delete(comment);
     }
+
+    public Comment findCommentById(UUID commentId) {
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentNotFoundException("Comment not found with ID: " + commentId));
+    }
+
 }

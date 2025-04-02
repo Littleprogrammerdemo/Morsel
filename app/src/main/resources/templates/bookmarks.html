@@ -140,10 +140,6 @@
                     <!-- Recipe Description -->
                     <p class="card-text" th:text="${post.content}"></p>
 
-                    <!-- Remove Bookmark Button -->
-                    <form th:action="@{/bookmarks/remove/{postId}(postId=${post.id})}" method="post">
-                        <button class="btn btn-danger mt-2">Remove Bookmark</button>
-                    </form>
                 </div>
             </div>
         </div>

@@ -150,14 +150,20 @@
                 <button type="submit">Rate</button>
             </form>
 
+            <!-- Form to Add a Comment -->
             <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post">
                 <input type="text" name="content" placeholder="Write a comment..." required>
                 <button type="submit">Comment</button>
             </form>
 
+            <!-- Display Comments -->
             <div th:each="comment : ${post.comments}">
-                <p><strong th:text="${comment.owner.username}"></strong>: <span th:text="${comment.content}"></span></p>
+                <p>
+                    <strong th:text="${comment.owner.username}"></strong>:
+                    <span th:text="${comment.content}"></span>
+
             </div>
+
 
             <!-- Bookmark button -->
             <form th:action="@{/bookmarks/add/{postId}(postId=${post.id})}" method="post" th:if="${!post.bookmarked}">
