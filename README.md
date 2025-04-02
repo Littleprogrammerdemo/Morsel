@@ -1,9 +1,11 @@
 # Morsel
 
-🍽️ Social Recipe App
+🍽️ Social Recipe App :
+
 This project is my final assignment for SoftUni – a social media platform for food enthusiasts. The application enables users to share, explore, and engage with recipes in an interactive community.
 
 ✨ Features:
+
 📝 Post & Share – Publish and showcase your favorite recipes.
 
 📬 Notifications – Microservice-powered notifications.
