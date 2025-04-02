@@ -143,5 +143,27 @@ class PostControllerUnitTest {
         verify(postService, times(1)).ratePost(postId, user, rating);
         assertEquals("redirect:/home", modelAndView.getViewName());
     }
+    @Test
+    void shouldDeleteCommentFromPost() {
+        UUID commentId = UUID.randomUUID();
+
+        ModelAndView modelAndView = postController.deleteComment(commentId);
+
+        verify(postService, times(1)).deleteCommentFromPost(commentId);
+        assertEquals("redirect:/home", modelAndView.getViewName());
+    }
+
+    @Test
+    void shouldAddCommentToPost() {
+        String content = "This is a comment.";
+
+        when(authenticationMetadata.getUserId()).thenReturn(user.getId());
+        when(userService.getByUserId(user.getId())).thenReturn(user);
+
+        ModelAndView modelAndView = postController.addComment(postId, content, authenticationMetadata);
+
+        verify(postService, times(1)).addComment(postId, user, content);
+        assertEquals("redirect:/home", modelAndView.getViewName());
+    }
 
 }

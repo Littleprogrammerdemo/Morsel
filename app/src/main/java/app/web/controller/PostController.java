@@ -1,6 +1,5 @@
 package app.web.controller;
 
-import app.comment.model.Comment;
 import app.post.model.Post;
 import app.post.service.PostService;
 import app.security.AuthenticationMetadata;
